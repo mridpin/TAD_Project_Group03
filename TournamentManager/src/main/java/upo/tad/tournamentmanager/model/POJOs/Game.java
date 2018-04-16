@@ -10,5 +10,5 @@ package upo.tad.tournamentmanager.model.POJOs;
  * @author ridao
  */
 public class Game {
-    
+    //hola
 }
