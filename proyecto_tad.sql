@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-04-2018 a las 20:46:50
+-- Tiempo de generación: 17-04-2018 a las 01:27:40
 -- Versión del servidor: 10.1.30-MariaDB
 -- Versión de PHP: 7.2.1
 
@@ -63,7 +63,8 @@ CREATE TABLE `player` (
   `password` varchar(450) NOT NULL,
   `email` varchar(50) NOT NULL,
   `points` int(4) NOT NULL,
-  `nickname` varchar(25) NOT NULL
+  `nickname` varchar(25) NOT NULL,
+  `type` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
