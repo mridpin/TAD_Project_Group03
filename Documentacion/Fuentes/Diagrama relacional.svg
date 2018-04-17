@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg
+PUBLIC "-//W3C//DTD SVG 1.1//EN"
+       "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg viewBox="191 229 779 424" width="588px" height="195px" xmlns="http://www.w3.org/2000/svg" version="1.1">
+   <line x1="441" y1="356" x2="431" y2="356" style="stroke:#0b0;stroke-width:1;"/>
+   <line x1="294" y1="279" x2="284" y2="279" style="stroke:#0b0;stroke-width:1;"/>
+   <line x1="431" y1="356" x2="294" y2="279" style="stroke:#0b0;stroke-width:1;"/>
+   <line x1="433,5" y1="356" x2="437,03553390593" y2="359,53553390593" style="stroke:#0b0;stroke-width:2;"/>
+   <line x1="433,5" y1="356" x2="437,03553390593" y2="352,46446609407" style="stroke:#0b0;stroke-width:2;"/>
+   <line x1="289" y1="279" x2="292,53553390593" y2="282,53553390593" style="stroke:#0b0;stroke-width:2;"/>
+   <line x1="289" y1="279" x2="292,53553390593" y2="275,46446609407" style="stroke:#0b0;stroke-width:2;"/>
+   <line x1="689" y1="334" x2="679" y2="334" style="stroke:#cb0;stroke-width:1;"/>
+   <line x1="522" y1="276" x2="512" y2="276" style="stroke:#cb0;stroke-width:1;"/>
+   <line x1="679" y1="334" x2="522" y2="276" style="stroke:#cb0;stroke-width:1;"/>
+   <line x1="681,5" y1="334" x2="685,03553390593" y2="337,53553390593" style="stroke:#cb0;stroke-width:2;"/>
+   <line x1="681,5" y1="334" x2="685,03553390593" y2="330,46446609407" style="stroke:#cb0;stroke-width:2;"/>
+   <line x1="517" y1="276" x2="520,53553390593" y2="279,53553390593" style="stroke:#cb0;stroke-width:2;"/>
+   <line x1="517" y1="276" x2="520,53553390593" y2="272,46446609407" style="stroke:#cb0;stroke-width:2;"/>
+   <line x1="689" y1="314" x2="679" y2="314" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="522" y1="276" x2="512" y2="276" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="679" y1="314" x2="522" y2="276" style="stroke:#0bf;stroke-width:1;"/>
+   <line x1="681,5" y1="314" x2="685,03553390593" y2="317,53553390593" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="681,5" y1="314" x2="685,03553390593" y2="310,46446609407" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="517" y1="276" x2="520,53553390593" y2="279,53553390593" style="stroke:#0bf;stroke-width:2;"/>
+   <line x1="517" y1="276" x2="520,53553390593" y2="272,46446609407" style="stroke:#0bf;stroke-width:2;"/>
+   <rect width="71" height="20" x="441" y="246" style="fill:#007;stroke:black;"/>
+   <text width="71" height="20" x="446" y="260" style="fill:#fff;" font-family="Arial" font-size="16px"> army</text>
+   <rect width="71" height="20" x="441" y="266" style="fill:#aea;stroke:black;"/>
+   <text width="71" height="20" x="446" y="280" style="fill:black;" font-family="Arial" font-size="16px">army_id</text>
+   <rect width="71" height="20" x="441" y="286" style="fill:none;stroke:black;"/>
+   <text width="71" height="20" x="446" y="300" style="fill:black;" font-family="Arial" font-size="16px">name</text>
+   <rect width="71" height="20" x="441" y="306" style="fill:none;stroke:black;"/>
+   <text width="71" height="20" x="446" y="320" style="fill:black;" font-family="Arial" font-size="16px">faction</text>
+   <rect width="71" height="20" x="441" y="326" style="fill:none;stroke:black;"/>
+   <text width="71" height="20" x="446" y="340" style="fill:black;" font-family="Arial" font-size="16px">strategy</text>
+   <rect width="71" height="20" x="441" y="346" style="fill:none;stroke:black;"/>
+   <text width="71" height="20" x="446" y="360" style="fill:black;" font-family="Arial" font-size="16px">player_id</text>
+   <rect width="75" height="20" x="689" y="244" style="fill:#007;stroke:black;"/>
+   <text width="75" height="20" x="694" y="258" style="fill:#fff;" font-family="Arial" font-size="16px"> game</text>
+   <rect width="75" height="20" x="689" y="264" style="fill:#aea;stroke:black;"/>
+   <text width="75" height="20" x="694" y="278" style="fill:black;" font-family="Arial" font-size="16px">game_id</text>
+   <rect width="75" height="20" x="689" y="284" style="fill:none;stroke:black;"/>
+   <text width="75" height="20" x="694" y="298" style="fill:black;" font-family="Arial" font-size="16px">date</text>
+   <rect width="75" height="20" x="689" y="304" style="fill:none;stroke:black;"/>
+   <text width="75" height="20" x="694" y="318" style="fill:black;" font-family="Arial" font-size="16px">winner_id</text>
+   <rect width="75" height="20" x="689" y="324" style="fill:none;stroke:black;"/>
+   <text width="75" height="20" x="694" y="338" style="fill:black;" font-family="Arial" font-size="16px">loser_id</text>
+   <rect width="78" height="20" x="206" y="249" style="fill:#007;stroke:black;"/>
+   <text width="78" height="20" x="211" y="263" style="fill:#fff;" font-family="Arial" font-size="16px"> player</text>
+   <rect width="78" height="20" x="206" y="269" style="fill:#aea;stroke:black;"/>
+   <text width="78" height="20" x="211" y="283" style="fill:black;" font-family="Arial" font-size="16px">player_id</text>
+   <rect width="78" height="20" x="206" y="289" style="fill:none;stroke:black;"/>
+   <text width="78" height="20" x="211" y="303" style="fill:black;" font-family="Arial" font-size="16px">name</text>
+   <rect width="78" height="20" x="206" y="309" style="fill:none;stroke:black;"/>
+   <text width="78" height="20" x="211" y="323" style="fill:black;" font-family="Arial" font-size="16px">password</text>
+   <rect width="78" height="20" x="206" y="329" style="fill:none;stroke:black;"/>
+   <text width="78" height="20" x="211" y="343" style="fill:black;" font-family="Arial" font-size="16px">email</text>
+   <rect width="78" height="20" x="206" y="349" style="fill:none;stroke:black;"/>
+   <text width="78" height="20" x="211" y="363" style="fill:black;" font-family="Arial" font-size="16px">points</text>
+   <rect width="78" height="20" x="206" y="369" style="fill:none;stroke:black;"/>
+   <text width="78" height="20" x="211" y="383" style="fill:black;" font-family="Arial" font-size="16px">nickname</text>
+   <rect width="78" height="20" x="206" y="389" style="fill:none;stroke:black;"/>
+   <text width="78" height="20" x="211" y="403" style="fill:black;" font-family="Arial" font-size="16px">type</text>
+</svg>

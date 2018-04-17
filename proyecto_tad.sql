@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-04-2018 a las 01:27:40
+-- Tiempo de generación: 17-04-2018 a las 18:05:58
 -- Versión del servidor: 10.1.30-MariaDB
 -- Versión de PHP: 7.2.1
 
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `proyecto_tad`
 --
-CREATE DATABASE IF NOT EXISTS `proyecto_tad` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `proyecto_tad`;
 
 -- --------------------------------------------------------
 
@@ -30,6 +28,7 @@ USE `proyecto_tad`;
 -- Estructura de tabla para la tabla `army`
 --
 
+DROP TABLE IF EXISTS `army`;
 CREATE TABLE `army` (
   `army_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
@@ -44,6 +43,7 @@ CREATE TABLE `army` (
 -- Estructura de tabla para la tabla `game`
 --
 
+DROP TABLE IF EXISTS `game`;
 CREATE TABLE `game` (
   `game_id` int(11) NOT NULL,
   `date` date NOT NULL,
@@ -57,6 +57,7 @@ CREATE TABLE `game` (
 -- Estructura de tabla para la tabla `player`
 --
 
+DROP TABLE IF EXISTS `player`;
 CREATE TABLE `player` (
   `player_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
@@ -77,15 +78,15 @@ CREATE TABLE `player` (
 ALTER TABLE `army`
   ADD PRIMARY KEY (`army_id`),
   ADD UNIQUE KEY `name` (`name`),
-  ADD KEY `player_id` (`player_id`);
+  ADD KEY `army_ibfk_1` (`player_id`);
 
 --
 -- Indices de la tabla `game`
 --
 ALTER TABLE `game`
   ADD PRIMARY KEY (`game_id`),
-  ADD KEY `winner_id` (`winner_id`),
-  ADD KEY `loser_id` (`loser_id`);
+  ADD KEY `loser_id` (`loser_id`),
+  ADD KEY `winner_id` (`winner_id`);
 
 --
 -- Indices de la tabla `player`
@@ -102,19 +103,19 @@ ALTER TABLE `player`
 -- AUTO_INCREMENT de la tabla `army`
 --
 ALTER TABLE `army`
-  MODIFY `army_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `army_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `game`
 --
 ALTER TABLE `game`
-  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `player`
 --
 ALTER TABLE `player`
-  MODIFY `player_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `player_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
@@ -124,14 +125,14 @@ ALTER TABLE `player`
 -- Filtros para la tabla `army`
 --
 ALTER TABLE `army`
-  ADD CONSTRAINT `army_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `player` (`player_id`);
+  ADD CONSTRAINT `army_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `player` (`player_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `game`
 --
 ALTER TABLE `game`
-  ADD CONSTRAINT `game_ibfk_1` FOREIGN KEY (`winner_id`) REFERENCES `player` (`player_id`),
-  ADD CONSTRAINT `game_ibfk_2` FOREIGN KEY (`loser_id`) REFERENCES `player` (`player_id`);
+  ADD CONSTRAINT `game_ibfk_1` FOREIGN KEY (`loser_id`) REFERENCES `army` (`army_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `game_ibfk_2` FOREIGN KEY (`winner_id`) REFERENCES `army` (`army_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
