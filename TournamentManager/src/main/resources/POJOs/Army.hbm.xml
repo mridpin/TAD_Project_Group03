@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 17-abr-2018 13:15:54 by Hibernate Tools 4.3.1 -->
+<!-- Generated 17-abr-2018 18:07:40 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="POJOs.Army" table="army" catalog="proyecto_tad" optimistic-lock="version">
         <id name="armyId" type="java.lang.Integer">
@@ -20,5 +20,17 @@
         <property name="strategy" type="string">
             <column name="strategy" length="200" not-null="true" />
         </property>
+        <set name="gamesForWinnerId" table="game" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="winner_id" not-null="true" />
+            </key>
+            <one-to-many class="POJOs.Game" />
+        </set>
+        <set name="gamesForLoserId" table="game" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="loser_id" not-null="true" />
+            </key>
+            <one-to-many class="POJOs.Game" />
+        </set>
     </class>
 </hibernate-mapping>

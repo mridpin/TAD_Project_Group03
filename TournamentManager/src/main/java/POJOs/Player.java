@@ -1,5 +1,5 @@
 package POJOs;
-// Generated 17-abr-2018 13:15:53 by Hibernate Tools 4.3.1
+// Generated 17-abr-2018 18:07:39 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -19,8 +19,6 @@ public class Player  implements java.io.Serializable {
      private String nickname;
      private boolean type;
      private Set armies = new HashSet(0);
-     private Set gamesForLoserId = new HashSet(0);
-     private Set gamesForWinnerId = new HashSet(0);
 
     public Player() {
     }
@@ -34,7 +32,7 @@ public class Player  implements java.io.Serializable {
         this.nickname = nickname;
         this.type = type;
     }
-    public Player(String name, String password, String email, int points, String nickname, boolean type, Set armies, Set gamesForLoserId, Set gamesForWinnerId) {
+    public Player(String name, String password, String email, int points, String nickname, boolean type, Set armies) {
        this.name = name;
        this.password = password;
        this.email = email;
@@ -42,8 +40,6 @@ public class Player  implements java.io.Serializable {
        this.nickname = nickname;
        this.type = type;
        this.armies = armies;
-       this.gamesForLoserId = gamesForLoserId;
-       this.gamesForWinnerId = gamesForWinnerId;
     }
    
     public Integer getPlayerId() {
@@ -101,20 +97,6 @@ public class Player  implements java.io.Serializable {
     
     public void setArmies(Set armies) {
         this.armies = armies;
-    }
-    public Set getGamesForLoserId() {
-        return this.gamesForLoserId;
-    }
-    
-    public void setGamesForLoserId(Set gamesForLoserId) {
-        this.gamesForLoserId = gamesForLoserId;
-    }
-    public Set getGamesForWinnerId() {
-        return this.gamesForWinnerId;
-    }
-    
-    public void setGamesForWinnerId(Set gamesForWinnerId) {
-        this.gamesForWinnerId = gamesForWinnerId;
     }
 
 

@@ -1,5 +1,5 @@
 package POJOs;
-// Generated 17-abr-2018 13:15:53 by Hibernate Tools 4.3.1
+// Generated 17-abr-2018 18:07:39 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -11,16 +11,16 @@ public class Game  implements java.io.Serializable {
 
 
      private Integer gameId;
-     private Player playerByLoserId;
-     private Player playerByWinnerId;
+     private Army armyByWinnerId;
+     private Army armyByLoserId;
      private Date date;
 
     public Game() {
     }
 
-    public Game(Player playerByLoserId, Player playerByWinnerId, Date date) {
-       this.playerByLoserId = playerByLoserId;
-       this.playerByWinnerId = playerByWinnerId;
+    public Game(Army armyByWinnerId, Army armyByLoserId, Date date) {
+       this.armyByWinnerId = armyByWinnerId;
+       this.armyByLoserId = armyByLoserId;
        this.date = date;
     }
    
@@ -31,19 +31,19 @@ public class Game  implements java.io.Serializable {
     public void setGameId(Integer gameId) {
         this.gameId = gameId;
     }
-    public Player getPlayerByLoserId() {
-        return this.playerByLoserId;
+    public Army getArmyByWinnerId() {
+        return this.armyByWinnerId;
     }
     
-    public void setPlayerByLoserId(Player playerByLoserId) {
-        this.playerByLoserId = playerByLoserId;
+    public void setArmyByWinnerId(Army armyByWinnerId) {
+        this.armyByWinnerId = armyByWinnerId;
     }
-    public Player getPlayerByWinnerId() {
-        return this.playerByWinnerId;
+    public Army getArmyByLoserId() {
+        return this.armyByLoserId;
     }
     
-    public void setPlayerByWinnerId(Player playerByWinnerId) {
-        this.playerByWinnerId = playerByWinnerId;
+    public void setArmyByLoserId(Army armyByLoserId) {
+        this.armyByLoserId = armyByLoserId;
     }
     public Date getDate() {
         return this.date;
