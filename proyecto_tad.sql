@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-04-2018 a las 18:05:58
+-- Tiempo de generación: 17-04-2018 a las 18:11:40
 -- Versión del servidor: 10.1.30-MariaDB
 -- Versión de PHP: 7.2.1
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `proyecto_tad`
 --
+CREATE DATABASE IF NOT EXISTS `proyecto_tad` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `proyecto_tad`;
 
 -- --------------------------------------------------------
 
@@ -28,7 +30,6 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `army`
 --
 
-DROP TABLE IF EXISTS `army`;
 CREATE TABLE `army` (
   `army_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
@@ -43,7 +44,6 @@ CREATE TABLE `army` (
 -- Estructura de tabla para la tabla `game`
 --
 
-DROP TABLE IF EXISTS `game`;
 CREATE TABLE `game` (
   `game_id` int(11) NOT NULL,
   `date` date NOT NULL,
@@ -57,7 +57,6 @@ CREATE TABLE `game` (
 -- Estructura de tabla para la tabla `player`
 --
 
-DROP TABLE IF EXISTS `player`;
 CREATE TABLE `player` (
   `player_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
