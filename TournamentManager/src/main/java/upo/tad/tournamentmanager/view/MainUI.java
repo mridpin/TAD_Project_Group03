@@ -13,6 +13,7 @@ import com.vaadin.server.WrappedSession;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 import upo.tad.tournamentmanager.view.LoginScreen.LoginListener;
 
 @PreserveOnRefresh
@@ -39,10 +40,13 @@ public class MainUI extends UI {
     }
 
     protected void showMainView() {
-        VerticalLayout l = new VerticalLayout();
-        Label name = new Label("Hola " + (String) session.getAttribute("user"));
-        l.addComponent(name);
-        setContent(l);
+        addStyleName(ValoTheme.UI_WITH_MENU);
+        setContent(new MainScreen(MainUI.this));
+        getNavigator().navigateTo(getNavigator().getState());
+//        VerticalLayout l = new VerticalLayout();
+//        Label name = new Label("Hola " + (String) session.getAttribute("user"));
+//        l.addComponent(name);
+//        setContent(l);
     }
 
     @WebServlet(urlPatterns = "/*", name = "MainUIServlet", asyncSupported = true)

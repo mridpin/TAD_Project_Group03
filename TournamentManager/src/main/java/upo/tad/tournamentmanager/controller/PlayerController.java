@@ -5,10 +5,15 @@
  */
 package upo.tad.tournamentmanager.controller;
 
+import upo.tad.tournamentmanager.model.DAO.DAO;
+
 /**
  *
  * @author ridao
  */
 public class PlayerController {
-    
+    DAO dao = new DAO();
+    public boolean checkLogin(String username, String password){
+        return dao.login(username, password);
+    }
 }

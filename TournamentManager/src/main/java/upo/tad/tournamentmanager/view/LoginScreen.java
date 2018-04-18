@@ -102,6 +102,8 @@ public class LoginScreen extends CssLayout {
 
     //Hace en login cunado se le da al boton
     private void login() {
+//        boolean pass = pc.checkLogin(username.getValue(), password.getValue());
+//        if (pass) {
         if (username.getValue().equals(password.getValue())) {
             MainUI.session.setAttribute("user", username.getValue());
             loginListener.loginSuccessful();
@@ -119,8 +121,9 @@ public class LoginScreen extends CssLayout {
         notification.setDelayMsec(2000);
         notification.show(Page.getCurrent());
     }
-    
+
     public interface LoginListener extends Serializable {
+
         void loginSuccessful();
     }
 }

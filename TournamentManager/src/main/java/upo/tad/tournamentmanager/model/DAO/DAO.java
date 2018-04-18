@@ -14,19 +14,20 @@ import org.hibernate.Session;
  * @author ridao
  */
 public class DAO {
+
     Session sesion = null;
-    
-    public boolean login (String user, String password){
+
+    public boolean login(String user, String password) {
         boolean login = false;
-        
+
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
-        Query q = sesion.createQuery("from Player where name = '"+user+"' and password = '"+password+"'");
-        
-        if(q.uniqueResult() != null){
+        Query q = sesion.createQuery("from Player where name = '" + user + "' and password = '" + password + "'");
+
+        if (q.uniqueResult() != null) {
             login = true;
         }
-        
+
         tx.commit();
         return login;
     }
