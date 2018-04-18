@@ -9,11 +9,13 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.LoginForm.LoginListener;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
+import java.io.Serializable;
 import upo.tad.tournamentmanager.controller.PlayerController;
 
 public class LoginScreen extends CssLayout {
@@ -23,8 +25,10 @@ public class LoginScreen extends CssLayout {
     private TextField username;
     private PasswordField password;
     private Button login;
+    private LoginListener loginListener;
 
-    public LoginScreen() {
+    public LoginScreen(LoginListener loginListener) {
+        this.loginListener = loginListener;
         buildUI();
         username.focus();
     }
@@ -98,14 +102,14 @@ public class LoginScreen extends CssLayout {
 
     //Hace en login cunado se le da al boton
     private void login() {
-//        boolean pass = pc.checkLogin(username.getValue(), password.getValue());
-//        if (pass) {
-//            loginListener.loginSuccessful();
-//        } else {
-//            showNotification(new Notification("Login failed", "Please check your username and password and try again.",
-//                    Notification.Type.HUMANIZED_MESSAGE));
-//            username.focus();
-//        }
+        if (username.getValue().equals(password.getValue())) {
+            MainUI.session.setAttribute("user", username.getValue());
+            loginListener.loginSuccessful();
+        } else {
+            showNotification(new Notification("Login failed", "Please check your username and password and try again.",
+                    Notification.Type.HUMANIZED_MESSAGE));
+            username.focus();
+        }
     }
 
     //Muestra las notificaciones pasadas como parametro
@@ -114,5 +118,9 @@ public class LoginScreen extends CssLayout {
         // mouse, or until clicked
         notification.setDelayMsec(2000);
         notification.show(Page.getCurrent());
+    }
+    
+    public interface LoginListener extends Serializable {
+        void loginSuccessful();
     }
 }

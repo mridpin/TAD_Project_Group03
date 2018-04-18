@@ -1,5 +1,6 @@
 package upo.tad.tournamentmanager.view;
 
+import com.vaadin.annotations.PreserveOnRefresh;
 import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.annotations.Theme;
@@ -8,16 +9,40 @@ import com.vaadin.annotations.Viewport;
 import com.vaadin.server.Responsive;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.server.WrappedSession;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
+import upo.tad.tournamentmanager.view.LoginScreen.LoginListener;
 
+@PreserveOnRefresh
 @Viewport("user-scalable=no,initial-scale=1.0")
 @Theme("mytheme")
 public class MainUI extends UI {
 
+    public static WrappedSession session;
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
+        session = getSession().getSession();
         Responsive.makeResponsive(this);
-        setContent(new LoginScreen());
+        if (session.getAttribute("user") == null) {
+            setContent(new LoginScreen(new LoginListener() {
+                @Override
+                public void loginSuccessful() {
+                    showMainView();
+                }
+            }));
+        } else {
+            showMainView();
+        }
+    }
+
+    protected void showMainView() {
+        VerticalLayout l = new VerticalLayout();
+        Label name = new Label("Hola " + (String) session.getAttribute("user"));
+        l.addComponent(name);
+        setContent(l);
     }
 
     @WebServlet(urlPatterns = "/*", name = "MainUIServlet", asyncSupported = true)
