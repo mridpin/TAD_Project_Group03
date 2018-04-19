@@ -18,6 +18,7 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
+import upo.tad.tournamentmanager.controller.ArmyController;
 
 /**
  *
@@ -27,6 +28,8 @@ public class ArmiesPanel extends CssLayout implements View {
 
     public ArmiesPanel() {
 
+        ArmyController armyController = new ArmyController();
+        
         setSizeFull();
         addStyleName("armies");
 
@@ -67,8 +70,10 @@ public class ArmiesPanel extends CssLayout implements View {
         army_name.setIcon(FontAwesome.USER);
         army_name.setWidth(100, Unit.PERCENTAGE);
         ComboBox army_faction = new ComboBox("Faction");
-        army_faction.addItem("Caos");
-        army_faction.addItem("Aeldari");
+        
+        for(String s : armyController.getFactions()){
+            army_faction.addItem(s);
+        }
         army_faction.setNullSelectionAllowed(false);
         army_faction.setIcon(FontAwesome.GAMEPAD);
         army_faction.setWidth(100, Unit.PERCENTAGE);  
@@ -82,8 +87,9 @@ public class ArmiesPanel extends CssLayout implements View {
         */
       
         ComboBox army_strategy = new ComboBox("Strategy");
-        army_strategy.addItem("A distancia");
-        army_strategy.addItem("Cuerpo a cuerpo");
+        for(String s : armyController.getStrategies()){
+            army_strategy.addItem(s);
+        }
         army_strategy.setNullSelectionAllowed(false);
         army_strategy.setIcon(FontAwesome.GAMEPAD);
         army_strategy.setWidth(100, Unit.PERCENTAGE);
