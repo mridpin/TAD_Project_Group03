@@ -19,18 +19,29 @@ public class DAO {
 
     Session sesion = null;
 
-    public boolean login(String user, String password) {
-        boolean login = false;
+    public Player login(String user, String password) {
+        Player p = null;
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
         Query q = sesion.createQuery("from Player where name = '" + user + "' and password = '" + password + "'");
 
         if (q.uniqueResult() != null) {
-            login = true;
+            p = (Player) q.list().get(0);
         }
 
         tx.commit();
-        return login;
+        return p;
+    }
+
+    public List consultaJugadores() {
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+
+        Query q = sesion.createQuery("from Player");
+        List listadoJugadores = q.list();
+
+        tx.commit();
+        return listadoJugadores;
     }
 
     public List consultaEjercitos() {
@@ -44,6 +55,16 @@ public class DAO {
         return listadoEjercitos;
     }
 
+    public Player consultaJugador(int playerId) {
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+
+        Query q = sesion.createQuery("from Player where playerId = '"+playerId+"'");
+        Player p = (Player) q.list().get(0);
+        tx.commit();
+        return p;
+    }
+    
     public List<Player> getPlayers() {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
@@ -54,22 +75,7 @@ public class DAO {
         tx.commit();
         return listadoPlayers;
     }
-
-    public void addPlayer(Player p) {
-        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
-        org.hibernate.Transaction tx = sesion.beginTransaction();
-        sesion.save(p);
-        tx.commit();
-    }
-
-    public void updatePlayer(Player p) {
-        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
-        org.hibernate.Transaction tx = sesion.beginTransaction();
-        sesion.update(p);
-
-        tx.commit();
-    }
-
+    
     public Player getPlayer(String nickname) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
@@ -87,5 +93,20 @@ public class DAO {
         sesion.delete(p);
         tx.commit();
     }
+    public void addPlayer(Player p) {
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+        sesion.save(p);
+        tx.commit();
+    }
+    
+    public void updatePlayer(Player p) {
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+        sesion.update(p);
 
+        tx.commit();
+    }
+    
+    
 }

@@ -5,6 +5,7 @@
  */
 package upo.tad.tournamentmanager.view.panels;
 
+import POJOs.Player;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -19,6 +20,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import upo.tad.tournamentmanager.controller.ArmyController;
+import upo.tad.tournamentmanager.view.MainUI;
 
 /**
  *
@@ -130,6 +132,8 @@ public class ArmiesPanel extends CssLayout implements View {
         create.addClickListener((event) -> {
             //CREAR EJERCITO
             rellenaTabla(table);
+            Player p = (Player) MainUI.session.getAttribute("user");
+            armyController.addArmy((String)army_name.getValue(), (String)army_faction.getValue(), (String)army_strategy.getValue(), p.getPlayerId());
             army_name.clear();            
         });
         
