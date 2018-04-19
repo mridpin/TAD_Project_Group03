@@ -13583,3 +13583,7 @@ div.v-layout.v-horizontal.v-widget {
 .mytheme .align-right {
 	text-align: right;
 }
+
+.mytheme .mytheme .align-right {
+	text-align: right;
+}

@@ -11,7 +11,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import upo.tad.tournamentmanager.view.panels.GamesPanel;
-import upo.tad.tournamentmanager.view.panels.PlayerPanel;
+import upo.tad.tournamentmanager.view.panels.PlayersPanel;
 
 public class MainScreen extends HorizontalLayout {
 
@@ -28,7 +28,7 @@ public class MainScreen extends HorizontalLayout {
         final Navigator navigator = new Navigator(ui, viewContainer);
         navigator.setErrorView(ErrorView.class);
         menu = new Menu(navigator);
-        menu.addView(new PlayerPanel(), "Players", "Players", FontAwesome.MALE);
+        menu.addView(new PlayersPanel(), "Players", "Players", FontAwesome.MALE);
         menu.addView(new GamesPanel(), "Games", "Games", FontAwesome.GAMEPAD);
 
         navigator.addViewChangeListener(viewChangeListener);

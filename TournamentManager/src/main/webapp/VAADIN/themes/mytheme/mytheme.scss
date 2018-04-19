@@ -345,5 +345,9 @@ $v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
   .align-right {
   	text-align: right;
   }
+  
+  .mytheme .align-right {
+	text-align: right;
+}
 
 }
