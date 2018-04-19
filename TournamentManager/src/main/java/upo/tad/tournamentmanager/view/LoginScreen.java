@@ -104,7 +104,6 @@ public class LoginScreen extends CssLayout {
     private void login() {
         boolean pass = pc.checkLogin(username.getValue(), password.getValue());
         if (pass) {
-        // if (username.getValue().equals(password.getValue())) {
             MainUI.session.setAttribute("user", username.getValue());
             loginListener.loginSuccessful();
         } else {

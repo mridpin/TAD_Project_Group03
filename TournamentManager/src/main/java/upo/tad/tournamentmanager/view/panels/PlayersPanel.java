@@ -5,6 +5,8 @@
  */
 package upo.tad.tournamentmanager.view.panels;
 
+import POJOs.Army;
+import POJOs.Player;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -16,8 +18,13 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
+import java.util.Iterator;
+import java.util.List;
+import upo.tad.tournamentmanager.controller.PlayerController;
 
 public class PlayersPanel extends CssLayout implements View {
+
+    PlayerController pc = new PlayerController();
 
     public PlayersPanel() {
         setSizeFull();
@@ -65,7 +72,7 @@ public class PlayersPanel extends CssLayout implements View {
         TextField player_nickname = new TextField("Nick name");
         player_nickname.setIcon(FontAwesome.GAMEPAD);
         player_nickname.setWidth(100, Unit.PERCENTAGE);
-        PasswordField player_password = new PasswordField("Password");
+        player_nickname.setEnabled(false);        PasswordField player_password = new PasswordField("Password");
         player_password.setIcon(FontAwesome.LOCK);
         player_password.setWidth(100, Unit.PERCENTAGE);
         TextField player_email = new TextField("Email");
@@ -100,13 +107,14 @@ public class PlayersPanel extends CssLayout implements View {
             player_name.setValue(name);
             player_nickname.setValue(nick);
             player_email.setValue(email);
-            
+
             update.setVisible(true);
             create.setVisible(false);
         });
 
         create.addClickListener((event) -> {
-            //CREAR JUGADOR
+            pc.addPlayer(player_name.getValue(), player_nickname.getValue(), player_password.getValue(), player_email.getValue());
+            
             rellenaTabla(table);
             player_email.clear();
             player_name.clear();
@@ -133,9 +141,9 @@ public class PlayersPanel extends CssLayout implements View {
             create.setVisible(true);
             update.setVisible(false);
         });
-        
+
         update.addClickListener((event) -> {
-            //ACTUALIZAR JUGADOR
+            pc.updatePlayer(player_name.getValue(), player_nickname.getValue(), player_password.getValue(), player_email.getValue());
             rellenaTabla(table);
             player_email.clear();
             player_name.clear();
@@ -149,42 +157,18 @@ public class PlayersPanel extends CssLayout implements View {
     public void rellenaTabla(Table table) {
         table.removeAllItems();
         //RELLENAR TABLA
-        table.addItem(new Object[]{"Player 1", "player1", "player1@tad.com", 4, 9, 7, 452}, null);
-        table.addItem(new Object[]{"Player 2", "player2", "player2@tad.com", 7, 16, 74, 236}, null);
-        table.addItem(new Object[]{"Player 3", "player3", "player3@tad.com", 6, 7, 6, 410}, null);
-        table.addItem(new Object[]{"Player 4", "player4", "player4@tad.com", 9, 0, 4, 127}, null);
-        table.addItem(new Object[]{"Player 1", "player1", "player1@tad.com", 4, 9, 7, 452}, null);
-        table.addItem(new Object[]{"Player 2", "player2", "player2@tad.com", 7, 16, 74, 236}, null);
-        table.addItem(new Object[]{"Player 3", "player3", "player3@tad.com", 6, 7, 6, 410}, null);
-        table.addItem(new Object[]{"Player 4", "player4", "player4@tad.com", 9, 0, 4, 127}, null);
-        table.addItem(new Object[]{"Player 1", "player1", "player1@tad.com", 4, 9, 7, 452}, null);
-        table.addItem(new Object[]{"Player 2", "player2", "player2@tad.com", 7, 16, 74, 236}, null);
-        table.addItem(new Object[]{"Player 3", "player3", "player3@tad.com", 6, 7, 6, 410}, null);
-        table.addItem(new Object[]{"Player 4", "player4", "player4@tad.com", 9, 0, 4, 127}, null);
-        table.addItem(new Object[]{"Player 1", "player1", "player1@tad.com", 4, 9, 7, 452}, null);
-        table.addItem(new Object[]{"Player 2", "player2", "player2@tad.com", 7, 16, 74, 236}, null);
-        table.addItem(new Object[]{"Player 3", "player3", "player3@tad.com", 6, 7, 6, 410}, null);
-        table.addItem(new Object[]{"Player 4", "player4", "player4@tad.com", 9, 0, 4, 127}, null);
-        table.addItem(new Object[]{"Player 1", "player1", "player1@tad.com", 4, 9, 7, 452}, null);
-        table.addItem(new Object[]{"Player 2", "player2", "player2@tad.com", 7, 16, 74, 236}, null);
-        table.addItem(new Object[]{"Player 3", "player3", "player3@tad.com", 6, 7, 6, 410}, null);
-        table.addItem(new Object[]{"Player 4", "player4", "player4@tad.com", 9, 0, 4, 127}, null);
-        table.addItem(new Object[]{"Player 1", "player1", "player1@tad.com", 4, 9, 7, 452}, null);
-        table.addItem(new Object[]{"Player 2", "player2", "player2@tad.com", 7, 16, 74, 236}, null);
-        table.addItem(new Object[]{"Player 3", "player3", "player3@tad.com", 6, 7, 6, 410}, null);
-        table.addItem(new Object[]{"Player 4", "player4", "player4@tad.com", 9, 0, 4, 127}, null);
-        table.addItem(new Object[]{"Player 1", "player1", "player1@tad.com", 4, 9, 7, 452}, null);
-        table.addItem(new Object[]{"Player 2", "player2", "player2@tad.com", 7, 16, 74, 236}, null);
-        table.addItem(new Object[]{"Player 3", "player3", "player3@tad.com", 6, 7, 6, 410}, null);
-        table.addItem(new Object[]{"Player 4", "player4", "player4@tad.com", 9, 0, 4, 127}, null);
-        table.addItem(new Object[]{"Player 1", "player1", "player1@tad.com", 4, 9, 7, 452}, null);
-        table.addItem(new Object[]{"Player 2", "player2", "player2@tad.com", 7, 16, 74, 236}, null);
-        table.addItem(new Object[]{"Player 3", "player3", "player3@tad.com", 6, 7, 6, 410}, null);
-        table.addItem(new Object[]{"Player 4", "player4", "player4@tad.com", 9, 0, 4, 127}, null);
-        table.addItem(new Object[]{"Player 1", "player1", "player1@tad.com", 4, 9, 7, 452}, null);
-        table.addItem(new Object[]{"Player 2", "player2", "player2@tad.com", 7, 16, 74, 236}, null);
-        table.addItem(new Object[]{"Player 3", "player3", "player3@tad.com", 6, 7, 6, 410}, null);
-        table.addItem(new Object[]{"Player 4", "player4", "player4@tad.com", 9, 0, 4, 127}, null);
+        List<Player> players = pc.getPlayers();
+        for (Player p : players) {
+            int ganados = 0;
+            int perdidos = 0;
+            Iterator it = p.getArmies().iterator();
+            while(it.hasNext()){
+                Army a = (Army) it.next();
+                ganados += a.getGamesForWinnerId().size();
+                perdidos += a.getGamesForLoserId().size();
+            }
+            table.addItem(new Object[]{p.getName(), p.getNickname(), p.getEmail(), p.getArmies().size(), ganados, perdidos, p.getPoints()}, null);
+        }
     }
 
     @Override
