@@ -5,6 +5,8 @@
  */
 package upo.tad.tournamentmanager.model.DAO;
 
+import POJOs.Army;
+import POJOs.Game;
 import POJOs.HibernateUtil;
 import POJOs.Player;
 import java.util.List;
@@ -86,8 +88,8 @@ public class DAO {
         tx.commit();
         return p;
     }
-    
-    public void removePlayer(Player p){
+
+    public void removePlayer(Player p) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
         sesion.delete(p);
@@ -104,9 +106,41 @@ public class DAO {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
         sesion.update(p);
+    }
+
+    public List<Game> getGames() {
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+
+        Query q = sesion.createQuery("from Game");
+        List listadoGames = q.list();
 
         tx.commit();
+        return listadoGames;
+    }
+
+    public List<Army> getArmies() {
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+
+        Query q = sesion.createQuery("from Army");
+        List listadoArmies = q.list();
+
+        tx.commit();
+        return listadoArmies;
+    }
+
+    public Army getArmy(int id) {
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+
+        Query q = sesion.createQuery("from Army where armyId='" + id + "'");
+        Army army = (Army) q.uniqueResult();
+
+        tx.commit();
+        return army;
     }
     
     
+
 }
