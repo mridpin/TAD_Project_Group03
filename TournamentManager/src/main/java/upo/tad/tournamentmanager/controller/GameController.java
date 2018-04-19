@@ -5,10 +5,15 @@
  */
 package upo.tad.tournamentmanager.controller;
 
-/**
- *
- * @author ridao
- */
+import POJOs.Game;
+import java.util.List;
+import upo.tad.tournamentmanager.model.DAO.DAO;
+
 public class GameController {
-    
+
+    DAO dao = new DAO();
+
+    public List<Game> getGames() {
+        return dao.getGames();
+    }
 }

@@ -45,5 +45,5 @@ public class PlayerController {
         Player p = dao.getPlayer(nickName);
         dao.removePlayer(p);
     }
-
+    
 }

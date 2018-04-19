@@ -5,14 +5,18 @@
  */
 package upo.tad.tournamentmanager.controller;
 
+import POJOs.Army;
 import java.util.ArrayList;
 import java.util.List;
+import upo.tad.tournamentmanager.model.DAO.DAO;
 
 /**
  *
  * @author ridao
  */
 public class ArmyController {
+    
+    DAO dao = new DAO();
 
     public List<String> getFactions() {
         List<String> factions = new ArrayList<>();
@@ -32,4 +36,11 @@ public class ArmyController {
         return strategies;
     }
     
+    public List<Army> getArmies(){
+        return dao.getArmies();
+    }
+    
+    public Army getArmy(int id){
+        return dao.getArmy(id);
+    }
 }
