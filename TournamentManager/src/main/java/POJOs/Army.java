@@ -88,6 +88,11 @@ public class Army  implements java.io.Serializable {
         this.gamesForLoserId = gamesForLoserId;
     }
 
+    @Override
+    public String toString() {
+        return armyId + ", " + name;
+    }
+
 
 
 
