@@ -80,5 +80,12 @@ public class DAO {
         tx.commit();
         return p;
     }
+    
+    public void removePlayer(Player p){
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+        sesion.delete(p);
+        tx.commit();
+    }
 
 }

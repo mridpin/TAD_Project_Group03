@@ -40,5 +40,10 @@ public class PlayerController {
         }
         dao.updatePlayer(p);
     }
+    
+    public void removePlayer(String nickName){
+        Player p = dao.getPlayer(nickName);
+        dao.removePlayer(p);
+    }
 
 }

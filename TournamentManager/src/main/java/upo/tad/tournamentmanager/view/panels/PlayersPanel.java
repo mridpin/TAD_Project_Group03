@@ -132,7 +132,7 @@ public class PlayersPanel extends CssLayout implements View {
         });
 
         remove.addClickListener((event) -> {
-            //BORRAR JUGADOR
+            pc.removePlayer(player_nickname.getValue());
             rellenaTabla(table);
             player_email.clear();
             player_name.clear();
