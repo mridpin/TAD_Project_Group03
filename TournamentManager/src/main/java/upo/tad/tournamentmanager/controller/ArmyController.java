@@ -15,7 +15,9 @@ import upo.tad.tournamentmanager.model.DAO.DAO;
  * @author ridao
  */
 public class ArmyController {
+
     DAO dao = new DAO();
+
     public List<String> getFactions() {
         List<String> factions = new ArrayList<>();
         factions.add("Imperium");
@@ -23,7 +25,7 @@ public class ArmyController {
         factions.add("Chaos");
         return factions;
     }
-    
+
     public List<String> getStrategies() {
         List<String> strategies = new ArrayList<>();
         strategies.add("Agresiva");
@@ -33,16 +35,16 @@ public class ArmyController {
         strategies.add("Cuerpo a Cuerpo");
         return strategies;
     }
-    
-        public List<Integer> getFactionCount() {
+
+    public List<Integer> getFactionCount() {
         List<Integer> factionCount = new ArrayList<>();
         factionCount.add(3);
         factionCount.add(6);
         factionCount.add(8);
         return factionCount;
     }
-    
-    public void addArmy(String name, String faction, String strategy, int playerId){
+
+    public void addArmy(String name, String faction, String strategy, int playerId) {
         Army a = new Army(dao.consultaJugador(playerId), name, faction, strategy);
     }
 }
