@@ -38,7 +38,7 @@ public class DAO {
         
         Query q = sesion.createQuery("from Player");
         List listadoJugadores = q.list();
-        
+       
         tx.commit();
         return listadoJugadores;
     }
