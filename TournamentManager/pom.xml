@@ -82,6 +82,11 @@
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
             <version>1.0.0.Final</version>
+        </dependency>        
+        <dependency> 
+            <groupId>com.vaadin.addon</groupId> 
+            <artifactId>vaadin-charts</artifactId> 
+            <version>3.0.0</version>
         </dependency>
     </dependencies>
 
