@@ -62,7 +62,9 @@ public class GamesPanel extends CssLayout implements View {
         left.addComponent(table);
 
         ComboBox winner = new ComboBox("Winner");
-        winner.addItems(components);
+        winner.addItems(ac.getArmies());
+        
+        
         TextField player_name = new TextField("Name");
         player_name.setIcon(FontAwesome.USER);
         player_name.setWidth(100, Unit.PERCENTAGE);

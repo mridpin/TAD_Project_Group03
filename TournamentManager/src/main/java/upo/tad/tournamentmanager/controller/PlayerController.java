@@ -16,8 +16,7 @@ import upo.tad.tournamentmanager.model.DAO.DAO;
 public class PlayerController {
 
     DAO dao = new DAO();
-
-    public boolean checkLogin(String username, String password) {
+    public Player checkLogin(String username, String password){
         return dao.login(username, password);
     }
 

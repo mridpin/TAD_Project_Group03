@@ -36,11 +36,24 @@ public class ArmyController {
         return strategies;
     }
     
+
     public List<Army> getArmies(){
         return dao.getArmies();
     }
     
     public Army getArmy(int id){
         return dao.getArmy(id);
+    }
+
+        public List<Integer> getFactionCount() {
+        List<Integer> factionCount = new ArrayList<>();
+        factionCount.add(3);
+        factionCount.add(6);
+        factionCount.add(8);
+        return factionCount;
+    }
+    
+    public void addArmy(String name, String faction, String strategy, int playerId){
+        Army a = new Army(dao.consultaJugador(playerId), name, faction, strategy);
     }
 }

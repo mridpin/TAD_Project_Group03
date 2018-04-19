@@ -1,5 +1,6 @@
 package upo.tad.tournamentmanager.view;
 
+import POJOs.Player;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -102,9 +103,10 @@ public class LoginScreen extends CssLayout {
 
     //Hace en login cunado se le da al boton
     private void login() {
-        boolean pass = pc.checkLogin(username.getValue(), password.getValue());
-        if (pass) {
-            MainUI.session.setAttribute("user", username.getValue());
+        Player p = pc.checkLogin(username.getValue(), password.getValue());
+        if (p != null) {
+        // if (username.getValue().equals(password.getValue())) {
+            MainUI.session.setAttribute("user", p);
             loginListener.loginSuccessful();
         } else {
             showNotification(new Notification("Login failed", "Please check your username and password and try again.",
