@@ -6,6 +6,7 @@
 package upo.tad.tournamentmanager.model.DAO;
 
 import POJOs.HibernateUtil;
+import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -31,4 +32,26 @@ public class DAO {
         tx.commit();
         return login;
     }
+    
+    public List consultaJugadores(){
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+        
+        Query q = sesion.createQuery("from Player");
+        List listadoJugadores = q.list();
+        
+        tx.commit();
+        return listadoJugadores;
+    }
+    
+    public List consultaEjercitos(){
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+        
+        Query q = sesion.createQuery("from Army");
+        List listadoEjercitos = q.list();
+        
+        tx.commit();
+        return listadoEjercitos;
+    }    
 }

@@ -10,6 +10,7 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
+import upo.tad.tournamentmanager.view.panels.ArmiesPanel;
 import upo.tad.tournamentmanager.view.panels.GamesPanel;
 import upo.tad.tournamentmanager.view.panels.PlayersPanel;
 
@@ -30,6 +31,7 @@ public class MainScreen extends HorizontalLayout {
         menu = new Menu(navigator);
         menu.addView(new PlayersPanel(), "Players", "Players", FontAwesome.MALE);
         menu.addView(new GamesPanel(), "Games", "Games", FontAwesome.GAMEPAD);
+        menu.addView(new ArmiesPanel(), "Armies", "Armies", FontAwesome.EMPIRE);
 
         navigator.addViewChangeListener(viewChangeListener);
 
