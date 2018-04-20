@@ -90,7 +90,7 @@ public class Army  implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return armyId + ", " + name;
+        return name;
     }
 
 

@@ -1,5 +1,6 @@
 package upo.tad.tournamentmanager.view.panels;
 
+import POJOs.Army;
 import POJOs.Game;
 import POJOs.Player;
 import com.vaadin.navigator.View;
@@ -15,7 +16,9 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import upo.tad.tournamentmanager.controller.ArmyController;
 import upo.tad.tournamentmanager.controller.GameController;
@@ -50,8 +53,8 @@ public class GamesPanel extends CssLayout implements View {
         Table table = new Table();
 
         table.addContainerProperty("Id", Integer.class, null);
-        table.addContainerProperty("Winner", String.class, null);
-        table.addContainerProperty("Loser", String.class, null);
+        table.addContainerProperty("Winner", Army.class, null);
+        table.addContainerProperty("Loser", Army.class, null);
         table.addContainerProperty("Date", Date.class, null);
 
         rellenaTabla(table);
@@ -66,22 +69,21 @@ public class GamesPanel extends CssLayout implements View {
         game_id.setWidth(100, Unit.PERCENTAGE);
         game_id.setIcon(FontAwesome.FLAG);
         game_id.setEnabled(false);
-        
+
         ComboBox game_winner = new ComboBox("Winner");
         game_winner.addItems(ac.getArmies());
         game_winner.setWidth(100, Unit.PERCENTAGE);
         game_winner.setIcon(FontAwesome.ARROW_UP);
-        
-        
+
         ComboBox game_loser = new ComboBox("Loser");
         game_loser.addItems(ac.getArmies());
         game_loser.setWidth(100, Unit.PERCENTAGE);
         game_loser.setIcon(FontAwesome.ARROW_DOWN);
-        
+
         DateField game_date = new DateField("Game's date");
         game_date.setWidth(100, Unit.PERCENTAGE);
         game_date.setIcon(FontAwesome.CALENDAR);
-        
+
         Button create = new Button("Create");
         create.setIcon(FontAwesome.PLUS);
         create.setWidth(100, Unit.PERCENTAGE);
@@ -105,26 +107,46 @@ public class GamesPanel extends CssLayout implements View {
         table.addItemClickListener((event) -> {
             Object currentItemId = event.getItemId();
             Integer id = (Integer) table.getItem(currentItemId).getItemProperty("Id").getValue();
-            String winner = (String) table.getItem(currentItemId).getItemProperty("Winner").getValue();
-            String loser = (String) table.getItem(currentItemId).getItemProperty("Loser").getValue();
+            Army winner = (Army) table.getItem(currentItemId).getItemProperty("Winner").getValue();
+            Army loser = (Army) table.getItem(currentItemId).getItemProperty("Loser").getValue();
             Date date = (Date) table.getItem(currentItemId).getItemProperty("Date").getValue();
 
+            Collection ids = game_winner.getItemIds();
+
+            Iterator it = ids.iterator();
+            while (it.hasNext()) {
+                Army aux = (Army) it.next();
+                if (aux.getArmyId() == winner.getArmyId()) {
+                    game_winner.select(aux);
+                }
+            }
+
+            ids = game_loser.getItemIds();
+
+            it = ids.iterator();
+            while (it.hasNext()) {
+                Army aux = (Army) it.next();
+                if (aux.getArmyId() == loser.getArmyId()) {
+                    game_loser.select(aux);
+                }
+            }
+
             game_id.setValue(id.toString());
-            game_winner.setValue(winner);
-            game_loser.setValue(loser);
+
             game_date.setValue(date);
 
             update.setVisible(true);
             create.setVisible(false);
         });
 
-//        create.addClickListener((event) -> {
-//            rellenaTabla(table);
-//            player_email.clear();
-//            player_name.clear();
-//            player_nickname.clear();
-//            player_password.clear();
-//        });
+        create.addClickListener((event) -> {
+            gc.addGame((Army) game_winner.getValue(), (Army) game_loser.getValue(), game_date.getValue());
+            rellenaTabla(table);
+            game_id.clear();
+            game_winner.clear();
+            game_loser.clear();
+            game_date.clear();
+        });
 
         clean.addClickListener((event) -> {
             game_id.clear();
@@ -135,32 +157,34 @@ public class GamesPanel extends CssLayout implements View {
             update.setVisible(false);
         });
 
-//        remove.addClickListener((event) -> {
-//            rellenaTabla(table);
-//            player_email.clear();
-//            player_name.clear();
-//            player_nickname.clear();
-//            player_password.clear();
-//            create.setVisible(true);
-//            update.setVisible(false);
-//        });
+        remove.addClickListener((event) -> {
+            gc.removeGame(Integer.parseInt(game_id.getValue()), (Army) game_winner.getValue(), (Army) game_loser.getValue(), game_date.getValue());
+            rellenaTabla(table);
+            game_id.clear();
+            game_winner.clear();
+            game_loser.clear();
+            game_date.clear();
+            create.setVisible(true);
+            update.setVisible(false);
+        });
 
-//        update.addClickListener((event) -> {
-//            rellenaTabla(table);
-//            player_email.clear();
-//            player_name.clear();
-//            player_nickname.clear();
-//            player_password.clear();
-//            create.setVisible(true);
-//            update.setVisible(false);
-//        });
+        update.addClickListener((event) -> {
+            gc.updateGame(Integer.parseInt(game_id.getValue()), (Army) game_winner.getValue(), (Army) game_loser.getValue(), game_date.getValue());
+            rellenaTabla(table);
+            game_id.clear();
+            game_winner.clear();
+            game_loser.clear();
+            game_date.clear();
+            create.setVisible(true);
+            update.setVisible(false);
+        });
     }
 
     public void rellenaTabla(Table table) {
         table.removeAllItems();
         List<Game> games = gc.getGames();
         for (Game g : games) {
-            table.addItem(new Object[]{g.getGameId(), g.getArmyByWinnerId().getName(), g.getArmyByLoserId().getName(), g.getDate()}, null);
+            table.addItem(new Object[]{g.getGameId(), g.getArmyByWinnerId(), g.getArmyByLoserId(), g.getDate()}, null);
         }
     }
 
