@@ -5,6 +5,7 @@
  */
 package upo.tad.tournamentmanager.view.panels;
 
+import POJOs.Army;
 import POJOs.Player;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -19,6 +20,7 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
+import java.util.List;
 import upo.tad.tournamentmanager.controller.ArmyController;
 import upo.tad.tournamentmanager.view.MainUI;
 
@@ -28,10 +30,10 @@ import upo.tad.tournamentmanager.view.MainUI;
  */
 public class ArmiesPanel extends CssLayout implements View {
 
+    ArmyController armyController = new ArmyController();
+
     public ArmiesPanel() {
 
-        ArmyController armyController = new ArmyController();
-        
         setSizeFull();
         addStyleName("armies");
 
@@ -72,13 +74,13 @@ public class ArmiesPanel extends CssLayout implements View {
         army_name.setIcon(FontAwesome.USER);
         army_name.setWidth(100, Unit.PERCENTAGE);
         ComboBox army_faction = new ComboBox("Faction");
-        
-        for(String s : armyController.getFactions()){
+
+        for (String s : armyController.getFactions()) {
             army_faction.addItem(s);
         }
         army_faction.setNullSelectionAllowed(false);
         army_faction.setIcon(FontAwesome.GAMEPAD);
-        army_faction.setWidth(100, Unit.PERCENTAGE);  
+        army_faction.setWidth(100, Unit.PERCENTAGE);
         /*
         get faction
         army_faction.addValueChangeListener(event
@@ -86,10 +88,10 @@ public class ArmiesPanel extends CssLayout implements View {
                 layout.addComponent(new Label("Selected "
                         + event.getProperty().getValue()))
         );
-        */
-      
+         */
+
         ComboBox army_strategy = new ComboBox("Strategy");
-        for(String s : armyController.getStrategies()){
+        for (String s : armyController.getStrategies()) {
             army_strategy.addItem(s);
         }
         army_strategy.setNullSelectionAllowed(false);
@@ -115,7 +117,7 @@ public class ArmiesPanel extends CssLayout implements View {
         remove.setStyleName(ValoTheme.BUTTON_DANGER);
 
         right.addComponents(army_name, army_faction, army_strategy, create, update, clean, remove);
-        
+
         table.addItemClickListener((event) -> {
             Object currentItemId = event.getItemId();
             String name = (String) table.getItem(currentItemId).getItemProperty("Name").getValue();
@@ -124,25 +126,24 @@ public class ArmiesPanel extends CssLayout implements View {
 
             army_name.setValue(name);
 
-            
             update.setVisible(true);
             create.setVisible(false);
         });
-        
+
         create.addClickListener((event) -> {
             //CREAR EJERCITO
             rellenaTabla(table);
             Player p = (Player) MainUI.session.getAttribute("user");
-            armyController.addArmy((String)army_name.getValue(), (String)army_faction.getValue(), (String)army_strategy.getValue(), p.getPlayerId());
-            army_name.clear();            
+            armyController.addArmy((String) army_name.getValue(), (String) army_faction.getValue(), (String) army_strategy.getValue(), p.getPlayerId());
+            army_name.clear();
         });
-        
+
         clean.addClickListener((event) -> {
             army_name.clear();
             create.setVisible(true);
             update.setVisible(false);
         });
-        
+
         remove.addClickListener((event) -> {
             //BORRAR JUGADOR
             rellenaTabla(table);
@@ -150,7 +151,7 @@ public class ArmiesPanel extends CssLayout implements View {
             create.setVisible(true);
             update.setVisible(false);
         });
-        
+
         update.addClickListener((event) -> {
             //ACTUALIZAR JUGADOR
             rellenaTabla(table);
@@ -166,11 +167,12 @@ public class ArmiesPanel extends CssLayout implements View {
 
     }
 
-    private void rellenaTabla(Table table) {
-        table.addItem(new Object[]{"Army 1", "Faction 1", "Distancia", "Player 1"}, null);
-        table.addItem(new Object[]{"Army 2", "Faction 2", "Cuerpo a cuerpo", "Player 1"}, null);
-        table.addItem(new Object[]{"Army 3", "Faction 1", "Distancia", "Player 2"}, null);
-        table.addItem(new Object[]{"Army 4", "Faction 3", "Cuerpo a cuerpo", "Player 3"}, null);
+    private void rellenaTabla(Table table) {        
+        table.removeAllItems();
+        List<Army> armies = armyController.getArmies();
+        for (Army g : armies) {
+            table.addItem(new Object[]{g.getName(), g.getFaction(), g.getStrategy(), g.getPlayer().getNickname()}, null);
+        }
     }
 
 }
