@@ -7,6 +7,8 @@ package upo.tad.tournamentmanager.controller;
 
 import POJOs.Army;
 import POJOs.Game;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -64,5 +66,25 @@ public class GameController {
             popularity.put(s.toUpperCase(), count);
         }
         return popularity;
+    }
+
+    /**
+     * Returns a list of all the dates of the games
+     *
+     * @return List of dates
+     */
+    public Map<String, Date> getGameDates() {
+        List<Game> games = this.getGames();
+        Map<String, Date> gameDates = new HashMap<>();
+        Calendar now = Calendar.getInstance();
+        for (Game g : games) {
+            Date d = g.getDate();
+            now.setTime(d);
+            now.set(Calendar.HOUR_OF_DAY, 10);
+            d = now.getTime();
+            //String name = "Game : " + g.getArmyByWinnerId().getName() + " fsfsfs. " + g.getArmyByLoserId().getName();
+            gameDates.put("Game " + g.getGameId() + ": " + g.getArmyByWinnerId().getName() + " vs. " + g.getArmyByLoserId(), d);
+        }
+        return gameDates;
     }
 }

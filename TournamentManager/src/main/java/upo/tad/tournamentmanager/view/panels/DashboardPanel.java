@@ -17,6 +17,7 @@ import com.vaadin.addon.charts.model.style.Color;
 import com.vaadin.addon.charts.model.style.SolidColor;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.ui.Calendar;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
@@ -24,6 +25,9 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.VerticalSplitPanel;
+import com.vaadin.ui.components.calendar.event.BasicEvent;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +46,7 @@ public class DashboardPanel extends CssLayout implements View {
     GameController gc = new GameController();
     List<Player> players = null;
     Map<String, Integer> facPop = null;
+    Map<String, Date> dates = null;
 
     public DashboardPanel() {
         setSizeFull();
@@ -49,7 +54,22 @@ public class DashboardPanel extends CssLayout implements View {
         this.loadData();
 
         //Calendario
-        VerticalLayout topleft = new VerticalLayout();
+        Calendar cal = new Calendar("Last Games");
+        cal.setSizeFull();
+        Date month = Date.from(ZonedDateTime.now().minusMonths(1).toInstant());
+        cal.setStartDate(month);
+        cal.setEndDate(new Date());
+        Iterator it = dates.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            String armies = (String) pair.getKey();
+            Date d = (Date) pair.getValue();
+            cal.addEvent(new BasicEvent(armies,
+                    armies,
+                    d, Date.from(d.toInstant().plusSeconds(3600 * 3))));
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        VerticalLayout topleft = new VerticalLayout(cal);
 
         //Gráfico
         Chart chart = new Chart(ChartType.PIE);
@@ -60,6 +80,7 @@ public class DashboardPanel extends CssLayout implements View {
         conf.setSubTitle("Popularity of each faction");
         DataSeries data = new DataSeries(facPop.keySet().toArray(new String[facPop.size()]), facPop.values().toArray(new Integer[facPop.size()]));
         PlotOptionsPie plot = new PlotOptionsPie();
+        // Un color especifico para cada faccion
         plot.setColors(new SolidColor[]{new SolidColor("#9E0000"), new SolidColor("#2F478A"), new SolidColor("#4FAF00")});
         data.setPlotOptions(plot);
         conf.addSeries(data);
@@ -98,6 +119,7 @@ public class DashboardPanel extends CssLayout implements View {
     private void loadData() {
         this.players = pc.getPlayers();
         this.facPop = gc.getFactionPopularity();
+        this.dates = gc.getGameDates();
     }
 
 }
