@@ -22,6 +22,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import java.util.List;
 import upo.tad.tournamentmanager.controller.ArmyController;
+import upo.tad.tournamentmanager.controller.PlayerController;
 import upo.tad.tournamentmanager.view.MainUI;
 
 /**
@@ -158,7 +159,8 @@ public class ArmiesPanel extends CssLayout implements View {
 
         remove.addClickListener((event) -> {
             //BORRAR JUGADOR
-            
+            Player p = (Player) MainUI.session.getAttribute("user");
+            armyController.removeArmy(Integer.parseInt(army_id.getValue()), army_name.getValue(), (String)army_faction.getValue(), (String)army_strategy.getValue(), p);
             rellenaTabla(table);
             army_name.clear();
             create.setVisible(true);
