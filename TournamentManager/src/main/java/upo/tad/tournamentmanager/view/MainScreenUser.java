@@ -29,7 +29,8 @@ public class MainScreenUser extends HorizontalLayout{
         final Navigator navigator = new Navigator(ui, viewContainer);
         navigator.setErrorView(ErrorView.class);
         menu = new Menu(navigator);
-        menu.addView(new DashboardPanel(), "Dashboard", "Dashboard", FontAwesome.MALE);
+        // Le damos nombre "" al panel Dashboard para que sea el panel por defecto
+        menu.addView(new DashboardPanel(), "", "Dashboard", FontAwesome.MALE);
         menu.addView(new PlayersPanel(), "Player", "Player", FontAwesome.MALE);
         menu.addView(new ArmiesPanel(), "Armies", "Armies", FontAwesome.EMPIRE);
 
