@@ -9,6 +9,12 @@ import POJOs.Game;
 import POJOs.Player;
 import com.vaadin.addon.charts.Chart;
 import com.vaadin.addon.charts.model.ChartType;
+import com.vaadin.addon.charts.model.Configuration;
+import com.vaadin.addon.charts.model.DataSeries;
+import com.vaadin.addon.charts.model.ListSeries;
+import com.vaadin.addon.charts.model.PlotOptionsPie;
+import com.vaadin.addon.charts.model.style.Color;
+import com.vaadin.addon.charts.model.style.SolidColor;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Component;
@@ -18,6 +24,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.VerticalSplitPanel;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Spliterator;
@@ -43,10 +50,20 @@ public class DashboardPanel extends CssLayout implements View {
 
         //Calendario
         VerticalLayout topleft = new VerticalLayout();
-        
+
         //Gráfico
         Chart chart = new Chart(ChartType.PIE);
-        VerticalLayout bottomleft = new VerticalLayout();
+        chart.setWidth(100, Unit.PERCENTAGE);
+        chart.setHeight(100, Unit.PERCENTAGE);
+        Configuration conf = chart.getConfiguration();
+        conf.setTitle("Most popular factions");
+        conf.setSubTitle("Popularity of each faction");
+        DataSeries data = new DataSeries(facPop.keySet().toArray(new String[facPop.size()]), facPop.values().toArray(new Integer[facPop.size()]));
+        PlotOptionsPie plot = new PlotOptionsPie();
+        plot.setColors(new SolidColor[]{new SolidColor("#9E0000"), new SolidColor("#2F478A"), new SolidColor("#4FAF00")});
+        data.setPlotOptions(plot);
+        conf.addSeries(data);
+        VerticalLayout bottomleft = new VerticalLayout(chart);
 
         VerticalSplitPanel left = new VerticalSplitPanel(topleft, bottomleft);
 

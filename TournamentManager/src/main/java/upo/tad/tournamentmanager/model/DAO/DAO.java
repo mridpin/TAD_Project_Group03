@@ -192,9 +192,9 @@ public class DAO {
 
     public List<String> getFactions() {
         List<String> factions = new ArrayList<>();
-        factions.add("Imperium");
-        factions.add("Xenos");
-        factions.add("Chaos");
+        factions.add("imperium");
+        factions.add("xenos");
+        factions.add("chaos");
         return factions;
     }
 

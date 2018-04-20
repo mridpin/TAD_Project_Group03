@@ -54,14 +54,14 @@ public class GameController {
             // Loop all the games
             for (Game g : games) {
                 // If the winner or loser army belongs to this faction, add to count
-                if (g.getArmyByLoserId().getFaction().equals(s)) {
+                if (g.getArmyByLoserId().getFaction().equalsIgnoreCase(s)) {
                     count += 1;
                 }
-                if (g.getArmyByWinnerId().getFaction().equals(s)) {
+                if (g.getArmyByWinnerId().getFaction().equalsIgnoreCase(s)) {
                     count += 1;
                 }
             }
-            popularity.put(s, count);
+            popularity.put(s.toUpperCase(), count);
         }
         return popularity;
     }
