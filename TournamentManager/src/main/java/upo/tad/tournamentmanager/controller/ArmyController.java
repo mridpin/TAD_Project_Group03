@@ -40,6 +40,10 @@ public class ArmyController {
         return dao.getArmies();
     }
 
+    public List<Army> getArmiesForUser(int playerId) {
+        return dao.getArmiesForUser(playerId);
+    }
+    
     public Army getArmy(int id) {
         return dao.getArmy(id);
     }

@@ -5,6 +5,7 @@
  */
 package upo.tad.tournamentmanager.view.panels;
 
+import POJOs.Army;
 import POJOs.Player;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -19,6 +20,7 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
+import java.util.List;
 import upo.tad.tournamentmanager.controller.ArmyController;
 import upo.tad.tournamentmanager.view.MainUI;
 
@@ -28,10 +30,11 @@ import upo.tad.tournamentmanager.view.MainUI;
  */
 public class ArmiesPanel extends CssLayout implements View {
 
+    ArmyController armyController = new ArmyController();
+
     public ArmiesPanel() {
 
         ArmyController armyController = new ArmyController();
-
         setSizeFull();
         addStyleName("armies");
 
@@ -123,7 +126,6 @@ public class ArmiesPanel extends CssLayout implements View {
             String strategy = (String) table.getItem(currentItemId).getItemProperty("Strategy").getValue();
 
             army_name.setValue(name);
-
             update.setVisible(true);
             create.setVisible(false);
         });
@@ -171,11 +173,13 @@ public class ArmiesPanel extends CssLayout implements View {
 
     }
 
-    private void rellenaTabla(Table table) {
-        table.addItem(new Object[]{"Army 1", "Faction 1", "Distancia", "Player 1"}, null);
-        table.addItem(new Object[]{"Army 2", "Faction 2", "Cuerpo a cuerpo", "Player 1"}, null);
-        table.addItem(new Object[]{"Army 3", "Faction 1", "Distancia", "Player 2"}, null);
-        table.addItem(new Object[]{"Army 4", "Faction 3", "Cuerpo a cuerpo", "Player 3"}, null);
+    private void rellenaTabla(Table table) {        
+        table.removeAllItems();
+        Player p = (Player) MainUI.session.getAttribute("user");
+        List<Army> armies = armyController.getArmiesForUser(p.getPlayerId());
+        for (Army g : armies) {
+            table.addItem(new Object[]{g.getName(), g.getFaction(), g.getStrategy(), g.getPlayer().getNickname()}, null);
+        }
     }
 
 }
