@@ -123,10 +123,12 @@ public class ArmiesPanel extends CssLayout implements View {
             String name = (String) table.getItem(currentItemId).getItemProperty("Name").getValue();
             String faction = (String) table.getItem(currentItemId).getItemProperty("Faction").getValue();
             String strategy = (String) table.getItem(currentItemId).getItemProperty("Strategy").getValue();
-
+            Player p = (Player) MainUI.session.getAttribute("user");
+            int playerId = p.getPlayerId();
+            
             army_name.setValue(name);
-            
-            
+            army_faction.select(faction);
+            army_strategy.select(strategy);
 
             update.setVisible(true);
             create.setVisible(false);
