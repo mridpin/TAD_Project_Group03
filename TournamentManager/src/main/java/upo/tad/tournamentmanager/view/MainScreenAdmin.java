@@ -28,7 +28,7 @@ public class MainScreenAdmin extends HorizontalLayout {
         viewContainer.setSizeFull();
 
         final Navigator navigator = new Navigator(ui, viewContainer);
-        //navigator.setErrorView(ErrorView.class);
+        navigator.setErrorView(ErrorView.class);
         menu = new Menu(navigator);
         // Le damos nombre "" al panel Dashboard para que sea el panel por defecto
         menu.addView(new DashboardPanel(), "", "Dashboard", FontAwesome.MALE);
