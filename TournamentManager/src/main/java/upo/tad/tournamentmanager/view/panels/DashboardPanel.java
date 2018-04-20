@@ -19,6 +19,7 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.VerticalSplitPanel;
 import java.util.List;
+import java.util.Map;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 import upo.tad.tournamentmanager.controller.GameController;
@@ -33,7 +34,7 @@ public class DashboardPanel extends CssLayout implements View {
     PlayerController pc = new PlayerController();
     GameController gc = new GameController();
     List<Player> players = null;
-    List<Game> games =null;
+    Map<String, Integer> facPop = null;
 
     public DashboardPanel() {
         setSizeFull();
@@ -79,7 +80,7 @@ public class DashboardPanel extends CssLayout implements View {
 
     private void loadData() {
         this.players = pc.getPlayers();
-        this.games = 
+        this.facPop = gc.getFactionPopularity();
     }
 
 }
