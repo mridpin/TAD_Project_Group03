@@ -125,6 +125,8 @@ public class ArmiesPanel extends CssLayout implements View {
             String strategy = (String) table.getItem(currentItemId).getItemProperty("Strategy").getValue();
 
             army_name.setValue(name);
+            
+            
 
             update.setVisible(true);
             create.setVisible(false);
@@ -169,7 +171,8 @@ public class ArmiesPanel extends CssLayout implements View {
 
     private void rellenaTabla(Table table) {        
         table.removeAllItems();
-        List<Army> armies = armyController.getArmies();
+        Player p = (Player) MainUI.session.getAttribute("user");
+        List<Army> armies = armyController.getArmiesForUser(p.getPlayerId());
         for (Army g : armies) {
             table.addItem(new Object[]{g.getName(), g.getFaction(), g.getStrategy(), g.getPlayer().getNickname()}, null);
         }

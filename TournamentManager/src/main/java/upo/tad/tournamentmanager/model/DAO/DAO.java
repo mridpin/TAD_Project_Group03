@@ -139,6 +139,17 @@ public class DAO {
         return listadoArmies;
     }
     
+   public List<Army> getArmiesForUser(int playerId) {
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+        
+        Query q = sesion.createQuery("from Army where player_id='"+playerId+"'");
+        List listadoArmies = q.list();
+        
+        tx.commit();
+        return listadoArmies;
+    }
+    
     public Army getArmy(int id) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
