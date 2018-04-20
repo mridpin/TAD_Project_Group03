@@ -82,7 +82,6 @@ public class GameController {
             now.setTime(d);
             now.set(Calendar.HOUR_OF_DAY, 10);
             d = now.getTime();
-            //String name = "Game : " + g.getArmyByWinnerId().getName() + " fsfsfs. " + g.getArmyByLoserId().getName();
             gameDates.put("Game " + g.getGameId() + ": " + g.getArmyByWinnerId().getName() + " vs. " + g.getArmyByLoserId(), d);
         }
         return gameDates;
