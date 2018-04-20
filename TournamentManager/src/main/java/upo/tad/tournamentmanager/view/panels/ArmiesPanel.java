@@ -145,14 +145,18 @@ public class ArmiesPanel extends CssLayout implements View {
 
         create.addClickListener((event) -> {
             //CREAR EJERCITO
-            rellenaTabla(table);
             Player p = (Player) MainUI.session.getAttribute("user");
             armyController.addArmy((String) army_name.getValue(), (String) army_faction.getValue(), (String) army_strategy.getValue(), p.getPlayerId());
+            rellenaTabla(table);            
             army_name.clear();
+            army_faction.clear();
+            army_strategy.clear();
         });
 
         clean.addClickListener((event) -> {
             army_name.clear();
+            army_faction.clear();
+            army_strategy.clear();
             create.setVisible(true);
             update.setVisible(false);
         });
