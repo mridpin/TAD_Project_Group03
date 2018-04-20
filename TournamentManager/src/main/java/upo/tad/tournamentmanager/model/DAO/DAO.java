@@ -78,6 +78,13 @@ public class DAO {
         return listadoPlayers;
     }
     
+    public void addArmy(Army a){
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+        sesion.save(a);
+        tx.commit();
+    }
+    
     public Player getPlayer(String nickname) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
