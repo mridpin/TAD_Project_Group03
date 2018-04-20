@@ -9,6 +9,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Label;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
@@ -17,13 +18,23 @@ import java.util.function.Consumer;
  * @author ridao
  */
 public class DashboardPanel extends CssLayout implements View {
-    
-    
+
+    public DashboardPanel() {
+        setSizeFull();
+        addStyleName("games");
+        Label l = new Label("PENE");
+        addComponent(l);
+    }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        /*
+        Called before the view is shown on screen.
+        The event object contains information about parameters used when showing the view, 
+        in addition to references to the old view and the new view.
+        Override this method to perform initialization of your view.
+        By default does nothing.
+         */
     }
 
-    
 }
