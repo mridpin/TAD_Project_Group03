@@ -5,7 +5,10 @@
  */
 package upo.tad.tournamentmanager.view.panels;
 
+import POJOs.Game;
 import POJOs.Player;
+import com.vaadin.addon.charts.Chart;
+import com.vaadin.addon.charts.model.ChartType;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Component;
@@ -18,6 +21,7 @@ import com.vaadin.ui.VerticalSplitPanel;
 import java.util.List;
 import java.util.Spliterator;
 import java.util.function.Consumer;
+import upo.tad.tournamentmanager.controller.GameController;
 import upo.tad.tournamentmanager.controller.PlayerController;
 
 /**
@@ -27,16 +31,20 @@ import upo.tad.tournamentmanager.controller.PlayerController;
 public class DashboardPanel extends CssLayout implements View {
 
     PlayerController pc = new PlayerController();
+    GameController gc = new GameController();
     List<Player> players = null;
+    List<Game> games =null;
 
     public DashboardPanel() {
         setSizeFull();
         addStyleName("dashboard");
-        this.loadPlayers();
+        this.loadData();
 
         //Calendario
         VerticalLayout topleft = new VerticalLayout();
+        
         //Gráfico
+        Chart chart = new Chart(ChartType.PIE);
         VerticalLayout bottomleft = new VerticalLayout();
 
         VerticalSplitPanel left = new VerticalSplitPanel(topleft, bottomleft);
@@ -69,8 +77,9 @@ public class DashboardPanel extends CssLayout implements View {
 
     }
 
-    private void loadPlayers() {
+    private void loadData() {
         this.players = pc.getPlayers();
+        this.games = 
     }
 
 }
