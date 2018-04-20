@@ -54,5 +54,6 @@ public class ArmyController {
 
     public void addArmy(String name, String faction, String strategy, int playerId) {
         Army a = new Army(dao.consultaJugador(playerId), name, faction, strategy);
+        dao.addArmy(a);        
     }
 }
