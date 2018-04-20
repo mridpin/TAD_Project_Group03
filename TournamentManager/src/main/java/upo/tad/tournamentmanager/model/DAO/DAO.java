@@ -139,6 +139,13 @@ public class DAO {
         return listadoArmies;
     }
     
+    public void removeArmy(Army a) {
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+        sesion.delete(a);
+        tx.commit();
+    }
+    
    public List<Army> getArmiesForUser(int playerId) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();

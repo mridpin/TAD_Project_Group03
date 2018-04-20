@@ -6,6 +6,7 @@
 package upo.tad.tournamentmanager.controller;
 
 import POJOs.Army;
+import POJOs.Player;
 import java.util.ArrayList;
 import java.util.List;
 import upo.tad.tournamentmanager.model.DAO.DAO;
@@ -59,5 +60,11 @@ public class ArmyController {
     public void addArmy(String name, String faction, String strategy, int playerId) {
         Army a = new Army(dao.consultaJugador(playerId), name, faction, strategy);
         dao.addArmy(a);        
+    }
+    
+    public void removeArmy(int armyId, String armyName, String armyFaction, String armyStrategy, Player player){
+        Army a = new Army(player, armyName, armyFaction, armyStrategy);
+        a.setArmyId(armyId);
+        dao.removeArmy(a);
     }
 }

@@ -34,7 +34,6 @@ public class ArmiesPanel extends CssLayout implements View {
 
     public ArmiesPanel() {
 
-        ArmyController armyController = new ArmyController();
         setSizeFull();
         addStyleName("armies");
 
@@ -58,6 +57,7 @@ public class ArmiesPanel extends CssLayout implements View {
 
         Table table = new Table();
 
+        table.addContainerProperty("#Army", Integer.class, null);
         table.addContainerProperty("Name", String.class, null);
         table.addContainerProperty("Faction", String.class, null);
         table.addContainerProperty("Strategy", String.class, null);
@@ -71,6 +71,10 @@ public class ArmiesPanel extends CssLayout implements View {
 
         left.addComponent(table);
 
+        TextField army_id = new TextField("#Army");
+        army_id.setIcon(FontAwesome.FLAG);
+        army_id.setWidth(100, Unit.PERCENTAGE);
+        army_id.setEnabled(false);
         TextField army_name = new TextField("Name");
         army_name.setIcon(FontAwesome.USER);
         army_name.setWidth(100, Unit.PERCENTAGE);
@@ -115,18 +119,21 @@ public class ArmiesPanel extends CssLayout implements View {
         Button remove = new Button("Remove");
         remove.setIcon(FontAwesome.REMOVE);
         remove.setWidth(100, Unit.PERCENTAGE);
-        remove.setStyleName(ValoTheme.BUTTON_DANGER);
+        remove.setStyleName(ValoTheme.BUTTON_DANGER);        
 
-        right.addComponents(army_name, army_faction, army_strategy, create, update, clean, remove);
+        right.addComponents(army_id,army_name, army_faction, army_strategy, create, update, clean, remove);
 
         table.addItemClickListener((event) -> {
             Object currentItemId = event.getItemId();
+            Integer armyId = (Integer) table.getItem(currentItemId).getItemProperty("#Army").getValue();
             String name = (String) table.getItem(currentItemId).getItemProperty("Name").getValue();
             String faction = (String) table.getItem(currentItemId).getItemProperty("Faction").getValue();
             String strategy = (String) table.getItem(currentItemId).getItemProperty("Strategy").getValue();
-            Player p = (Player) MainUI.session.getAttribute("user");
+            
+            Player p = (Player) MainUI.session.getAttribute("user");            
             int playerId = p.getPlayerId();
             
+            army_id.setValue(armyId.toString());
             army_name.setValue(name);
             army_faction.select(faction);
             army_strategy.select(strategy);
@@ -151,6 +158,7 @@ public class ArmiesPanel extends CssLayout implements View {
 
         remove.addClickListener((event) -> {
             //BORRAR JUGADOR
+            
             rellenaTabla(table);
             army_name.clear();
             create.setVisible(true);
@@ -166,14 +174,9 @@ public class ArmiesPanel extends CssLayout implements View {
         });
 
     }
+    
 
     @Override
-    /**
-     * Called before the view is shown on screen. The event object contains
-     * information about parameters used when showing the view, in addition to
-     * references to the old view and the new view. Override this method to
-     * perform initialization of your view. By default does nothing.
-     */
     public void enter(ViewChangeEvent event) {
 
     }
@@ -182,8 +185,8 @@ public class ArmiesPanel extends CssLayout implements View {
         table.removeAllItems();
         Player p = (Player) MainUI.session.getAttribute("user");
         List<Army> armies = armyController.getArmiesForUser(p.getPlayerId());
-        for (Army g : armies) {
-            table.addItem(new Object[]{g.getName(), g.getFaction(), g.getStrategy(), g.getPlayer().getNickname()}, null);
+        for (Army a : armies) {
+            table.addItem(new Object[]{a.getArmyId(),a.getName(), a.getFaction(), a.getStrategy(), a.getPlayer().getNickname()}, null);
         }
     }
 
