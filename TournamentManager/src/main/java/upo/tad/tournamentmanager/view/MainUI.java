@@ -1,5 +1,6 @@
 package upo.tad.tournamentmanager.view;
 
+import POJOs.Player;
 import com.vaadin.annotations.PreserveOnRefresh;
 import javax.servlet.annotation.WebServlet;
 
@@ -29,22 +30,34 @@ public class MainUI extends UI {
             setContent(new LoginScreen(new LoginListener() {
                 @Override
                 public void loginSuccessful() {
-                    showMainView();
+                    Player p = (Player) session.getAttribute("user");
+                    if (!p.isType()) {
+                        showMainAdminView();
+                    } else {
+                        showMainUserView();
+                    }
                 }
             }));
         } else {
-            showMainView();
+            Player p = (Player) session.getAttribute("user");
+            if (!p.isType()) {
+                showMainAdminView();
+            } else {
+                showMainUserView();
+            }
         }
     }
 
-    protected void showMainView() {
+    protected void showMainAdminView() {
         addStyleName(ValoTheme.UI_WITH_MENU);
-        setContent(new MainScreen(MainUI.this));
+        setContent(new MainScreenAdmin(MainUI.this));
         getNavigator().navigateTo(getNavigator().getState());
-//        VerticalLayout l = new VerticalLayout();
-//        Label name = new Label("Hola " + (String) session.getAttribute("user"));
-//        l.addComponent(name);
-//        setContent(l);
+    }
+
+    protected void showMainUserView() {
+        addStyleName(ValoTheme.UI_WITH_MENU);
+        setContent(new MainScreenUser(MainUI.this));
+        getNavigator().navigateTo(getNavigator().getState());
     }
 
     @WebServlet(urlPatterns = "/*", name = "MainUIServlet", asyncSupported = true)

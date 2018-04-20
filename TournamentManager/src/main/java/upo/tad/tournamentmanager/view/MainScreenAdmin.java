@@ -15,11 +15,11 @@ import upo.tad.tournamentmanager.view.panels.DashboardPanel;
 import upo.tad.tournamentmanager.view.panels.GamesPanel;
 import upo.tad.tournamentmanager.view.panels.PlayersPanel;
 
-public class MainScreen extends HorizontalLayout {
+public class MainScreenAdmin extends HorizontalLayout {
 
     private Menu menu;
 
-    public MainScreen(MainUI ui) {
+    public MainScreenAdmin(MainUI ui) {
 
         setStyleName("main-screen");
 
