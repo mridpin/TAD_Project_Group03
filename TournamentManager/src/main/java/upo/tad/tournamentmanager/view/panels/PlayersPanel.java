@@ -72,7 +72,8 @@ public class PlayersPanel extends CssLayout implements View {
         TextField player_nickname = new TextField("Nick name");
         player_nickname.setIcon(FontAwesome.GAMEPAD);
         player_nickname.setWidth(100, Unit.PERCENTAGE);
-        player_nickname.setEnabled(false);        PasswordField player_password = new PasswordField("Password");
+        player_nickname.setEnabled(false);
+        PasswordField player_password = new PasswordField("Password");
         player_password.setIcon(FontAwesome.LOCK);
         player_password.setWidth(100, Unit.PERCENTAGE);
         TextField player_email = new TextField("Email");
@@ -114,7 +115,7 @@ public class PlayersPanel extends CssLayout implements View {
 
         create.addClickListener((event) -> {
             pc.addPlayer(player_name.getValue(), player_nickname.getValue(), player_password.getValue(), player_email.getValue());
-            
+
             rellenaTabla(table);
             player_email.clear();
             player_name.clear();
@@ -162,7 +163,7 @@ public class PlayersPanel extends CssLayout implements View {
             int ganados = 0;
             int perdidos = 0;
             Iterator it = p.getArmies().iterator();
-            while(it.hasNext()){
+            while (it.hasNext()) {
                 Army a = (Army) it.next();
                 ganados += a.getGamesForWinnerId().size();
                 perdidos += a.getGamesForLoserId().size();
@@ -172,6 +173,12 @@ public class PlayersPanel extends CssLayout implements View {
     }
 
     @Override
+    /**
+     * Called before the view is shown on screen. The event object contains
+     * information about parameters used when showing the view, in addition to
+     * references to the old view and the new view. Override this method to
+     * perform initialization of your view. By default does nothing.
+     */
     public void enter(ViewChangeEvent event) {
 
     }

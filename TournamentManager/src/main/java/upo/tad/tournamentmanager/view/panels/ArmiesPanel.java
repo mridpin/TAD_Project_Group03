@@ -31,7 +31,7 @@ public class ArmiesPanel extends CssLayout implements View {
     public ArmiesPanel() {
 
         ArmyController armyController = new ArmyController();
-        
+
         setSizeFull();
         addStyleName("armies");
 
@@ -72,13 +72,13 @@ public class ArmiesPanel extends CssLayout implements View {
         army_name.setIcon(FontAwesome.USER);
         army_name.setWidth(100, Unit.PERCENTAGE);
         ComboBox army_faction = new ComboBox("Faction");
-        
-        for(String s : armyController.getFactions()){
+
+        for (String s : armyController.getFactions()) {
             army_faction.addItem(s);
         }
         army_faction.setNullSelectionAllowed(false);
         army_faction.setIcon(FontAwesome.GAMEPAD);
-        army_faction.setWidth(100, Unit.PERCENTAGE);  
+        army_faction.setWidth(100, Unit.PERCENTAGE);
         /*
         get faction
         army_faction.addValueChangeListener(event
@@ -86,10 +86,10 @@ public class ArmiesPanel extends CssLayout implements View {
                 layout.addComponent(new Label("Selected "
                         + event.getProperty().getValue()))
         );
-        */
-      
+         */
+
         ComboBox army_strategy = new ComboBox("Strategy");
-        for(String s : armyController.getStrategies()){
+        for (String s : armyController.getStrategies()) {
             army_strategy.addItem(s);
         }
         army_strategy.setNullSelectionAllowed(false);
@@ -115,7 +115,7 @@ public class ArmiesPanel extends CssLayout implements View {
         remove.setStyleName(ValoTheme.BUTTON_DANGER);
 
         right.addComponents(army_name, army_faction, army_strategy, create, update, clean, remove);
-        
+
         table.addItemClickListener((event) -> {
             Object currentItemId = event.getItemId();
             String name = (String) table.getItem(currentItemId).getItemProperty("Name").getValue();
@@ -124,25 +124,24 @@ public class ArmiesPanel extends CssLayout implements View {
 
             army_name.setValue(name);
 
-            
             update.setVisible(true);
             create.setVisible(false);
         });
-        
+
         create.addClickListener((event) -> {
             //CREAR EJERCITO
             rellenaTabla(table);
             Player p = (Player) MainUI.session.getAttribute("user");
-            armyController.addArmy((String)army_name.getValue(), (String)army_faction.getValue(), (String)army_strategy.getValue(), p.getPlayerId());
-            army_name.clear();            
+            armyController.addArmy((String) army_name.getValue(), (String) army_faction.getValue(), (String) army_strategy.getValue(), p.getPlayerId());
+            army_name.clear();
         });
-        
+
         clean.addClickListener((event) -> {
             army_name.clear();
             create.setVisible(true);
             update.setVisible(false);
         });
-        
+
         remove.addClickListener((event) -> {
             //BORRAR JUGADOR
             rellenaTabla(table);
@@ -150,7 +149,7 @@ public class ArmiesPanel extends CssLayout implements View {
             create.setVisible(true);
             update.setVisible(false);
         });
-        
+
         update.addClickListener((event) -> {
             //ACTUALIZAR JUGADOR
             rellenaTabla(table);
@@ -162,6 +161,12 @@ public class ArmiesPanel extends CssLayout implements View {
     }
 
     @Override
+    /**
+     * Called before the view is shown on screen. The event object contains
+     * information about parameters used when showing the view, in addition to
+     * references to the old view and the new view. Override this method to
+     * perform initialization of your view. By default does nothing.
+     */
     public void enter(ViewChangeEvent event) {
 
     }
