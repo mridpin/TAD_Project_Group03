@@ -9,6 +9,7 @@ import POJOs.Army;
 import POJOs.Player;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import upo.tad.tournamentmanager.model.DAO.DAO;
 
 /**
@@ -58,5 +59,9 @@ public class ArmyController {
         Army a = new Army(player, armyName, armyFaction, armyStrategy);
         a.setArmyId(armyId);
         dao.removeArmy(a);
+    }
+
+    public Map<String, Float> getArmiesWinRatio() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
