@@ -94,7 +94,6 @@ public class GameController {
      */
     public Map<String, Double> getFactionsWinRatio() {
         Map<String, Double> result = new HashMap<>();
-        List<Game> games = dao.getGames();
         List<String> factions = dao.getFactions();
         for (String s : factions) {
             Integer wins = dao.factionWins(s).size();
@@ -105,7 +104,7 @@ public class GameController {
             } else {
                 winratio = wins.doubleValue();
             }
-            result.put(s, winratio);
+            result.put(s.toUpperCase(), winratio);
         }
         return result;
     }
