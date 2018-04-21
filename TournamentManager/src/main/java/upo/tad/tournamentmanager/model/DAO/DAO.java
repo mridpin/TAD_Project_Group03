@@ -210,4 +210,32 @@ public class DAO {
         return strategies;
     }
 
+    /**
+     * Returns a list of all the games that this army has won
+     * @param armyId The army we want to know about
+     * @return A List<Game> with games it has won
+     */
+    public List<Game> armyWins(Integer armyId) {
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+        Query q = sesion.createQuery("from Game where armyByWinnerId='" + armyId + "'");
+        List<Game> result = q.list();
+        tx.commit();
+        return result;        
+    }
+
+    /**
+     * Returns a list of all the games that this army has lost
+     * @param armyId The army we want to know about
+     * @return A List<Game> with games it has lost
+     */
+    public List<Game> armyLoses(Integer armyId) {
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+        Query q = sesion.createQuery("from Game where armyByLoserId='" + armyId + "'");
+        List<Game> result = q.list();
+        tx.commit();
+        return result;        
+    }
+
 }

@@ -6,8 +6,10 @@
 package upo.tad.tournamentmanager.controller;
 
 import POJOs.Army;
+import POJOs.Game;
 import POJOs.Player;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import upo.tad.tournamentmanager.model.DAO.DAO;
@@ -61,7 +63,26 @@ public class ArmyController {
         dao.removeArmy(a);
     }
 
-    public Map<String, Float> getArmiesWinRatio() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    /**
+     * Returns a Map of army names and win ratios of each army. To do this, for each army,
+     * it counts all the wins and all the loses with two HQL clauses, and returns the division
+     * @return Map<Army name, Win Ratio>
+     */
+    public Map<String, Double> getArmiesWinRatio() {
+        Map<String, Double> result = new HashMap<>();
+        List<Game> games = dao.getGames();
+        List<Army> armies = dao.getArmies();
+        for (Army a : armies) {
+            Integer wins = dao.armyWins(a.getArmyId()).size();
+            Integer loses = dao.armyLoses(a.getArmyId()).size();
+            Double winratio = 0.0;
+            if (!loses.equals(0)) {
+                winratio = wins.doubleValue() / loses.doubleValue();
+            } else {
+                winratio = wins.doubleValue();
+            }
+            result.put(a.getName(), winratio);
+        }
+        return result;
     }
 }

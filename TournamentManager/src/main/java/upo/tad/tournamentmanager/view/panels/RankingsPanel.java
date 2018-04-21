@@ -5,6 +5,7 @@
  */
 package upo.tad.tournamentmanager.view.panels;
 
+import POJOs.Army;
 import POJOs.Player;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -12,6 +13,9 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalSplitPanel;
+import com.vaadin.ui.components.calendar.event.BasicEvent;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import upo.tad.tournamentmanager.controller.ArmyController;
@@ -26,7 +30,7 @@ public class RankingsPanel extends CssLayout implements View {
     PlayerController pc = new PlayerController();
     ArmyController ac = new ArmyController();
     List<Player> players = null;
-    Map<String, Float> armies = null;
+    Map<String, Double> armies = null;
 
     public RankingsPanel() {
         setSizeFull();
@@ -38,7 +42,7 @@ public class RankingsPanel extends CssLayout implements View {
         VerticalSplitPanel leftMidBot = new VerticalSplitPanel();
         leftMidBot.setLocked(true);
         VerticalSplitPanel left = new VerticalSplitPanel();
-        left.setSplitPosition(67, Unit.PERCENTAGE);
+        left.setSplitPosition(33, Unit.PERCENTAGE);
         left.setLocked(true);
         left.setSecondComponent(leftMidBot);
 
@@ -58,8 +62,21 @@ public class RankingsPanel extends CssLayout implements View {
         // Table 2: Armies
         Table armiesTable = new Table("Army Rankings");
         armiesTable.addContainerProperty("Army Name", String.class, null);
-        armiesTable.addContainerProperty("Win Ratio", Float.class, null);
-
+        armiesTable.addContainerProperty("Win Ratio", Double.class, null);
+        i = 1;
+        Iterator it = this.armies.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            String army = (String) pair.getKey();
+            Double d = (Double) pair.getValue();
+            armiesTable.addItem(new Object[]{army, d}, i);
+            i++;
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        armiesTable.setWidth(100, Unit.PERCENTAGE);
+        armiesTable.setPageLength(0);
+        leftMidBot.setFirstComponent(armiesTable);
+        
         VerticalSplitPanel right = new VerticalSplitPanel();
         HorizontalSplitPanel hsp = new HorizontalSplitPanel(left, right);
         addComponent(hsp);
