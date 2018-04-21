@@ -5,23 +5,18 @@
  */
 package upo.tad.tournamentmanager.view.panels;
 
-import POJOs.Game;
 import POJOs.Player;
 import com.vaadin.addon.charts.Chart;
 import com.vaadin.addon.charts.model.ChartType;
 import com.vaadin.addon.charts.model.Configuration;
 import com.vaadin.addon.charts.model.DataSeries;
-import com.vaadin.addon.charts.model.ListSeries;
 import com.vaadin.addon.charts.model.PlotOptionsPie;
-import com.vaadin.addon.charts.model.style.Color;
 import com.vaadin.addon.charts.model.style.SolidColor;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Calendar;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.VerticalSplitPanel;
@@ -31,8 +26,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Spliterator;
-import java.util.function.Consumer;
 import upo.tad.tournamentmanager.controller.GameController;
 import upo.tad.tournamentmanager.controller.PlayerController;
 

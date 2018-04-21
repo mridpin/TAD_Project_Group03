@@ -14,6 +14,7 @@ import upo.tad.tournamentmanager.view.panels.ArmiesPanel;
 import upo.tad.tournamentmanager.view.panels.DashboardPanel;
 import upo.tad.tournamentmanager.view.panels.GamesPanel;
 import upo.tad.tournamentmanager.view.panels.PlayersPanel;
+import upo.tad.tournamentmanager.view.panels.RankingsPanel;
 
 public class MainScreenAdmin extends HorizontalLayout {
 
@@ -35,6 +36,7 @@ public class MainScreenAdmin extends HorizontalLayout {
         menu.addView(new PlayersPanel(), "Players", "Players", FontAwesome.MALE);
         menu.addView(new GamesPanel(), "Games", "Games", FontAwesome.GAMEPAD);
         menu.addView(new ArmiesPanel(), "Armies", "Armies", FontAwesome.EMPIRE);
+        menu.addView(new RankingsPanel(), "Rankings", "Rankings", FontAwesome.HISTORY);
 
         navigator.addViewChangeListener(viewChangeListener);
 
