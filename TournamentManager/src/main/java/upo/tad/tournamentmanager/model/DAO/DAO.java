@@ -238,4 +238,12 @@ public class DAO {
         return result;        
     }
 
+    public List<Game> factionLoses(String s) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public List<Game> factionWins(String s) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

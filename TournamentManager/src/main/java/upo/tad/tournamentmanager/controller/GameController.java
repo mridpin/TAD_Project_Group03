@@ -86,4 +86,27 @@ public class GameController {
         }
         return gameDates;
     }
+
+    /**
+     * Returns a Map of faction names and win ratios of each faction. To do this, for each faction,
+     * it counts all the wins and all the loses with two HQL clauses, and returns the division
+     * @return Map<Faction name, Win Ratio>
+     */
+    public Map<String, Double> getFactionsWinRatio() {
+        Map<String, Double> result = new HashMap<>();
+        List<Game> games = dao.getGames();
+        List<String> factions = dao.getFactions();
+        for (String s : factions) {
+            Integer wins = dao.factionWins(s).size();
+            Integer loses = dao.factionLoses(s).size();
+            Double winratio = 0.0;
+            if (!loses.equals(0)) {
+                winratio = wins.doubleValue() / loses.doubleValue();
+            } else {
+                winratio = wins.doubleValue();
+            }
+            result.put(s, winratio);
+        }
+        return result;
+    }
 }

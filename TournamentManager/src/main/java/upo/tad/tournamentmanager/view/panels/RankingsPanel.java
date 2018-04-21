@@ -19,6 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import upo.tad.tournamentmanager.controller.ArmyController;
+import upo.tad.tournamentmanager.controller.GameController;
 import upo.tad.tournamentmanager.controller.PlayerController;
 
 /**
@@ -28,9 +29,11 @@ import upo.tad.tournamentmanager.controller.PlayerController;
 public class RankingsPanel extends CssLayout implements View {
 
     PlayerController pc = new PlayerController();
+    GameController gc = new GameController();
     ArmyController ac = new ArmyController();
     List<Player> players = null;
     Map<String, Double> armies = null;
+    Map<String, Double> factions = null;
 
     public RankingsPanel() {
         setSizeFull();
@@ -77,6 +80,24 @@ public class RankingsPanel extends CssLayout implements View {
         armiesTable.setPageLength(0);
         leftMidBot.setFirstComponent(armiesTable);
         
+        // Table 3: Factions ranking
+        Table factionsTable = new Table("Factions Rankings");
+        factionsTable.addContainerProperty("Faction Name", String.class, null);
+        factionsTable.addContainerProperty("Win Ratio", Double.class, null);
+        i = 1;
+        it = this.factions.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            String faction = (String) pair.getKey();
+            Double d = (Double) pair.getValue();
+            factionsTable.addItem(new Object[]{faction, d}, i);
+            i++;
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        factionsTable.setWidth(100, Unit.PERCENTAGE);
+        factionsTable.setPageLength(0);
+        leftMidBot.setSecondComponent(factionsTable);
+        
         VerticalSplitPanel right = new VerticalSplitPanel();
         HorizontalSplitPanel hsp = new HorizontalSplitPanel(left, right);
         addComponent(hsp);
@@ -95,6 +116,7 @@ public class RankingsPanel extends CssLayout implements View {
     private void loadData() {
         this.players = pc.getPlayers();
         this.armies = ac.getArmiesWinRatio();
+        this.factions = gc.getFactionsWinRatio();
     }
 
 }
