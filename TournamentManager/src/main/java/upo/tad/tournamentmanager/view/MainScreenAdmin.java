@@ -34,9 +34,9 @@ public class MainScreenAdmin extends HorizontalLayout {
         // Le damos nombre "" al panel Dashboard para que sea el panel por defecto
         menu.addView(new DashboardPanel(), "", "Dashboard", FontAwesome.MALE);
         menu.addView(new PlayersPanel(), "Players", "Players", FontAwesome.MALE);
-        menu.addView(new GamesPanel(), "Games", "Games", FontAwesome.GAMEPAD);
-        menu.addView(new ArmiesPanel(), "Armies", "Armies", FontAwesome.EMPIRE);
+        menu.addView(new GamesPanel(), "Games", "Games", FontAwesome.GAMEPAD);        
         menu.addView(new RankingsPanel(), "Rankings", "Rankings", FontAwesome.HISTORY);
+        //menu.addView(new ArmiesPanel(), "Armies", "Armies", FontAwesome.EMPIRE); //Admin no tiene acceso a armies
 
         navigator.addViewChangeListener(viewChangeListener);
 

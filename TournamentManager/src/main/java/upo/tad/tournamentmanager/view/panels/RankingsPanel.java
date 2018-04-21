@@ -16,7 +16,8 @@ import com.vaadin.ui.CssLayout;
 public class RankingsPanel extends CssLayout implements View {
 
     public RankingsPanel() {
-
+        setSizeFull();
+        addStyleName("rankings");
     }
 
     @Override
@@ -28,9 +29,9 @@ public class RankingsPanel extends CssLayout implements View {
      */
     public void enter(ViewChangeListener.ViewChangeEvent event) {
     }
-    
-    private void loadData () {
-        
+
+    private void loadData() {
+
     }
 
 }

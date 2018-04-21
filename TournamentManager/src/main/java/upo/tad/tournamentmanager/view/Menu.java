@@ -10,6 +10,7 @@ import com.vaadin.server.Page;
 import com.vaadin.server.Resource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.server.WrappedSession;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -60,7 +61,9 @@ public class Menu extends CssLayout {
 
             @Override
             public void menuSelected(MenuItem selectedItem) {
-                VaadinSession.getCurrent().getSession().invalidate();
+                //VaadinSession.getCurrent().getSession().invalidate();
+                WrappedSession session = getSession().getSession();
+                session.invalidate();
                 Page.getCurrent().reload();
             }
         });
