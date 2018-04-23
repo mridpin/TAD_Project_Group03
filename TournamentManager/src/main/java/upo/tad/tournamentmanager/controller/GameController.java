@@ -7,7 +7,7 @@ package upo.tad.tournamentmanager.controller;
 
 import POJOs.Army;
 import POJOs.Game;
-import java.util.ArrayList;
+import POJOs.Player;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,6 +18,7 @@ import upo.tad.tournamentmanager.model.DAO.DAO;
 public class GameController {
 
     DAO dao = new DAO();
+    PlayerController pc = new PlayerController();
 
     public List<Game> getGames() {
         return dao.getGames();
@@ -25,7 +26,10 @@ public class GameController {
 
     public void addGame(Army winner, Army loser, Date date) {
         Game game = new Game(winner, loser, date);
+        Player p = winner.getPlayer();
+        p.setPoints(p.getPoints() + 10);
         dao.addGame(game);
+        dao.updatePlayer(p);
     }
 
     public void updateGame(int id, Army winner, Army loser, Date date) {
@@ -88,8 +92,10 @@ public class GameController {
     }
 
     /**
-     * Returns a Map of faction names and win ratios of each faction. To do this, for each faction,
-     * it counts all the wins and all the loses with two HQL clauses, and returns the division
+     * Returns a Map of faction names and win ratios of each faction. To do
+     * this, for each faction, it counts all the wins and all the loses with two
+     * HQL clauses, and returns the division
+     *
      * @return Map<Faction name, Win Ratio>
      */
     public Map<String, Double> getFactionsWinRatio() {
