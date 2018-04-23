@@ -13587,3 +13587,10 @@ div.v-layout.v-horizontal.v-widget {
 .mytheme .mytheme .align-right {
 	text-align: right;
 }
+
+.mytheme .mytheme .points-style {
+	text-align: center;
+	background-color: white;
+	border: 1px solid #4396EA;
+	color: #4396EA;
+}

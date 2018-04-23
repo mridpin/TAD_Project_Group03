@@ -28,7 +28,7 @@ public class DAO {
         Player p = null;
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
-        Query q = sesion.createQuery("from Player where name = '" + user + "' and password = '" + password + "'");
+        Query q = sesion.createQuery("from Player where nickname = '" + user + "' and password = '" + password + "'");
 
         if (q.uniqueResult() != null) {
             p = (Player) q.list().get(0);

@@ -117,7 +117,7 @@ public class LoginScreen extends CssLayout {
         content.setComponentAlignment(email, Alignment.MIDDLE_CENTER);
         content.setComponentAlignment(password, Alignment.MIDDLE_CENTER);
         content.setComponentAlignment(signUp, Alignment.MIDDLE_CENTER);
-        
+
         window.setContent(content);
 
         //Cuando hace click en login
@@ -135,13 +135,13 @@ public class LoginScreen extends CssLayout {
         register.addClickListener((event) -> {
             this.getUI().getUI().addWindow(window);
         });
-        
+
         signUp.addClickListener((event) -> {
             String new_name = name.getValue();
             String new_nick = nick.getValue();
             String new_email = email.getValue();
             String new_password = password.getValue();
-            
+
             pc.addPlayer(new_name, new_name, new_password, new_email);
             this.getUI().getUI().removeWindow(window);
         });

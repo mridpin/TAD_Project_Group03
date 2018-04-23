@@ -12,8 +12,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import upo.tad.tournamentmanager.view.panels.ArmiesPanel;
 import upo.tad.tournamentmanager.view.panels.DashboardPanel;
-import upo.tad.tournamentmanager.view.panels.GamesPanel;
-import upo.tad.tournamentmanager.view.panels.PlayersPanel;
+import upo.tad.tournamentmanager.view.panels.UserProfilePanel;
 
 public class MainScreenUser extends HorizontalLayout{
     private Menu menu;
@@ -31,7 +30,7 @@ public class MainScreenUser extends HorizontalLayout{
         menu = new Menu(navigator);
         // Le damos nombre "" al panel Dashboard para que sea el panel por defecto
         menu.addView(new DashboardPanel(), "", "Dashboard", FontAwesome.MALE);
-        menu.addView(new PlayersPanel(), "Player", "Player", FontAwesome.MALE);
+        menu.addView(new UserProfilePanel(), "Profile", "Profile", FontAwesome.USER);
         menu.addView(new ArmiesPanel(), "Armies", "Armies", FontAwesome.EMPIRE);
 
         navigator.addViewChangeListener(viewChangeListener);
