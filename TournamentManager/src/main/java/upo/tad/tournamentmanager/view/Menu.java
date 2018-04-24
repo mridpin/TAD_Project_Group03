@@ -64,7 +64,8 @@ public class Menu extends CssLayout {
                 //VaadinSession.getCurrent().getSession().invalidate();
                 WrappedSession session = getSession().getSession();
                 session.invalidate();
-                Page.getCurrent().reload();
+                //Page.getCurrent().reload();
+                Page.getCurrent().setLocation("");
             }
         });
 
