@@ -169,7 +169,14 @@ public class GamesPanel extends CssLayout implements View {
         });
 
         update.addClickListener((event) -> {
-            gc.updateGame(Integer.parseInt(game_id.getValue()), (Army) game_winner.getValue(), (Army) game_loser.getValue(), game_date.getValue());
+            Game g1 = gc.getGame(Integer.parseInt(game_id.getValue()));
+            Player p = g1.getArmyByWinnerId().getPlayer();
+            p.setPoints(p.getPoints()-10);
+            //PERSISTIR AL ANTIGUO GANADOR
+            Army a1 = (Army) game_winner.getValue();
+            a1.getPlayer().setPoints(a1.getPlayer().getPoints()+10);
+            //PERSISTIR AL NUEVO
+            gc.updateGame(Integer.parseInt(game_id.getValue()), (Army) game_winner.getValue(), (Army) game_loser.getValue(), game_date.getValue(), p);
             rellenaTabla(table);
             game_id.clear();
             game_winner.clear();

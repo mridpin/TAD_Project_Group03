@@ -212,6 +212,7 @@ public class DAO {
 
     /**
      * Returns a list of all the games that this army has won
+     *
      * @param armyId The army we want to know about
      * @return A List<Game> with games it has won
      */
@@ -221,11 +222,12 @@ public class DAO {
         Query q = sesion.createQuery("from Game where armyByWinnerId='" + armyId + "'");
         List<Game> result = q.list();
         tx.commit();
-        return result;        
+        return result;
     }
 
     /**
      * Returns a list of all the games that this army has lost
+     *
      * @param armyId The army we want to know about
      * @return A List<Game> with games it has lost
      */
@@ -235,35 +237,48 @@ public class DAO {
         Query q = sesion.createQuery("from Game where armyByLoserId='" + armyId + "'");
         List<Game> result = q.list();
         tx.commit();
-        return result;        
+        return result;
     }
 
     /**
      * Returns a list of all the games that this faction has won
+     *
      * @param faction The faction we want to know about
      * @return A List<Game> with games it has won
      */
     public List<Game> factionWins(String faction) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
-        Query q = sesion.createQuery("select distinct g from Army a, Game g where a.faction='"+faction+"' and a.armyId=g.armyByWinnerId");
+        Query q = sesion.createQuery("select distinct g from Army a, Game g where a.faction='" + faction + "' and a.armyId=g.armyByWinnerId");
         List<Game> result = q.list();
         tx.commit();
-        return result;        
+        return result;
     }
 
     /**
      * Returns a list of all the games that this faction has lost
+     *
      * @param faction The faction we want to know about
      * @return A List<Game> with games it has lost
      */
     public List<Game> factionLoses(String faction) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
-        Query q = sesion.createQuery("select distinct g from Army a, Game g where a.faction='"+faction+"' and a.armyId=g.armyByLoserId");
+        Query q = sesion.createQuery("select distinct g from Army a, Game g where a.faction='" + faction + "' and a.armyId=g.armyByLoserId");
         List<Game> result = q.list();
         tx.commit();
-        return result;        
+        return result;
+    }
+
+    public Game getGame(int id) {
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+
+        Query q = sesion.createQuery("from Game where gameId='" + id + "'");
+        Game game = (Game) q.uniqueResult();
+
+        tx.commit();
+        return game;
     }
 
 }

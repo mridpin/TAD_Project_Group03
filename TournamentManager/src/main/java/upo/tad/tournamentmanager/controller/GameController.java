@@ -32,9 +32,11 @@ public class GameController {
         dao.updatePlayer(p);
     }
 
-    public void updateGame(int id, Army winner, Army loser, Date date) {
+    public void updateGame(int id, Army winner, Army loser, Date date, Player old_winner) {
         Game game = new Game(winner, loser, date);
         game.setGameId(id);
+        dao.updatePlayer(old_winner);
+        dao.updatePlayer(winner.getPlayer());
         dao.updateGame(game);
     }
 
@@ -113,5 +115,9 @@ public class GameController {
             result.put(s.toUpperCase(), winratio);
         }
         return result;
+    }
+    
+    public Game getGame(int id){
+        return dao.getGame(id);
     }
 }
