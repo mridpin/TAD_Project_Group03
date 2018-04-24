@@ -48,7 +48,8 @@ public class PlayerController {
     }
 
     public boolean updatePlayerProfile(String name, String nickname, String email, String old_pass, String new_pass) {
-        Player p1 = dao.getPlayer(nickname);
+        Player p1 = (Player) MainUI.session.getAttribute("user");
+        p1 = dao.getPlayer(p1.getName());
         boolean result = true;
         if (new_pass.equals("")) {
             p1.setName(name);
