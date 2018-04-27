@@ -41,6 +41,7 @@ nbproject/private/
 build/
 nbbuild/
 dist/
+target/
 nbdist/
 nbactions.xml
 nb-configuration.xml

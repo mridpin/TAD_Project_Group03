@@ -56,7 +56,7 @@ public class ArmyController {
         Army a = new Army(dao.consultaJugador(playerId), name, faction, strategy);
         dao.addArmy(a);        
     }
-    
+
     public void removeArmy(int armyId, String armyName, String armyFaction, String armyStrategy, Player player){
         Army a = new Army(player, armyName, armyFaction, armyStrategy);
         a.setArmyId(armyId);
@@ -66,6 +66,7 @@ public class ArmyController {
     /**
      * Returns a Map of army names and win ratios of each army. To do this, for each army,
      * it counts all the wins and all the loses with two HQL clauses, and returns the division
+     * 
      * @return Map<Army name, Win Ratio>
      */
     public Map<String, Double> getArmiesWinRatio() {

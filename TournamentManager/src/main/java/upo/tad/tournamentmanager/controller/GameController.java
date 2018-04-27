@@ -48,7 +48,7 @@ public class GameController {
 
     /**
      * Counts the number of games for each faction
-     *
+     * 
      * @return HashMap <Faction, Count> with a count of each faction
      */
     public Map<String, Integer> getFactionPopularity() {
