@@ -10,10 +10,12 @@ import POJOs.Player;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.Select;
 import com.vaadin.ui.Table;
@@ -120,9 +122,9 @@ public class ArmiesPanel extends CssLayout implements View {
         Button remove = new Button("Remove");
         remove.setIcon(FontAwesome.REMOVE);
         remove.setWidth(100, Unit.PERCENTAGE);
-        remove.setStyleName(ValoTheme.BUTTON_DANGER);        
+        remove.setStyleName(ValoTheme.BUTTON_DANGER);
 
-        right.addComponents(army_id,army_name, army_faction, army_strategy, create, update, clean, remove);
+        right.addComponents(army_id, army_name, army_faction, army_strategy, create, update, clean, remove);
 
         table.addItemClickListener((event) -> {
             Object currentItemId = event.getItemId();
@@ -130,10 +132,10 @@ public class ArmiesPanel extends CssLayout implements View {
             String name = (String) table.getItem(currentItemId).getItemProperty("Name").getValue();
             String faction = (String) table.getItem(currentItemId).getItemProperty("Faction").getValue();
             String strategy = (String) table.getItem(currentItemId).getItemProperty("Strategy").getValue();
-            
-            Player p = (Player) MainUI.session.getAttribute("user");            
+
+            Player p = (Player) MainUI.session.getAttribute("user");
             int playerId = p.getPlayerId();
-            
+
             army_id.setValue(armyId.toString());
             army_name.setValue(name);
             army_faction.select(faction);
@@ -147,7 +149,7 @@ public class ArmiesPanel extends CssLayout implements View {
             //CREAR EJERCITO
             Player p = (Player) MainUI.session.getAttribute("user");
             armyController.addArmy((String) army_name.getValue(), (String) army_faction.getValue(), (String) army_strategy.getValue(), p.getPlayerId());
-            rellenaTabla(table);            
+            rellenaTabla(table);
             army_name.clear();
             army_faction.clear();
             army_strategy.clear();
@@ -162,9 +164,13 @@ public class ArmiesPanel extends CssLayout implements View {
         });
 
         remove.addClickListener((event) -> {
-            //BORRAR JUGADOR
             Player p = (Player) MainUI.session.getAttribute("user");
-            armyController.removeArmy(Integer.parseInt(army_id.getValue()), army_name.getValue(), (String)army_faction.getValue(), (String)army_strategy.getValue(), p);
+            if (armyController.ifArmyPlay(Integer.parseInt(army_id.getValue()))) {
+                armyController.removeArmy(Integer.parseInt(army_id.getValue()), army_name.getValue(), (String) army_faction.getValue(), (String) army_strategy.getValue(), p);
+            } else {
+                showNotification(new Notification("You can't remove this army", "",
+                    Notification.Type.HUMANIZED_MESSAGE));
+            }
             rellenaTabla(table);
             army_name.clear();
             create.setVisible(true);
@@ -180,20 +186,26 @@ public class ArmiesPanel extends CssLayout implements View {
         });
 
     }
-    
 
     @Override
     public void enter(ViewChangeEvent event) {
 
     }
 
-    private void rellenaTabla(Table table) {        
+    private void rellenaTabla(Table table) {
         table.removeAllItems();
         Player p = (Player) MainUI.session.getAttribute("user");
         List<Army> armies = armyController.getArmiesForUser(p.getPlayerId());
         for (Army a : armies) {
-            table.addItem(new Object[]{a.getArmyId(),a.getName(), a.getFaction(), a.getStrategy(), a.getPlayer().getNickname()}, null);
+            table.addItem(new Object[]{a.getArmyId(), a.getName(), a.getFaction(), a.getStrategy(), a.getPlayer().getNickname()}, null);
         }
     }
 
+    //Muestra las notificaciones pasadas como parametro
+    private void showNotification(Notification notification) {
+        // keep the notification visible a little while after moving the
+        // mouse, or until clicked
+        notification.setDelayMsec(2000);
+        notification.show(Page.getCurrent());
+    }
 }

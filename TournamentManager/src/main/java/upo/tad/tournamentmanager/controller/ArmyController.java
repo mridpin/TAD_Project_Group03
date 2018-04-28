@@ -82,10 +82,10 @@ public class ArmyController {
     
     public boolean ifArmyPlay(int id){
         Army a = getArmy(id);
-        boolean canDelete = true;
+        boolean canDelete = false;
         
-        if(a.getGamesForWinnerId().size() > 0 || a.getGamesForWinnerId().size() > 0){
-            canDelete = false;
+        if(a.getGamesForWinnerId().size() == 0 || a.getGamesForWinnerId().size() == 0){
+            canDelete = true;
         }
         
         return canDelete;
