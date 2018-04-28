@@ -20,14 +20,13 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalSplitPanel;
-import com.vaadin.ui.components.calendar.event.BasicEvent;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import upo.tad.tournamentmanager.controller.ArmyController;
 import upo.tad.tournamentmanager.controller.GameController;
 import upo.tad.tournamentmanager.controller.PlayerController;
+import upo.tad.tournamentmanager.model.DAO.*;
 
 /**
  *
@@ -39,8 +38,8 @@ public class RankingsPanel extends CssLayout implements View {
     GameController gc = new GameController();
     ArmyController ac = new ArmyController();
     List<Player> players = null;
-    Map<String, Double> armies = null;
-    Map<String, Double> factions = null;
+    List<List> armies = null;
+    //List<Tuple<String, Double>> factions = null;
 
     public RankingsPanel() {
         setSizeFull();
@@ -56,12 +55,13 @@ public class RankingsPanel extends CssLayout implements View {
         Configuration conf = pie.getConfiguration();
         conf.setTitle("Performance");
         conf.setSubTitle("Wins vs. Loses");
-        DataSeries data1 = new DataSeries();
+        DataSeries dataWinLoss = new DataSeries();
         PlotOptionsPie plot = new PlotOptionsPie();
         plot.setColors(new SolidColor[]{new SolidColor("green"), new SolidColor("red")});
-        data1.setPlotOptions(plot);
-        conf.addSeries(data1);
+        dataWinLoss.setPlotOptions(plot);
+        conf.addSeries(dataWinLoss);
         right.setFirstComponent(pie);
+
         /* Left side: Tables */
         // Divide left side in 3 equal parts
         VerticalSplitPanel leftMidBot = new VerticalSplitPanel();
@@ -90,14 +90,11 @@ public class RankingsPanel extends CssLayout implements View {
         armiesTable.addContainerProperty("Army Name", String.class, null);
         armiesTable.addContainerProperty("Win Ratio", Double.class, null);
         i = 1;
-        Iterator it = this.armies.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
-            String army = (String) pair.getKey();
-            Double d = (Double) pair.getValue();
-            armiesTable.addItem(new Object[]{army, d}, i);
+        for (List tuple : this.armies) {
+            String armyName = ((Army) tuple.get(0)).getName();
+            Double d = (Double) tuple.get(1);
+            armiesTable.addItem(new Object[]{armyName, d}, i);
             i++;
-            it.remove(); // avoids a ConcurrentModificationException
         }
         armiesTable.setWidth(100, Unit.PERCENTAGE);
         armiesTable.setPageLength(0);
@@ -109,30 +106,36 @@ public class RankingsPanel extends CssLayout implements View {
              * has been clicked
              */
             public void itemClick(ItemClickEvent event) {
-                data1.clear();
+                dataWinLoss.clear();
+                Integer armyId = (Integer) event.getItemId() - 1; // -1 Prevents index out of bounds
+                Army army = (Army) armies.get(armyId).get(0);
+                Integer wins = gc.armyWins(army).size();
+                Integer losses = gc.armyLosses((Army) armies.get(armyId).get(0)).size();
+                dataWinLoss.setData(new String[]{"WINS", "LOSSES"}, new Integer[]{wins, losses});                
+                conf.setTitle("Performance: " + army.getName().toUpperCase());
+                pie.drawChart();
             }
         });
         leftMidBot.setFirstComponent(armiesTable);
-
+        
         // Table 3: Factions ranking
-        Table factionsTable = new Table("Factions Rankings");
-        factionsTable.addContainerProperty("Faction Name", String.class, null);
-        factionsTable.addContainerProperty("Win Ratio", Double.class, null);
-        i = 1;
-        it = this.factions.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
-            String faction = (String) pair.getKey();
-            Double d = (Double) pair.getValue();
-            factionsTable.addItem(new Object[]{faction, d}, i);
-            i++;
-            it.remove(); // avoids a ConcurrentModificationException
-        }
-        factionsTable.setWidth(100, Unit.PERCENTAGE);
-        factionsTable.setPageLength(0);
-        factionsTable.setSelectable(true);
-        leftMidBot.setSecondComponent(factionsTable);
-
+//        Table factionsTable = new Table("Factions Rankings");
+//        factionsTable.addContainerProperty("Faction Name", String.class, null);
+//        factionsTable.addContainerProperty("Win Ratio", Double.class, null);
+//        i = 1;
+//        it = this.factions.iterator();
+//        while (it.hasNext()) {
+//            Map.Entry pair = (Map.Entry) it.next();
+//            String faction = (String) pair.getKey();
+//            Double d = (Double) pair.getValue();
+//            factionsTable.addItem(new Object[]{faction, d}, i);
+//            i++;
+//            it.remove(); // avoids a ConcurrentModificationException
+//        }
+//        factionsTable.setWidth(100, Unit.PERCENTAGE);
+//        factionsTable.setPageLength(0);
+//        factionsTable.setSelectable(true);
+//        leftMidBot.setSecondComponent(factionsTable);
         HorizontalSplitPanel hsp = new HorizontalSplitPanel(left, right);
         addComponent(hsp);
     }
@@ -150,7 +153,7 @@ public class RankingsPanel extends CssLayout implements View {
     private void loadData() {
         this.players = pc.getPlayers();
         this.armies = ac.getArmiesWinRatio();
-        this.factions = gc.getFactionsWinRatio();
+        //this.factions = gc.getFactionsWinRatio();
     }
 
 }

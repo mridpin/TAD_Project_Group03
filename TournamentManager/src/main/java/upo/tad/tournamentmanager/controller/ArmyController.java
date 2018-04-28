@@ -9,10 +9,9 @@ import POJOs.Army;
 import POJOs.Game;
 import POJOs.Player;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import upo.tad.tournamentmanager.model.DAO.DAO;
+import upo.tad.tournamentmanager.model.DAO.*;
 
 /**
  *
@@ -69,8 +68,8 @@ public class ArmyController {
      * 
      * @return Map<Army name, Win Ratio>
      */
-    public Map<String, Double> getArmiesWinRatio() {
-        Map<String, Double> result = new HashMap<>();
+    public List<List> getArmiesWinRatio() {
+        List<List> result = new ArrayList<>();
         List<Game> games = dao.getGames();
         List<Army> armies = dao.getArmies();
         for (Army a : armies) {
@@ -82,7 +81,10 @@ public class ArmyController {
             } else {
                 winratio = wins.doubleValue();
             }
-            result.put(a.getName(), winratio);
+            List tuple = new ArrayList();
+            tuple.add(a);
+            tuple.add(winratio);
+            result.add(tuple);
         }
         return result;
     }

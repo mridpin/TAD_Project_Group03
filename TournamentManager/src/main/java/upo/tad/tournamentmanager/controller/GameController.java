@@ -117,6 +117,24 @@ public class GameController {
         return result;
     }
     
+    /**
+     * Returns a list with the games that an army has won.
+     * @param army The army we are querying for
+     * @return The list of games
+     */
+    public List<Game> armyWins (Army army) {
+        return dao.armyWins(army.getArmyId());
+    }
+    
+    /**
+     * Returns a list with the games that an army has lost.
+     * @param army The army we are querying for
+     * @return The list of games
+     */
+    public List<Game> armyLosses (Army army) {
+        return dao.armyLoses(army.getArmyId());
+    }
+    
     public Game getGame(int id){
         return dao.getGame(id);
     }
