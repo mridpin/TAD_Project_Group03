@@ -25,6 +25,14 @@ public class GameController {
         return dao.getGames();
     }
 
+    
+    /**
+     * Add a new game
+     * 
+     * @param winner Army winner of the game
+     * @param loser Army loser of the game
+     * @param date Date of the game
+     */
     public void addGame(Army winner, Army loser, Date date) {
         Game game = new Game(winner, loser, date);
         Player p = winner.getPlayer();
@@ -33,6 +41,15 @@ public class GameController {
         dao.updatePlayer(p);
     }
 
+    /**
+     * Update the game
+     * 
+     * @param id ID of the game
+     * @param winner Army winner of the game
+     * @param loser Army loser of the game
+     * @param date Date of the game
+     * @param old_winner Old player who won the game
+     */
     public void updateGame(int id, Army winner, Army loser, Date date, Player old_winner) {
         Game game = new Game(winner, loser, date);
         game.setGameId(id);
@@ -41,6 +58,14 @@ public class GameController {
         dao.updateGame(game);
     }
 
+    /**
+     * Remove a game from database
+     * 
+     * @param id ID of the game
+     * @param winner Army winner of the game
+     * @param loser Army loser of the game
+     * @param date Date of the game
+     */
     public void removeGame(int id, Army winner, Army loser, Date date) {
         Game game = new Game(winner, loser, date);
         game.setGameId(id);
@@ -141,6 +166,12 @@ public class GameController {
         return dao.armyLoses(army.getArmyId());
     }
 
+    /**
+     * Return a game by id of the army
+     * 
+     * @param id Id of the army 
+     * @return A game
+     */
     public Game getGame(int id) {
         return dao.getGame(id);
     }
