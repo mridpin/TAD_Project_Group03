@@ -194,19 +194,19 @@ public class DAO {
 
     public List<String> getFactions() {
         List<String> factions = new ArrayList<>();
-        factions.add("imperium");
-        factions.add("xenos");
-        factions.add("chaos");
+        factions.add("IMPERIUM");
+        factions.add("XENOS");
+        factions.add("CHAOS");
         return factions;
     }
 
     public List<String> getStrategies() {
         List<String> strategies = new ArrayList<>();
-        strategies.add("Agresiva");
-        strategies.add("Defensiva");
-        strategies.add("Balanceada");
-        strategies.add("Magia");
-        strategies.add("Cuerpo a Cuerpo");
+        strategies.add("Aggresive");
+        strategies.add("Defensive");
+        strategies.add("Balanced");
+        strategies.add("Magic");
+        strategies.add("Melee");
         return strategies;
     }
 
@@ -279,6 +279,36 @@ public class DAO {
 
         tx.commit();
         return game;
+    }
+
+    /**
+     * Returns a list of all the games that this strategy has won
+     *
+     * @param s The strategy we want to know about
+     * @return A List<Game> with games it has lost
+     */
+    public List<Game> stratWins(String s) {
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+        Query q = sesion.createQuery("select distinct g from Army a, Game g where a.strategy='" + s + "' and a.armyId=g.armyByWinnerId");
+        List<Game> result = q.list();
+        tx.commit();
+        return result;
+    }
+
+    /**
+     * Returns a list of all the games that this strategy has lost
+     *
+     * @param s The strategy we want to know about
+     * @return A List<Game> with games it has lost
+     */
+    public List<Game> stratLosses(String s) {
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+        Query q = sesion.createQuery("select distinct g from Army a, Game g where a.strategy='" + s + "' and a.armyId=g.armyByLoserId");
+        List<Game> result = q.list();
+        tx.commit();
+        return result;
     }
 
 }

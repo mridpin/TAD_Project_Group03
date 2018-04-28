@@ -156,12 +156,59 @@ public class GameController {
     }
 
     /**
-     * Returns a list with the games that a faction has won.
+     * Returns a list with the games that a faction has lost.
      *
      * @param faction The faction we are querying for
      * @return The list of games
      */
     public List<Game> factionLosses(String faction) {
         return dao.factionLoses(faction);
+    }
+
+    /**
+     * For each strategy, returns a List of strategy names and win ratios. To do
+     * this, for each strategy (first List), we add another List that acts as a
+     * tuple and holds a strategy and its winratio
+     *
+     * @return List<List<Faction, Winratio>>
+     */
+    public List<List> getStrategiesWinRatio() {
+        List<List> result = new ArrayList<>();
+        List<String> strategies = dao.getStrategies();
+        for (String s : strategies) {
+            Integer wins = dao.stratWins(s).size();
+            Integer loses = dao.stratLosses(s).size();
+            Double winratio = 0.0;
+            if (!loses.equals(0)) {
+                winratio = wins.doubleValue() / loses.doubleValue();
+            } else {
+                winratio = wins.doubleValue();
+            }
+            List tuple = new ArrayList();
+            tuple.add(s.toUpperCase());
+            tuple.add(winratio);
+            result.add(tuple);
+        }
+        return result;
+    }
+
+    /**
+     * Returns a list with the games that a strategy has won.
+     *
+     * @param strat The strategy we are querying for
+     * @return The list of games
+     */
+    public List<Game> strategyWins(String strat) {
+        return dao.stratWins(strat);
+    }
+
+    /**
+     * Returns a list with the games that a strategy has lost.
+     *
+     * @param strat The strategy we are querying for
+     * @return The list of games
+     */
+    public List<Game> strategyLosses(String strat) {
+        return dao.stratLosses(strat);
     }
 }
