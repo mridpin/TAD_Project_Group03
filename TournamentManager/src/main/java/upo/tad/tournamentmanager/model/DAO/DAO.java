@@ -318,6 +318,13 @@ public class DAO {
         tx.commit();
     }
 
+    /**
+     * Returns a list of games where an army using this strategy has
+     * participated.
+     *
+     * @param strat strategy we are interested in
+     * @return list of games
+     */
     public List<Game> getStrategyGames(String strat) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
@@ -327,6 +334,12 @@ public class DAO {
         return result;
     }
 
+    /**
+     * Returns a list of games where an army from this faction has participated.
+     *
+     * @param faction faction we are interested in
+     * @return list of games
+     */
     public List<Game> getFactionGames(String faction) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
@@ -336,10 +349,16 @@ public class DAO {
         return result;
     }
 
+    /**
+     * Returns a list of games where this army has played
+     *
+     * @param armyId id of the army we are interested in
+     * @return list of games
+     */
     public List<Game> getArmyGames(Integer armyId) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
-        Query q = sesion.createQuery("select distinct g from Game g where g.armyByLoserId='"+armyId+"' or g.armyByWinnerId='"+armyId+"'");
+        Query q = sesion.createQuery("select distinct g from Game g where g.armyByLoserId='" + armyId + "' or g.armyByWinnerId='" + armyId + "'");
         List<Game> result = q.list();
         tx.commit();
         return result;
