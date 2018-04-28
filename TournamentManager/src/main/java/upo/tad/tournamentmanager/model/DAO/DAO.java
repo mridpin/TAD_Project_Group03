@@ -318,4 +318,13 @@ public class DAO {
         tx.commit();
     }
 
+    public List<Game> getStrategyGames(String strat) {
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+        Query q = sesion.createQuery("select distinct g from Army a, Game g where a.strategy='" + strat + "' and (a.armyId=g.armyByLoserId or a.armyId=g.armyByWinnerId)");
+        List<Game> result = q.list();
+        tx.commit();
+        return result;
+    }
+
 }

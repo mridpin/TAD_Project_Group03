@@ -216,7 +216,7 @@ public class GameController {
                 winratio = wins.doubleValue();
             }
             List tuple = new ArrayList();
-            tuple.add(s.toUpperCase());
+            tuple.add(s);
             tuple.add(winratio);
             result.add(tuple);
         }
@@ -241,5 +241,18 @@ public class GameController {
      */
     public List<Game> strategyLosses(String strat) {
         return dao.stratLosses(strat);
+    }
+
+    public List<Number> strategyPointHistory(String strat) {
+        List<Number> res = new ArrayList<>();
+        res.add(0);
+        List<Game> games = dao.getStrategyGames(strat);
+        for (Game g : games) {
+            if (g.getArmyByWinnerId().getStrategy().equals(strat)) {
+                Integer previous = res.get(res.size() - 1).intValue();
+                res.add(previous + 10);
+            }
+        }
+        return res;
     }
 }
