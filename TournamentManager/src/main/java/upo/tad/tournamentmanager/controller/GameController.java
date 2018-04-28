@@ -8,6 +8,7 @@ package upo.tad.tournamentmanager.controller;
 import POJOs.Army;
 import POJOs.Game;
 import POJOs.Player;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -48,7 +49,7 @@ public class GameController {
 
     /**
      * Counts the number of games for each faction
-     * 
+     *
      * @return HashMap <Faction, Count> with a count of each faction
      */
     public Map<String, Integer> getFactionPopularity() {
@@ -94,14 +95,14 @@ public class GameController {
     }
 
     /**
-     * Returns a Map of faction names and win ratios of each faction. To do
-     * this, for each faction, it counts all the wins and all the loses with two
-     * HQL clauses, and returns the division
+     * For each faction, returns a List of faction names and win ratios. To do
+     * this, for each faction (first List), we add another List that acts as a
+     * tuple and holds a faction and its winratio
      *
-     * @return Map<Faction name, Win Ratio>
+     * @return List<List<Faction, Winratio>>
      */
-    public Map<String, Double> getFactionsWinRatio() {
-        Map<String, Double> result = new HashMap<>();
+    public List<List> getFactionsWinRatio() {
+        List<List> result = new ArrayList<>();
         List<String> factions = dao.getFactions();
         for (String s : factions) {
             Integer wins = dao.factionWins(s).size();
@@ -112,30 +113,55 @@ public class GameController {
             } else {
                 winratio = wins.doubleValue();
             }
-            result.put(s.toUpperCase(), winratio);
+            List tuple = new ArrayList();
+            tuple.add(s.toUpperCase());
+            tuple.add(winratio);
+            result.add(tuple);
         }
         return result;
     }
-    
+
     /**
      * Returns a list with the games that an army has won.
+     *
      * @param army The army we are querying for
      * @return The list of games
      */
-    public List<Game> armyWins (Army army) {
+    public List<Game> armyWins(Army army) {
         return dao.armyWins(army.getArmyId());
     }
-    
+
     /**
      * Returns a list with the games that an army has lost.
+     *
      * @param army The army we are querying for
      * @return The list of games
      */
-    public List<Game> armyLosses (Army army) {
+    public List<Game> armyLosses(Army army) {
         return dao.armyLoses(army.getArmyId());
     }
-    
-    public Game getGame(int id){
+
+    public Game getGame(int id) {
         return dao.getGame(id);
+    }
+
+    /**
+     * Returns a list with the games that a faction has won.
+     *
+     * @param faction The faction we are querying for
+     * @return The list of games
+     */
+    public List<Game> factionWins(String faction) {
+        return dao.factionWins(faction);
+    }
+
+    /**
+     * Returns a list with the games that a faction has won.
+     *
+     * @param faction The faction we are querying for
+     * @return The list of games
+     */
+    public List<Game> factionLosses(String faction) {
+        return dao.factionLoses(faction);
     }
 }

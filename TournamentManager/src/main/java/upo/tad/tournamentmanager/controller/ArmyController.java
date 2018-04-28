@@ -63,10 +63,11 @@ public class ArmyController {
     }
 
     /**
-     * Returns a Map of army names and win ratios of each army. To do this, for each army,
-     * it counts all the wins and all the loses with two HQL clauses, and returns the division
+     * For each army, returns a List of army names and win ratios. To do this, 
+     * for each army (first List), we add another List that acts as a tuple 
+     * and holds an Army and its winratio
      * 
-     * @return Map<Army name, Win Ratio>
+     * @return List<List<Army, Winratio>>
      */
     public List<List> getArmiesWinRatio() {
         List<List> result = new ArrayList<>();

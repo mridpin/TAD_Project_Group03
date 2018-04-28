@@ -39,7 +39,7 @@ public class RankingsPanel extends CssLayout implements View {
     ArmyController ac = new ArmyController();
     List<Player> players = null;
     List<List> armies = null;
-    //List<Tuple<String, Double>> factions = null;
+    List<List> factions = null;
 
     public RankingsPanel() {
         setSizeFull();
@@ -110,32 +110,48 @@ public class RankingsPanel extends CssLayout implements View {
                 Integer armyId = (Integer) event.getItemId() - 1; // -1 Prevents index out of bounds
                 Army army = (Army) armies.get(armyId).get(0);
                 Integer wins = gc.armyWins(army).size();
-                Integer losses = gc.armyLosses((Army) armies.get(armyId).get(0)).size();
-                dataWinLoss.setData(new String[]{"WINS", "LOSSES"}, new Integer[]{wins, losses});                
+                Integer losses = gc.armyLosses(army).size();
+                dataWinLoss.setData(new String[]{"WINS", "LOSSES"}, new Integer[]{wins, losses});
                 conf.setTitle("Performance: " + army.getName().toUpperCase());
                 pie.drawChart();
             }
         });
         leftMidBot.setFirstComponent(armiesTable);
-        
+
         // Table 3: Factions ranking
-//        Table factionsTable = new Table("Factions Rankings");
-//        factionsTable.addContainerProperty("Faction Name", String.class, null);
-//        factionsTable.addContainerProperty("Win Ratio", Double.class, null);
-//        i = 1;
-//        it = this.factions.iterator();
-//        while (it.hasNext()) {
-//            Map.Entry pair = (Map.Entry) it.next();
-//            String faction = (String) pair.getKey();
-//            Double d = (Double) pair.getValue();
-//            factionsTable.addItem(new Object[]{faction, d}, i);
-//            i++;
-//            it.remove(); // avoids a ConcurrentModificationException
-//        }
-//        factionsTable.setWidth(100, Unit.PERCENTAGE);
-//        factionsTable.setPageLength(0);
-//        factionsTable.setSelectable(true);
-//        leftMidBot.setSecondComponent(factionsTable);
+        Table factionsTable = new Table("Factions Rankings");
+        factionsTable.addContainerProperty("Faction Name", String.class, null);
+        factionsTable.addContainerProperty("Win Ratio", Double.class, null);
+        i = 1;
+        for (List tuple : this.factions) {
+            String faction = (String) tuple.get(0);
+            Double d = (Double) tuple.get(1);
+            factionsTable.addItem(new Object[]{faction, d}, i);
+            i++;
+        }
+        factionsTable.setWidth(100, Unit.PERCENTAGE);
+        factionsTable.setPageLength(0);
+        factionsTable.setSelectable(true);
+        factionsTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+            @Override
+            /**
+             * Changes the information displayed on the graphs according to what
+             * has been clicked
+             */
+            public void itemClick(ItemClickEvent event) {
+                dataWinLoss.clear();
+                Integer factionId = (Integer) event.getItemId() - 1; // -1 Prevents index out of bounds
+                String faction = (String) factions.get(factionId).get(0);
+                Integer wins = gc.factionWins(faction).size();
+                Integer losses = gc.factionLosses(faction).size();
+                dataWinLoss.setData(new String[]{"WINS", "LOSSES"}, new Integer[]{wins, losses});
+                conf.setTitle("Performance: " + faction.toUpperCase());
+                pie.drawChart();
+            }
+        });
+        
+        
+        leftMidBot.setSecondComponent(factionsTable);
         HorizontalSplitPanel hsp = new HorizontalSplitPanel(left, right);
         addComponent(hsp);
     }
@@ -153,7 +169,7 @@ public class RankingsPanel extends CssLayout implements View {
     private void loadData() {
         this.players = pc.getPlayers();
         this.armies = ac.getArmiesWinRatio();
-        //this.factions = gc.getFactionsWinRatio();
+        this.factions = gc.getFactionsWinRatio();
     }
 
 }
