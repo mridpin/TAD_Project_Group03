@@ -37,7 +37,7 @@ public class RankingsPanel extends CssLayout implements View {
     PlayerController pc = new PlayerController();
     GameController gc = new GameController();
     ArmyController ac = new ArmyController();
-    List<Player> players = null;
+    List<List> strategies = null;
     List<List> armies = null;
     List<List> factions = null;
 
@@ -71,19 +71,38 @@ public class RankingsPanel extends CssLayout implements View {
         left.setLocked(true);
         left.setSecondComponent(leftMidBot);
 
-        // Table 1: Players
-        Table playersTable = new Table("Player Rankings");
-        playersTable.addContainerProperty("Nickname", String.class, null);
-        playersTable.addContainerProperty("Points", Integer.class, null);
+        // Table 1: Strategies
+        Table stratsTable = new Table("Strategies Rankings");
+        stratsTable.addContainerProperty("Strategy", String.class, null);
+        stratsTable.addContainerProperty("Win Ratio", Double.class, null);
         int i = 1;
-        for (Player p : this.players) {
-            playersTable.addItem(new Object[]{p.getNickname(), p.getPoints()}, i);
+        for (List tuple : this.strategies) {
+            String strat = (String) tuple.get(0);
+            Double d = (Double) tuple.get(1);
+            stratsTable.addItem(new Object[]{strat, d}, i);
             i++;
         }
-        playersTable.setWidth(100, Unit.PERCENTAGE);
-        playersTable.setPageLength(0);
-        playersTable.setSelectable(true);
-        left.setFirstComponent(playersTable);
+        stratsTable.setWidth(100, Unit.PERCENTAGE);
+        stratsTable.setPageLength(0);
+        stratsTable.setSelectable(true);
+        stratsTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+            @Override
+            /**
+             * Changes the information displayed on the graphs according to what
+             * has been clicked
+             */
+            public void itemClick(ItemClickEvent event) {
+                dataWinLoss.clear();
+                Integer stratId = (Integer) event.getItemId() - 1; // -1 Prevents index out of bounds
+                String strat = (String) strategies.get(stratId).get(0);
+                Integer wins = gc.strategyWins(strat).size();
+                Integer losses = gc.strategyLosses(strat).size();
+                dataWinLoss.setData(new String[]{"WINS", "LOSSES"}, new Integer[]{wins, losses});
+                conf.setTitle("Performance: " + strat.toUpperCase());
+                pie.drawChart();
+            }
+        });
+        left.setFirstComponent(stratsTable);
 
         // Table 2: Armies
         Table armiesTable = new Table("Army Rankings");
@@ -167,7 +186,7 @@ public class RankingsPanel extends CssLayout implements View {
     }
 
     private void loadData() {
-        this.players = pc.getPlayers();
+        this.strategies = gc.getStrategiesWinRatio();
         this.armies = ac.getArmiesWinRatio();
         this.factions = gc.getFactionsWinRatio();
     }
