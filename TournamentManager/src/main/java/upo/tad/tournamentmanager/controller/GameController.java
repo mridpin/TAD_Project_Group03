@@ -28,10 +28,9 @@ public class GameController {
         return dao.getGames();
     }
 
-    
     /**
      * Add a new game
-     * 
+     *
      * @param winner Army winner of the game
      * @param loser Army loser of the game
      * @param date Date of the game
@@ -49,7 +48,7 @@ public class GameController {
 
     /**
      * Update the game
-     * 
+     *
      * @param id ID of the game
      * @param winner Army winner of the game
      * @param loser Army loser of the game
@@ -66,7 +65,7 @@ public class GameController {
 
     /**
      * Remove a game from database
-     * 
+     *
      * @param id ID of the game
      * @param winner Army winner of the game
      * @param loser Army loser of the game
@@ -174,8 +173,8 @@ public class GameController {
 
     /**
      * Return a game by id of the army
-     * 
-     * @param id Id of the army 
+     *
+     * @param id Id of the army
      * @return A game
      */
     public Game getGame(int id) {
@@ -251,7 +250,7 @@ public class GameController {
 
     /**
      * Returns a list of points according to the games that an army with this
-     * strategy has participated in. The index of the game is the game number
+     * strategy has participated in. The index of the list is the game number
      * and the content the number of points
      *
      * @param strat the strategy we are interested in
@@ -275,7 +274,7 @@ public class GameController {
 
     /**
      * Returns a list of points according to the games that an army of this
-     * faction has participated in. The index of the game is the game number and
+     * faction has participated in. The index of the list is the game number and
      * the content the number of points
      *
      * @param faction the faction we are interested in
@@ -297,7 +296,27 @@ public class GameController {
         return res;
     }
 
+    /**
+     * Returns a list of points according to the games that an army has
+     * participated in. The index of the list is the game number and the content
+     * the number of points
+     *
+     * @param army the army we are interested in
+     * @return a list of point values
+     */
     public List<Number> armyPointHistory(Army army) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Number> res = new ArrayList<>();
+        res.add(0);
+        List<Game> games = dao.getArmyGames(army.getArmyId());
+        for (Game g : games) {
+            if (g.getArmyByWinnerId().getArmyId().equals(army.getArmyId())) {
+                Integer previous = res.get(res.size() - 1).intValue();
+                res.add(previous + WON);
+            } else if (g.getArmyByLoserId().getArmyId().equals(army.getArmyId())) {
+                Integer previous = res.get(res.size() - 1).intValue();
+                res.add(previous - LOST);
+            }
+        }
+        return res;
     }
 }

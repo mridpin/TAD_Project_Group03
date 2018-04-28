@@ -336,4 +336,13 @@ public class DAO {
         return result;
     }
 
+    public List<Game> getArmyGames(Integer armyId) {
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+        Query q = sesion.createQuery("select distinct g from Game g where g.armyByLoserId='"+armyId+"' or g.armyByWinnerId='"+armyId+"'");
+        List<Game> result = q.list();
+        tx.commit();
+        return result;
+    }
+
 }
