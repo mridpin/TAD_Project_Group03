@@ -5,8 +5,11 @@
  */
 package upo.tad.tournamentmanager.controller;
 
+import POJOs.Army;
 import POJOs.Player;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import upo.tad.tournamentmanager.model.DAO.DAO;
 import upo.tad.tournamentmanager.view.MainUI;
 
@@ -74,6 +77,24 @@ public class PlayerController {
         }
 
         return result;
+    }
+
+    public boolean ifPlayerPlay(String nickname) {
+        boolean haJugado = false;
+        Player p = dao.getPlayer(nickname);
+
+        Set listArmy = p.getArmies();
+
+        for (Iterator it = listArmy.iterator(); it.hasNext();) {
+            Army a = (Army) it.next();
+
+            if (a.getGamesForLoserId().size() > 0 || a.getGamesForWinnerId().size() > 0) {
+                haJugado = true;
+            }
+
+        }
+
+        return haJugado;
     }
 
 }

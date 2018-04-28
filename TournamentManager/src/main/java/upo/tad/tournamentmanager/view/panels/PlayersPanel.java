@@ -10,9 +10,11 @@ import POJOs.Player;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
@@ -133,7 +135,13 @@ public class PlayersPanel extends CssLayout implements View {
         });
 
         remove.addClickListener((event) -> {
-            pc.removePlayer(player_nickname.getValue());
+            if(!pc.ifPlayerPlay(player_nickname.getValue())){
+                pc.removePlayer(player_nickname.getValue());
+            } else {
+                showNotification(new Notification("You can't remove this player", "",
+                    Notification.Type.HUMANIZED_MESSAGE));
+            }
+            
             rellenaTabla(table);
             player_email.clear();
             player_name.clear();
@@ -183,4 +191,12 @@ public class PlayersPanel extends CssLayout implements View {
 
     }
 
+    //Muestra las notificaciones pasadas como parametro
+    private void showNotification(Notification notification) {
+        // keep the notification visible a little while after moving the
+        // mouse, or until clicked
+        notification.setDelayMsec(2000);
+        notification.show(Page.getCurrent());
+    }
+    
 }
