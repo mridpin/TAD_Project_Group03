@@ -90,4 +90,10 @@ public class ArmyController {
         
         return canDelete;
     }
+    
+    public void updateArmy(int id, String name){        
+        Army a = dao.getArmy(id);
+        a.setName(name);
+        dao.updateArmy(a);
+    }
 }

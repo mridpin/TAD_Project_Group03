@@ -310,5 +310,12 @@ public class DAO {
         tx.commit();
         return result;
     }
+    
+    public void updateArmy(Army a){
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+        sesion.update(a);
+        tx.commit();
+    }
 
 }

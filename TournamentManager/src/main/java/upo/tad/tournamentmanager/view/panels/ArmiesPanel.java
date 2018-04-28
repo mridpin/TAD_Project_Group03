@@ -178,7 +178,7 @@ public class ArmiesPanel extends CssLayout implements View {
         });
 
         update.addClickListener((event) -> {
-            //ACTUALIZAR JUGADOR
+            armyController.updateArmy(Integer.parseInt(army_id.getValue()), army_name.getValue());
             rellenaTabla(table);
             army_name.clear();
             create.setVisible(true);
