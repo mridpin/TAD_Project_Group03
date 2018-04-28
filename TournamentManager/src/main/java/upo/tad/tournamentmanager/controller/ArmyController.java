@@ -89,4 +89,15 @@ public class ArmyController {
         }
         return result;
     }
+    
+    public boolean ifArmyPlay(int id){
+        Army a = getArmy(id);
+        boolean canDelete = true;
+        
+        if(a.getGamesForWinnerId().size() > 0 || a.getGamesForWinnerId().size() > 0){
+            canDelete = false;
+        }
+        
+        return canDelete;
+    }
 }
