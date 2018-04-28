@@ -6,12 +6,14 @@
 package upo.tad.tournamentmanager.view.panels;
 
 import POJOs.Army;
-import POJOs.Player;
 import com.vaadin.addon.charts.Chart;
 import com.vaadin.addon.charts.model.ChartType;
 import com.vaadin.addon.charts.model.Configuration;
 import com.vaadin.addon.charts.model.DataSeries;
+import com.vaadin.addon.charts.model.ListSeries;
 import com.vaadin.addon.charts.model.PlotOptionsPie;
+import com.vaadin.addon.charts.model.XAxis;
+import com.vaadin.addon.charts.model.YAxis;
 import com.vaadin.addon.charts.model.style.SolidColor;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.navigator.View;
@@ -20,13 +22,10 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalSplitPanel;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import upo.tad.tournamentmanager.controller.ArmyController;
 import upo.tad.tournamentmanager.controller.GameController;
 import upo.tad.tournamentmanager.controller.PlayerController;
-import upo.tad.tournamentmanager.model.DAO.*;
 
 /**
  *
@@ -52,15 +51,34 @@ public class RankingsPanel extends CssLayout implements View {
         Chart pie = new Chart(ChartType.PIE);
         pie.setWidth(100, Unit.PERCENTAGE);
         pie.setHeight(100, Unit.PERCENTAGE);
-        Configuration conf = pie.getConfiguration();
-        conf.setTitle("Performance");
-        conf.setSubTitle("Wins vs. Loses");
+        Configuration pieConf = pie.getConfiguration();
+        pieConf.setTitle("Points per game");
+        pieConf.setSubTitle("Wins vs. Loses");
         DataSeries dataWinLoss = new DataSeries();
         PlotOptionsPie plot = new PlotOptionsPie();
         plot.setColors(new SolidColor[]{new SolidColor("green"), new SolidColor("red")});
         dataWinLoss.setPlotOptions(plot);
-        conf.addSeries(dataWinLoss);
+        pieConf.addSeries(dataWinLoss);
         right.setFirstComponent(pie);
+        
+        // Chart 2: Points per game line chart
+        Chart line = new Chart(ChartType.LINE);
+        line.setWidth(100, Unit.PERCENTAGE);
+        line.setHeight(100, Unit.PERCENTAGE);
+        Configuration lineConf = line.getConfiguration();
+        lineConf.setTitle("Points history");
+        lineConf.setSubTitle("Cumulative points per game");
+        XAxis xaxis = new XAxis();
+        xaxis.setTitle("Game Number");
+        xaxis.getLabels().setStep(2);
+        YAxis yaxis = new YAxis();
+        yaxis.setTitle("Points");
+        yaxis.getLabels().setStep(0.5);
+        lineConf.addxAxis(xaxis);
+        lineConf.addyAxis(yaxis);
+        ListSeries dataLine = new ListSeries("Points");
+        lineConf.addSeries(dataLine);
+        right.setSecondComponent(line);
 
         /* Left side: Tables */
         // Divide left side in 3 equal parts
@@ -79,7 +97,7 @@ public class RankingsPanel extends CssLayout implements View {
         for (List tuple : this.strategies) {
             String strat = (String) tuple.get(0);
             Double d = (Double) tuple.get(1);
-            stratsTable.addItem(new Object[]{strat, d}, i);
+            stratsTable.addItem(new Object[]{strat.toUpperCase(), d}, i);
             i++;
         }
         stratsTable.setWidth(100, Unit.PERCENTAGE);
@@ -92,14 +110,20 @@ public class RankingsPanel extends CssLayout implements View {
              * has been clicked
              */
             public void itemClick(ItemClickEvent event) {
-                dataWinLoss.clear();
                 Integer stratId = (Integer) event.getItemId() - 1; // -1 Prevents index out of bounds
                 String strat = (String) strategies.get(stratId).get(0);
+                // Draw pie chart
+                dataWinLoss.clear();
                 Integer wins = gc.strategyWins(strat).size();
                 Integer losses = gc.strategyLosses(strat).size();
                 dataWinLoss.setData(new String[]{"WINS", "LOSSES"}, new Integer[]{wins, losses});
-                conf.setTitle("Performance: " + strat.toUpperCase());
-                pie.drawChart();
+                pieConf.setTitle("Performance: " + strat.toUpperCase());
+                pie.drawChart();                
+                // Draw line chart
+                List<Number> pointsPerGame = gc.strategyPointHistory(strat);
+                dataLine.setData(pointsPerGame);
+                lineConf.setTitle("Points history: " + strat.toUpperCase());
+                line.drawChart();  
             }
         });
         left.setFirstComponent(stratsTable);
@@ -125,13 +149,14 @@ public class RankingsPanel extends CssLayout implements View {
              * has been clicked
              */
             public void itemClick(ItemClickEvent event) {
+                // Draw pir chart
                 dataWinLoss.clear();
                 Integer armyId = (Integer) event.getItemId() - 1; // -1 Prevents index out of bounds
                 Army army = (Army) armies.get(armyId).get(0);
                 Integer wins = gc.armyWins(army).size();
                 Integer losses = gc.armyLosses(army).size();
                 dataWinLoss.setData(new String[]{"WINS", "LOSSES"}, new Integer[]{wins, losses});
-                conf.setTitle("Performance: " + army.getName().toUpperCase());
+                pieConf.setTitle("Performance: " + army.getName().toUpperCase());
                 pie.drawChart();
             }
         });
@@ -158,30 +183,30 @@ public class RankingsPanel extends CssLayout implements View {
              * has been clicked
              */
             public void itemClick(ItemClickEvent event) {
+                // Draw pir chart
                 dataWinLoss.clear();
                 Integer factionId = (Integer) event.getItemId() - 1; // -1 Prevents index out of bounds
                 String faction = (String) factions.get(factionId).get(0);
                 Integer wins = gc.factionWins(faction).size();
                 Integer losses = gc.factionLosses(faction).size();
                 dataWinLoss.setData(new String[]{"WINS", "LOSSES"}, new Integer[]{wins, losses});
-                conf.setTitle("Performance: " + faction.toUpperCase());
+                pieConf.setTitle("Performance: " + faction.toUpperCase());
                 pie.drawChart();
             }
         });
-        
-        
+
         leftMidBot.setSecondComponent(factionsTable);
         HorizontalSplitPanel hsp = new HorizontalSplitPanel(left, right);
         addComponent(hsp);
     }
 
-    @Override
     /**
      * Called before the view is shown on screen. The event object contains
      * information about parameters used when showing the view, in addition to
      * references to the old view and the new view. Override this method to
      * perform initialization of your view. By default does nothing.
      */
+    @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
     }
 
