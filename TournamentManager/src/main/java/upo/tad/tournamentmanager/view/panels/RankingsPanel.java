@@ -60,7 +60,7 @@ public class RankingsPanel extends CssLayout implements View {
         dataWinLoss.setPlotOptions(plot);
         pieConf.addSeries(dataWinLoss);
         right.setFirstComponent(pie);
-        
+
         // Chart 2: Points per game line chart
         Chart line = new Chart(ChartType.LINE);
         line.setWidth(100, Unit.PERCENTAGE);
@@ -70,10 +70,13 @@ public class RankingsPanel extends CssLayout implements View {
         lineConf.setSubTitle("Cumulative points per game");
         XAxis xaxis = new XAxis();
         xaxis.setTitle("Game Number");
-        xaxis.getLabels().setStep(2);
+        xaxis.setMin(0);
+        // Max size is the total number of games in the tournament so far
+        xaxis.setMax(gc.getGames().size());
         YAxis yaxis = new YAxis();
         yaxis.setTitle("Points");
-        yaxis.getLabels().setStep(0.5);
+        // Max size is the total number of points achievable in the tournament so far
+        yaxis.setMax(gc.getGames().size() * 10);
         lineConf.addxAxis(xaxis);
         lineConf.addyAxis(yaxis);
         ListSeries dataLine = new ListSeries("Points");
@@ -118,12 +121,12 @@ public class RankingsPanel extends CssLayout implements View {
                 Integer losses = gc.strategyLosses(strat).size();
                 dataWinLoss.setData(new String[]{"WINS", "LOSSES"}, new Integer[]{wins, losses});
                 pieConf.setTitle("Performance: " + strat.toUpperCase());
-                pie.drawChart();                
+                pie.drawChart();
                 // Draw line chart
                 List<Number> pointsPerGame = gc.strategyPointHistory(strat);
                 dataLine.setData(pointsPerGame);
                 lineConf.setTitle("Points history: " + strat.toUpperCase());
-                line.drawChart();  
+                line.drawChart();
             }
         });
         left.setFirstComponent(stratsTable);
@@ -149,15 +152,20 @@ public class RankingsPanel extends CssLayout implements View {
              * has been clicked
              */
             public void itemClick(ItemClickEvent event) {
-                // Draw pir chart
-                dataWinLoss.clear();
                 Integer armyId = (Integer) event.getItemId() - 1; // -1 Prevents index out of bounds
                 Army army = (Army) armies.get(armyId).get(0);
+                // Draw pir chart
+                dataWinLoss.clear();
                 Integer wins = gc.armyWins(army).size();
                 Integer losses = gc.armyLosses(army).size();
                 dataWinLoss.setData(new String[]{"WINS", "LOSSES"}, new Integer[]{wins, losses});
                 pieConf.setTitle("Performance: " + army.getName().toUpperCase());
                 pie.drawChart();
+                // Draw line chart
+                List<Number> pointsPerGame = gc.armyPointHistory(army);
+                dataLine.setData(pointsPerGame);
+                lineConf.setTitle("Points history: " + army.getName().toUpperCase());
+                line.drawChart();
             }
         });
         leftMidBot.setFirstComponent(armiesTable);
@@ -183,15 +191,20 @@ public class RankingsPanel extends CssLayout implements View {
              * has been clicked
              */
             public void itemClick(ItemClickEvent event) {
-                // Draw pir chart
-                dataWinLoss.clear();
                 Integer factionId = (Integer) event.getItemId() - 1; // -1 Prevents index out of bounds
                 String faction = (String) factions.get(factionId).get(0);
+                // Draw pir chart
+                dataWinLoss.clear();
                 Integer wins = gc.factionWins(faction).size();
                 Integer losses = gc.factionLosses(faction).size();
                 dataWinLoss.setData(new String[]{"WINS", "LOSSES"}, new Integer[]{wins, losses});
                 pieConf.setTitle("Performance: " + faction.toUpperCase());
                 pie.drawChart();
+                // Draw line chart
+                List<Number> pointsPerGame = gc.factionPointHistory(faction);
+                dataLine.setData(pointsPerGame);
+                lineConf.setTitle("Points history: " + faction.toUpperCase());
+                line.drawChart();
             }
         });
 

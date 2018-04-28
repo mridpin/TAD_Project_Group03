@@ -18,6 +18,9 @@ import upo.tad.tournamentmanager.model.DAO.DAO;
 
 public class GameController {
 
+    public static final Integer LOST = 5;
+    public static final Integer WON = 10;
+
     DAO dao = new DAO();
     PlayerController pc = new PlayerController();
 
@@ -28,9 +31,12 @@ public class GameController {
     public void addGame(Army winner, Army loser, Date date) {
         Game game = new Game(winner, loser, date);
         Player p = winner.getPlayer();
-        p.setPoints(p.getPoints() + 10);
+        Player l = loser.getPlayer();
+        l.setPoints(l.getPoints() - LOST);
+        p.setPoints(p.getPoints() + WON);
         dao.addGame(game);
         dao.updatePlayer(p);
+        dao.updatePlayer(l);
     }
 
     public void updateGame(int id, Army winner, Army loser, Date date, Player old_winner) {
@@ -212,6 +218,14 @@ public class GameController {
         return dao.stratLosses(strat);
     }
 
+    /**
+     * Returns a list of points according to the games that an army with this
+     * strategy has participated in. The index of the game is the game number
+     * and the content the number of points
+     *
+     * @param strat the strategy we are interested in
+     * @return a list of point values
+     */
     public List<Number> strategyPointHistory(String strat) {
         List<Number> res = new ArrayList<>();
         res.add(0);
@@ -219,9 +233,40 @@ public class GameController {
         for (Game g : games) {
             if (g.getArmyByWinnerId().getStrategy().equals(strat)) {
                 Integer previous = res.get(res.size() - 1).intValue();
-                res.add(previous + 10);
+                res.add(previous + WON);
+            } else if (g.getArmyByLoserId().getStrategy().equals(strat)) {
+                Integer previous = res.get(res.size() - 1).intValue();
+                res.add(previous - LOST);
             }
         }
         return res;
+    }
+
+    /**
+     * Returns a list of points according to the games that an army of this
+     * faction has participated in. The index of the game is the game number and
+     * the content the number of points
+     *
+     * @param faction the faction we are interested in
+     * @return a list of point values
+     */
+    public List<Number> factionPointHistory(String faction) {
+        List<Number> res = new ArrayList<>();
+        res.add(0);
+        List<Game> games = dao.getFactionGames(faction);
+        for (Game g : games) {
+            if (g.getArmyByWinnerId().getFaction().equals(faction)) {
+                Integer previous = res.get(res.size() - 1).intValue();
+                res.add(previous + WON);
+            } else if (g.getArmyByLoserId().getFaction().equals(faction)) {
+                Integer previous = res.get(res.size() - 1).intValue();
+                res.add(previous - LOST);
+            }
+        }
+        return res;
+    }
+
+    public List<Number> armyPointHistory(Army army) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

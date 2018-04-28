@@ -310,8 +310,8 @@ public class DAO {
         tx.commit();
         return result;
     }
-    
-    public void updateArmy(Army a){
+
+    public void updateArmy(Army a) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
         sesion.update(a);
@@ -322,6 +322,15 @@ public class DAO {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
         Query q = sesion.createQuery("select distinct g from Army a, Game g where a.strategy='" + strat + "' and (a.armyId=g.armyByLoserId or a.armyId=g.armyByWinnerId)");
+        List<Game> result = q.list();
+        tx.commit();
+        return result;
+    }
+
+    public List<Game> getFactionGames(String faction) {
+        sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        org.hibernate.Transaction tx = sesion.beginTransaction();
+        Query q = sesion.createQuery("select distinct g from Army a, Game g where a.faction='" + faction + "' and (a.armyId=g.armyByLoserId or a.armyId=g.armyByWinnerId)");
         List<Game> result = q.list();
         tx.commit();
         return result;
