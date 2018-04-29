@@ -24,6 +24,13 @@ public class DAO {
 
     Session sesion = null;
 
+    /**
+     * Check if a player han enter if the app by a Login.
+     * 
+     * @param user Nickname of the player
+     * @param password Password of the player
+     * @return An entity of the player
+     */
     public Player login(String user, String password) {
         Player p = null;
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -38,6 +45,11 @@ public class DAO {
         return p;
     }
 
+    /**
+     * Return all players
+     * 
+     * @return List of all players
+     */
     public List consultaJugadores() {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
@@ -49,6 +61,11 @@ public class DAO {
         return listadoJugadores;
     }
 
+    /**
+     * Return a list of all armies
+     * 
+     * @return A list of all armies
+     */
     public List consultaEjercitos() {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
@@ -60,6 +77,12 @@ public class DAO {
         return listadoEjercitos;
     }
 
+    /**
+     * Check a player by an ID
+     * 
+     * @param playerId ID of the player
+     * @return An entity of the player
+     */
     public Player consultaJugador(int playerId) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
@@ -70,6 +93,11 @@ public class DAO {
         return p;
     }
 
+    /**
+     * Return a list of player whose type is 1 
+     * 
+     * @return A list of player
+     */
     public List<Player> getPlayers() {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
@@ -81,6 +109,11 @@ public class DAO {
         return listadoPlayers;
     }
 
+    /**
+     * Add a new army
+     * 
+     * @param a Army
+     */
     public void addArmy(Army a) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
@@ -88,6 +121,12 @@ public class DAO {
         tx.commit();
     }
 
+    /**
+     * Get the player by his nickname
+     * 
+     * @param nickname Nickname of the player
+     * @return An entity of the player
+     */
     public Player getPlayer(String nickname) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
@@ -99,6 +138,11 @@ public class DAO {
         return p;
     }
 
+    /**
+     * Delete a player
+     * 
+     * @param p Player
+     */
     public void removePlayer(Player p) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
@@ -106,6 +150,11 @@ public class DAO {
         tx.commit();
     }
 
+    /**
+     * Add a new player
+     * 
+     * @param p Player
+     */
     public void addPlayer(Player p) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
@@ -113,6 +162,11 @@ public class DAO {
         tx.commit();
     }
 
+    /**
+     * Update a player
+     * 
+     * @param p Player
+     */
     public void updatePlayer(Player p) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
@@ -120,6 +174,11 @@ public class DAO {
         tx.commit();
     }
 
+    /**
+     * Get a list of all games
+     * 
+     * @return List of games
+     */
     public List<Game> getGames() {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
@@ -131,6 +190,11 @@ public class DAO {
         return listadoGames;
     }
 
+    /**
+     * Get a list of armies
+     * 
+     * @return List of all armies
+     */
     public List<Army> getArmies() {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
@@ -142,6 +206,11 @@ public class DAO {
         return listadoArmies;
     }
 
+    /**
+     * Delete an army
+     * 
+     * @param a Army
+     */
     public void removeArmy(Army a) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
@@ -149,6 +218,12 @@ public class DAO {
         tx.commit();
     }
 
+    /**
+     * Get list of armies of the player
+     * 
+     * @param playerId PlayerID
+     * @return List of armies for user
+     */
     public List<Army> getArmiesForUser(int playerId) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
@@ -160,6 +235,12 @@ public class DAO {
         return listadoArmies;
     }
 
+    /**
+     * Get an army by his ID
+     * 
+     * @param id ID of the army
+     * @return Army
+     */
     public Army getArmy(int id) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
@@ -171,6 +252,11 @@ public class DAO {
         return army;
     }
 
+    /**
+     * Create a new game
+     * 
+     * @param g Game
+     */
     public void addGame(Game g) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
@@ -178,6 +264,11 @@ public class DAO {
         tx.commit();
     }
 
+    /**
+     * Modify a game
+     * 
+     * @param g Game
+     */
     public void updateGame(Game g) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
@@ -185,6 +276,11 @@ public class DAO {
         tx.commit();
     }
 
+    /**
+     * Delete a game
+     * 
+     * @param g Game
+     */
     public void removeGame(Game g) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
         org.hibernate.Transaction tx = sesion.beginTransaction();
@@ -192,6 +288,11 @@ public class DAO {
         tx.commit();
     }
 
+    /**
+     * Get a list of all factions
+     * 
+     * @return List of factions
+     */
     public List<String> getFactions() {
         List<String> factions = new ArrayList<>();
         factions.add("IMPERIUM");
@@ -199,7 +300,12 @@ public class DAO {
         factions.add("CHAOS");
         return factions;
     }
-
+    
+    /**
+     * Get a list of all strategies
+     * 
+     * @return List of strategies
+     */
     public List<String> getStrategies() {
         List<String> strategies = new ArrayList<>();
         strategies.add("Aggresive");
