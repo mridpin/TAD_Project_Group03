@@ -101,7 +101,7 @@ public class ArmyController {
      * for each army (first List), we add another List that acts as a tuple 
      * and holds an Army and its winratio
      * 
-     * @return List<List<Army, Winratio>>
+     * @return List of lists with army and winratio
      */
     public List<List> getArmiesWinRatio() {
         List<List> result = new ArrayList<>();

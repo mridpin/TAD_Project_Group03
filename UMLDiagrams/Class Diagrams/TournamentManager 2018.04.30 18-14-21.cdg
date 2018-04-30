@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="TournamentManager">
+  <ClassDiagramComponents>
+    <Class name="Army" package="POJOs" visibility="public" xPosition="3700.0" yPosition="1320.0">
+      <Fields>
+        <Field name="armyId" type="Integer" visibility="private"/>
+        <Field name="player" type="Player" visibility="private"/>
+        <Field name="name" type="String" visibility="private"/>
+        <Field name="faction" type="String" visibility="private"/>
+        <Field name="strategy" type="String" visibility="private"/>
+        <Field name="gamesForWinnerId" type="Set" visibility="private"/>
+        <Field name="gamesForLoserId" type="Set" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="Player" name="player"/>
+          <Argument type="String" name="name"/>
+          <Argument type="String" name="faction"/>
+          <Argument type="String" name="strategy"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="Player" name="player"/>
+          <Argument type="String" name="name"/>
+          <Argument type="String" name="faction"/>
+          <Argument type="String" name="strategy"/>
+          <Argument type="Set" name="gamesForWinnerId"/>
+          <Argument type="Set" name="gamesForLoserId"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getArmyId" returnType="Integer" visibility="public"/>
+        <Method name="setArmyId" returnType="void" visibility="public">
+          <Argument type="Integer" name="armyId"/>
+        </Method>
+        <Method name="getPlayer" returnType="Player" visibility="public"/>
+        <Method name="setPlayer" returnType="void" visibility="public">
+          <Argument type="Player" name="player"/>
+        </Method>
+        <Method name="getName" returnType="String" visibility="public"/>
+        <Method name="setName" returnType="void" visibility="public">
+          <Argument type="String" name="name"/>
+        </Method>
+        <Method name="getFaction" returnType="String" visibility="public"/>
+        <Method name="setFaction" returnType="void" visibility="public">
+          <Argument type="String" name="faction"/>
+        </Method>
+        <Method name="getStrategy" returnType="String" visibility="public"/>
+        <Method name="setStrategy" returnType="void" visibility="public">
+          <Argument type="String" name="strategy"/>
+        </Method>
+        <Method name="getGamesForWinnerId" returnType="Set" visibility="public"/>
+        <Method name="setGamesForWinnerId" returnType="void" visibility="public">
+          <Argument type="Set" name="gamesForWinnerId"/>
+        </Method>
+        <Method name="getGamesForLoserId" returnType="Set" visibility="public"/>
+        <Method name="setGamesForLoserId" returnType="void" visibility="public">
+          <Argument type="Set" name="gamesForLoserId"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Game" package="POJOs" visibility="public" xPosition="3712.0" yPosition="873.0">
+      <Fields>
+        <Field name="gameId" type="Integer" visibility="private"/>
+        <Field name="armyByWinnerId" type="Army" visibility="private"/>
+        <Field name="armyByLoserId" type="Army" visibility="private"/>
+        <Field name="date" type="Date" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="Army" name="armyByWinnerId"/>
+          <Argument type="Army" name="armyByLoserId"/>
+          <Argument type="Date" name="date"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getGameId" returnType="Integer" visibility="public"/>
+        <Method name="setGameId" returnType="void" visibility="public">
+          <Argument type="Integer" name="gameId"/>
+        </Method>
+        <Method name="getArmyByWinnerId" returnType="Army" visibility="public"/>
+        <Method name="setArmyByWinnerId" returnType="void" visibility="public">
+          <Argument type="Army" name="armyByWinnerId"/>
+        </Method>
+        <Method name="getArmyByLoserId" returnType="Army" visibility="public"/>
+        <Method name="setArmyByLoserId" returnType="void" visibility="public">
+          <Argument type="Army" name="armyByLoserId"/>
+        </Method>
+        <Method name="getDate" returnType="Date" visibility="public"/>
+        <Method name="setDate" returnType="void" visibility="public">
+          <Argument type="Date" name="date"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="HibernateUtil" package="POJOs" visibility="public" xPosition="3357.0" yPosition="1085.0">
+      <Fields>
+        <Field name="sessionFactory" type="SessionFactory" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="getSessionFactory" returnType="SessionFactory" visibility="public" isStatic="true"/>
+      </Methods>
+    </Class>
+    <Class name="Player" package="POJOs" visibility="public" xPosition="3017.0" yPosition="1282.0">
+      <Fields>
+        <Field name="playerId" type="Integer" visibility="private"/>
+        <Field name="name" type="String" visibility="private"/>
+        <Field name="password" type="String" visibility="private"/>
+        <Field name="email" type="String" visibility="private"/>
+        <Field name="points" type="int" visibility="private"/>
+        <Field name="nickname" type="String" visibility="private"/>
+        <Field name="type" type="boolean" visibility="private"/>
+        <Field name="armies" type="Set" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="name"/>
+          <Argument type="String" name="password"/>
+          <Argument type="String" name="email"/>
+          <Argument type="int" name="points"/>
+          <Argument type="String" name="nickname"/>
+          <Argument type="boolean" name="type"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="String" name="name"/>
+          <Argument type="String" name="password"/>
+          <Argument type="String" name="email"/>
+          <Argument type="int" name="points"/>
+          <Argument type="String" name="nickname"/>
+          <Argument type="boolean" name="type"/>
+          <Argument type="Set" name="armies"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getPlayerId" returnType="Integer" visibility="public"/>
+        <Method name="setPlayerId" returnType="void" visibility="public">
+          <Argument type="Integer" name="playerId"/>
+        </Method>
+        <Method name="getName" returnType="String" visibility="public"/>
+        <Method name="setName" returnType="void" visibility="public">
+          <Argument type="String" name="name"/>
+        </Method>
+        <Method name="getPassword" returnType="String" visibility="public"/>
+        <Method name="setPassword" returnType="void" visibility="public">
+          <Argument type="String" name="password"/>
+        </Method>
+        <Method name="getEmail" returnType="String" visibility="public"/>
+        <Method name="setEmail" returnType="void" visibility="public">
+          <Argument type="String" name="email"/>
+        </Method>
+        <Method name="getPoints" returnType="int" visibility="public"/>
+        <Method name="setPoints" returnType="void" visibility="public">
+          <Argument type="int" name="points"/>
+        </Method>
+        <Method name="getNickname" returnType="String" visibility="public"/>
+        <Method name="setNickname" returnType="void" visibility="public">
+          <Argument type="String" name="nickname"/>
+        </Method>
+        <Method name="isType" returnType="boolean" visibility="public"/>
+        <Method name="setType" returnType="void" visibility="public">
+          <Argument type="boolean" name="type"/>
+        </Method>
+        <Method name="getArmies" returnType="Set" visibility="public"/>
+        <Method name="setArmies" returnType="void" visibility="public">
+          <Argument type="Set" name="armies"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ArmyController" package="upo.tad.tournamentmanager.controller" visibility="public" xPosition="2421.0" yPosition="79.0">
+      <Fields>
+        <Field name="dao" type="DAO" visibility="package"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="getFactions" returnType="List&lt;String&gt;" visibility="public"/>
+        <Method name="getStrategies" returnType="List&lt;String&gt;" visibility="public"/>
+        <Method name="getArmies" returnType="List&lt;Army&gt;" visibility="public"/>
+        <Method name="getArmiesForUser" returnType="List&lt;Army&gt;" visibility="public">
+          <Argument type="int" name="playerId"/>
+        </Method>
+        <Method name="getArmy" returnType="Army" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="addArmy" returnType="void" visibility="public">
+          <Argument type="String" name="name"/>
+          <Argument type="String" name="faction"/>
+          <Argument type="String" name="strategy"/>
+          <Argument type="int" name="playerId"/>
+        </Method>
+        <Method name="removeArmy" returnType="void" visibility="public">
+          <Argument type="int" name="armyId"/>
+          <Argument type="String" name="armyName"/>
+          <Argument type="String" name="armyFaction"/>
+          <Argument type="String" name="armyStrategy"/>
+          <Argument type="Player" name="player"/>
+        </Method>
+        <Method name="getArmiesWinRatio" returnType="List&lt;List&gt;" visibility="public"/>
+        <Method name="ifArmyPlay" returnType="boolean" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="updateArmy" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+          <Argument type="String" name="name"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="GameController" package="upo.tad.tournamentmanager.controller" visibility="public" xPosition="2421.0" yPosition="1206.0">
+      <Fields>
+        <Field name="LOST" type="Integer" visibility="public" isStatic="true" isFinal="true"/>
+        <Field name="WON" type="Integer" visibility="public" isStatic="true" isFinal="true"/>
+        <Field name="dao" type="DAO" visibility="package"/>
+        <Field name="pc" type="PlayerController" visibility="package"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="getGames" returnType="List&lt;Game&gt;" visibility="public"/>
+        <Method name="addGame" returnType="void" visibility="public">
+          <Argument type="Army" name="winner"/>
+          <Argument type="Army" name="loser"/>
+          <Argument type="Date" name="date"/>
+        </Method>
+        <Method name="updateGame" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+          <Argument type="Army" name="winner"/>
+          <Argument type="Army" name="loser"/>
+          <Argument type="Date" name="date"/>
+          <Argument type="Player" name="old_winner"/>
+        </Method>
+        <Method name="removeGame" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+          <Argument type="Army" name="winner"/>
+          <Argument type="Army" name="loser"/>
+          <Argument type="Date" name="date"/>
+        </Method>
+        <Method name="getFactionPopularity" returnType="Map&lt;String, Integer&gt;" visibility="public"/>
+        <Method name="getGameDates" returnType="Map&lt;String, Date&gt;" visibility="public"/>
+        <Method name="getFactionsWinRatio" returnType="List&lt;List&gt;" visibility="public"/>
+        <Method name="armyWins" returnType="List&lt;Game&gt;" visibility="public">
+          <Argument type="Army" name="army"/>
+        </Method>
+        <Method name="armyLosses" returnType="List&lt;Game&gt;" visibility="public">
+          <Argument type="Army" name="army"/>
+        </Method>
+        <Method name="getGame" returnType="Game" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="factionWins" returnType="List&lt;Game&gt;" visibility="public">
+          <Argument type="String" name="faction"/>
+        </Method>
+        <Method name="factionLosses" returnType="List&lt;Game&gt;" visibility="public">
+          <Argument type="String" name="faction"/>
+        </Method>
+        <Method name="getStrategiesWinRatio" returnType="List&lt;List&gt;" visibility="public"/>
+        <Method name="strategyWins" returnType="List&lt;Game&gt;" visibility="public">
+          <Argument type="String" name="strat"/>
+        </Method>
+        <Method name="strategyLosses" returnType="List&lt;Game&gt;" visibility="public">
+          <Argument type="String" name="strat"/>
+        </Method>
+        <Method name="strategyPointHistory" returnType="List&lt;Number&gt;" visibility="public">
+          <Argument type="String" name="strat"/>
+        </Method>
+        <Method name="factionPointHistory" returnType="List&lt;Number&gt;" visibility="public">
+          <Argument type="String" name="faction"/>
+        </Method>
+        <Method name="armyPointHistory" returnType="List&lt;Number&gt;" visibility="public">
+          <Argument type="Army" name="army"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="PlayerController" package="upo.tad.tournamentmanager.controller" visibility="public" xPosition="2421.0" yPosition="683.0">
+      <Fields>
+        <Field name="dao" type="DAO" visibility="package"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="checkLogin" returnType="Player" visibility="public">
+          <Argument type="String" name="username"/>
+          <Argument type="String" name="password"/>
+        </Method>
+        <Method name="getPlayers" returnType="List&lt;Player&gt;" visibility="public"/>
+        <Method name="addPlayer" returnType="void" visibility="public">
+          <Argument type="String" name="name"/>
+          <Argument type="String" name="nickName"/>
+          <Argument type="String" name="password"/>
+          <Argument type="String" name="email"/>
+        </Method>
+        <Method name="updatePlayer" returnType="void" visibility="public">
+          <Argument type="String" name="name"/>
+          <Argument type="String" name="nickName"/>
+          <Argument type="String" name="password"/>
+          <Argument type="String" name="email"/>
+        </Method>
+        <Method name="removePlayer" returnType="void" visibility="public">
+          <Argument type="String" name="nickName"/>
+        </Method>
+        <Method name="updatePlayerProfile" returnType="boolean" visibility="public">
+          <Argument type="String" name="name"/>
+          <Argument type="String" name="nickname"/>
+          <Argument type="String" name="email"/>
+          <Argument type="String" name="old_pass"/>
+          <Argument type="String" name="new_pass"/>
+        </Method>
+        <Method name="ifPlayerPlay" returnType="boolean" visibility="public">
+          <Argument type="String" name="nickname"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="DAO" package="upo.tad.tournamentmanager.model.DAO" visibility="public" xPosition="3361.0" yPosition="281.0">
+      <Fields>
+        <Field name="sesion" type="Session" visibility="package"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="login" returnType="Player" visibility="public">
+          <Argument type="String" name="user"/>
+          <Argument type="String" name="password"/>
+        </Method>
+        <Method name="consultaJugadores" returnType="List" visibility="public"/>
+        <Method name="consultaEjercitos" returnType="List" visibility="public"/>
+        <Method name="consultaJugador" returnType="Player" visibility="public">
+          <Argument type="int" name="playerId"/>
+        </Method>
+        <Method name="getPlayers" returnType="List&lt;Player&gt;" visibility="public"/>
+        <Method name="addArmy" returnType="void" visibility="public">
+          <Argument type="Army" name="a"/>
+        </Method>
+        <Method name="getPlayer" returnType="Player" visibility="public">
+          <Argument type="String" name="nickname"/>
+        </Method>
+        <Method name="removePlayer" returnType="void" visibility="public">
+          <Argument type="Player" name="p"/>
+        </Method>
+        <Method name="addPlayer" returnType="void" visibility="public">
+          <Argument type="Player" name="p"/>
+        </Method>
+        <Method name="updatePlayer" returnType="void" visibility="public">
+          <Argument type="Player" name="p"/>
+        </Method>
+        <Method name="getGames" returnType="List&lt;Game&gt;" visibility="public"/>
+        <Method name="getArmies" returnType="List&lt;Army&gt;" visibility="public"/>
+        <Method name="removeArmy" returnType="void" visibility="public">
+          <Argument type="Army" name="a"/>
+        </Method>
+        <Method name="getArmiesForUser" returnType="List&lt;Army&gt;" visibility="public">
+          <Argument type="int" name="playerId"/>
+        </Method>
+        <Method name="getArmy" returnType="Army" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="addGame" returnType="void" visibility="public">
+          <Argument type="Game" name="g"/>
+        </Method>
+        <Method name="updateGame" returnType="void" visibility="public">
+          <Argument type="Game" name="g"/>
+        </Method>
+        <Method name="removeGame" returnType="void" visibility="public">
+          <Argument type="Game" name="g"/>
+        </Method>
+        <Method name="getFactions" returnType="List&lt;String&gt;" visibility="public"/>
+        <Method name="getStrategies" returnType="List&lt;String&gt;" visibility="public"/>
+        <Method name="armyWins" returnType="List&lt;Game&gt;" visibility="public">
+          <Argument type="Integer" name="armyId"/>
+        </Method>
+        <Method name="armyLoses" returnType="List&lt;Game&gt;" visibility="public">
+          <Argument type="Integer" name="armyId"/>
+        </Method>
+        <Method name="factionWins" returnType="List&lt;Game&gt;" visibility="public">
+          <Argument type="String" name="faction"/>
+        </Method>
+        <Method name="factionLoses" returnType="List&lt;Game&gt;" visibility="public">
+          <Argument type="String" name="faction"/>
+        </Method>
+        <Method name="getGame" returnType="Game" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="stratWins" returnType="List&lt;Game&gt;" visibility="public">
+          <Argument type="String" name="s"/>
+        </Method>
+        <Method name="stratLosses" returnType="List&lt;Game&gt;" visibility="public">
+          <Argument type="String" name="s"/>
+        </Method>
+        <Method name="updateArmy" returnType="void" visibility="public">
+          <Argument type="Army" name="a"/>
+        </Method>
+        <Method name="getStrategyGames" returnType="List&lt;Game&gt;" visibility="public">
+          <Argument type="String" name="strat"/>
+        </Method>
+        <Method name="getFactionGames" returnType="List&lt;Game&gt;" visibility="public">
+          <Argument type="String" name="faction"/>
+        </Method>
+        <Method name="getArmyGames" returnType="List&lt;Game&gt;" visibility="public">
+          <Argument type="Integer" name="armyId"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ErrorView" package="upo.tad.tournamentmanager.view" visibility="public" xPosition="460.0" yPosition="816.0">
+      <Fields>
+        <Field name="explanation" type="Label" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="enter" returnType="void" visibility="public">
+          <Argument type="ViewChangeListener.ViewChangeEvent" name="event"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="LoginScreen" package="upo.tad.tournamentmanager.view" visibility="public" xPosition="1378.0" yPosition="1301.0">
+      <Fields>
+        <Field name="pc" type="PlayerController" visibility="package"/>
+        <Field name="username" type="TextField" visibility="private"/>
+        <Field name="password" type="PasswordField" visibility="private"/>
+        <Field name="login" type="Button" visibility="private"/>
+        <Field name="register" type="Button" visibility="private"/>
+        <Field name="loginListener" type="LoginListener" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="LoginListener" name="loginListener"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="buildUI" returnType="void" visibility="private"/>
+        <Method name="buildLoginForm" returnType="Component" visibility="private"/>
+        <Method name="buildLoginInformation" returnType="CssLayout" visibility="private"/>
+        <Method name="login" returnType="void" visibility="private"/>
+        <Method name="showNotification" returnType="void" visibility="private">
+          <Argument type="Notification" name="notification"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="MainScreenAdmin" package="upo.tad.tournamentmanager.view" visibility="public" xPosition="500.0" yPosition="594.0">
+      <Fields>
+        <Field name="menu" type="Menu" visibility="private"/>
+        <Field name="viewChangeListener" type="ViewChangeListener" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="MainUI" name="ui"/>
+        </Constructor>
+      </Constructors>
+      <Methods/>
+    </Class>
+    <Class name="MainScreenUser" package="upo.tad.tournamentmanager.view" visibility="public" xPosition="911.0" yPosition="594.0">
+      <Fields>
+        <Field name="menu" type="Menu" visibility="private"/>
+        <Field name="viewChangeListener" type="ViewChangeListener" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="MainUI" name="ui"/>
+        </Constructor>
+      </Constructors>
+      <Methods/>
+    </Class>
+    <Class name="MainUI" package="upo.tad.tournamentmanager.view" visibility="public" xPosition="912.0" yPosition="797.0">
+      <Fields>
+        <Field name="session" type="WrappedSession" visibility="public" isStatic="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="init" returnType="void" visibility="protected">
+          <Argument type="VaadinRequest" name="vaadinRequest"/>
+        </Method>
+        <Method name="showMainAdminView" returnType="void" visibility="protected"/>
+        <Method name="showMainUserView" returnType="void" visibility="protected"/>
+      </Methods>
+    </Class>
+    <Class name="Menu" package="upo.tad.tournamentmanager.view" visibility="public" xPosition="623.0" yPosition="127.0">
+      <Fields>
+        <Field name="VALO_MENUITEMS" type="String" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="VALO_MENU_TOGGLE" type="String" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="VALO_MENU_VISIBLE" type="String" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="navigator" type="Navigator" visibility="private"/>
+        <Field name="viewButtons" type="Map&lt;String, Button&gt;" visibility="private"/>
+        <Field name="menuItemsLayout" type="CssLayout" visibility="private"/>
+        <Field name="menuPart" type="CssLayout" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Navigator" name="navigator"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="addView" returnType="void" visibility="public">
+          <Argument type="View" name="view"/>
+          <Argument type="String" name="name"/>
+          <Argument type="String" name="caption"/>
+          <Argument type="Resource" name="icon"/>
+        </Method>
+        <Method name="addView" returnType="void" visibility="public">
+          <Argument type="Class&lt;? extends View&gt;" name="viewClass"/>
+          <Argument type="String" name="name"/>
+          <Argument type="String" name="caption"/>
+          <Argument type="Resource" name="icon"/>
+        </Method>
+        <Method name="createViewButton" returnType="void" visibility="private">
+          <Argument type="String" name="name"/>
+          <Argument type="String" name="caption"/>
+          <Argument type="Resource" name="icon"/>
+        </Method>
+        <Method name="setActiveView" returnType="void" visibility="public">
+          <Argument type="String" name="viewName"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ArmiesPanel" package="upo.tad.tournamentmanager.view.panels" visibility="public" xPosition="2200.0" yPosition="475.0">
+      <Fields>
+        <Field name="armyController" type="ArmyController" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="enter" returnType="void" visibility="public">
+          <Argument type="ViewChangeEvent" name="event"/>
+        </Method>
+        <Method name="rellenaTabla" returnType="void" visibility="private">
+          <Argument type="Table" name="table"/>
+        </Method>
+        <Method name="showNotification" returnType="void" visibility="private">
+          <Argument type="Notification" name="notification"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="DashboardPanel" package="upo.tad.tournamentmanager.view.panels" visibility="public" xPosition="-139.0" yPosition="1729.0">
+      <Fields>
+        <Field name="pc" type="PlayerController" visibility="package"/>
+        <Field name="gc" type="GameController" visibility="package"/>
+        <Field name="players" type="List&lt;Player&gt;" visibility="package"/>
+        <Field name="facPop" type="Map&lt;String, Integer&gt;" visibility="package"/>
+        <Field name="dates" type="Map&lt;String, Date&gt;" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="enter" returnType="void" visibility="public">
+          <Argument type="ViewChangeListener.ViewChangeEvent" name="event"/>
+        </Method>
+        <Method name="loadData" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="GamesPanel" package="upo.tad.tournamentmanager.view.panels" visibility="public" xPosition="1480.0" yPosition="193.0">
+      <Fields>
+        <Field name="gc" type="GameController" visibility="package"/>
+        <Field name="ac" type="ArmyController" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="rellenaTabla" returnType="void" visibility="public">
+          <Argument type="Table" name="table"/>
+        </Method>
+        <Method name="enter" returnType="void" visibility="public">
+          <Argument type="ViewChangeEvent" name="event"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="PlayersPanel" package="upo.tad.tournamentmanager.view.panels" visibility="public" xPosition="1406.0" yPosition="852.0">
+      <Fields>
+        <Field name="pc" type="PlayerController" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="rellenaTabla" returnType="void" visibility="public">
+          <Argument type="Table" name="table"/>
+        </Method>
+        <Method name="enter" returnType="void" visibility="public">
+          <Argument type="ViewChangeEvent" name="event"/>
+        </Method>
+        <Method name="showNotification" returnType="void" visibility="private">
+          <Argument type="Notification" name="notification"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="RankingsPanel" package="upo.tad.tournamentmanager.view.panels" visibility="public" xPosition="1362.0" yPosition="510.0">
+      <Fields>
+        <Field name="pc" type="PlayerController" visibility="package"/>
+        <Field name="gc" type="GameController" visibility="package"/>
+        <Field name="ac" type="ArmyController" visibility="package"/>
+        <Field name="strategies" type="List&lt;List&gt;" visibility="package"/>
+        <Field name="armies" type="List&lt;List&gt;" visibility="package"/>
+        <Field name="factions" type="List&lt;List&gt;" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="enter" returnType="void" visibility="public">
+          <Argument type="ViewChangeListener.ViewChangeEvent" name="event"/>
+        </Method>
+        <Method name="loadData" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="UserProfilePanel" package="upo.tad.tournamentmanager.view.panels" visibility="public" xPosition="1147.0" yPosition="1099.0">
+      <Fields>
+        <Field name="pc" type="PlayerController" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="rellenaCampos" returnType="void" visibility="public">
+          <Argument type="TextField" name="name"/>
+          <Argument type="TextField" name="nickname"/>
+          <Argument type="TextField" name="email"/>
+          <Argument type="Label" name="points"/>
+        </Method>
+        <Method name="enter" returnType="void" visibility="public">
+          <Argument type="ViewChangeEvent" name="event"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="dao" source="upo.tad.tournamentmanager.controller.PlayerController" target="upo.tad.tournamentmanager.model.DAO.DAO" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="ac" source="upo.tad.tournamentmanager.view.panels.RankingsPanel" target="upo.tad.tournamentmanager.controller.ArmyController" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="pc" source="upo.tad.tournamentmanager.view.panels.RankingsPanel" target="upo.tad.tournamentmanager.controller.PlayerController" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="gc" source="upo.tad.tournamentmanager.view.panels.GamesPanel" target="upo.tad.tournamentmanager.controller.GameController" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="dao" source="upo.tad.tournamentmanager.controller.GameController" target="upo.tad.tournamentmanager.model.DAO.DAO" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="armyController" source="upo.tad.tournamentmanager.view.panels.ArmiesPanel" target="upo.tad.tournamentmanager.controller.ArmyController" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="pc" source="upo.tad.tournamentmanager.view.panels.DashboardPanel" target="upo.tad.tournamentmanager.controller.PlayerController" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="gc" source="upo.tad.tournamentmanager.view.panels.RankingsPanel" target="upo.tad.tournamentmanager.controller.GameController" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="pc" source="upo.tad.tournamentmanager.view.panels.PlayersPanel" target="upo.tad.tournamentmanager.controller.PlayerController" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="menu" source="upo.tad.tournamentmanager.view.MainScreenAdmin" target="upo.tad.tournamentmanager.view.Menu" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="dao" source="upo.tad.tournamentmanager.controller.ArmyController" target="upo.tad.tournamentmanager.model.DAO.DAO" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="pc" source="upo.tad.tournamentmanager.controller.GameController" target="upo.tad.tournamentmanager.controller.PlayerController" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="menu" source="upo.tad.tournamentmanager.view.MainScreenUser" target="upo.tad.tournamentmanager.view.Menu" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="gc" source="upo.tad.tournamentmanager.view.panels.DashboardPanel" target="upo.tad.tournamentmanager.controller.GameController" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="pc" source="upo.tad.tournamentmanager.view.LoginScreen" target="upo.tad.tournamentmanager.controller.PlayerController" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="ac" source="upo.tad.tournamentmanager.view.panels.GamesPanel" target="upo.tad.tournamentmanager.controller.ArmyController" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="pc" source="upo.tad.tournamentmanager.view.panels.UserProfilePanel" target="upo.tad.tournamentmanager.controller.PlayerController" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

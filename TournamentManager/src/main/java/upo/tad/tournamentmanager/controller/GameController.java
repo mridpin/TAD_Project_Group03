@@ -80,7 +80,7 @@ public class GameController {
     /**
      * Counts the number of games for each faction
      *
-     * @return HashMap <Faction, Count> with a count of each faction
+     * @return HashMap with a count of each faction
      */
     public Map<String, Integer> getFactionPopularity() {
         Map<String, Integer> popularity = new HashMap<>();
@@ -129,7 +129,7 @@ public class GameController {
      * this, for each faction (first List), we add another List that acts as a
      * tuple and holds a faction and its winratio
      *
-     * @return List<List<Faction, Winratio>>
+     * @return List of lists with each faction and its winratio
      */
     public List<List> getFactionsWinRatio() {
         List<List> result = new ArrayList<>();
@@ -206,7 +206,7 @@ public class GameController {
      * this, for each strategy (first List), we add another List that acts as a
      * tuple and holds a strategy and its winratio
      *
-     * @return List<List<Faction, Winratio>>
+     * @return List of lists with a strategy and its winratio
      */
     public List<List> getStrategiesWinRatio() {
         List<List> result = new ArrayList<>();

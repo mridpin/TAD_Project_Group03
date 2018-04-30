@@ -320,7 +320,7 @@ public class DAO {
      * Returns a list of all the games that this army has won
      *
      * @param armyId The army we want to know about
-     * @return A List<Game> with games it has won
+     * @return A List with games it has won
      */
     public List<Game> armyWins(Integer armyId) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -335,7 +335,7 @@ public class DAO {
      * Returns a list of all the games that this army has lost
      *
      * @param armyId The army we want to know about
-     * @return A List<Game> with games it has lost
+     * @return A List with games it has lost
      */
     public List<Game> armyLoses(Integer armyId) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -350,7 +350,7 @@ public class DAO {
      * Returns a list of all the games that this faction has won
      *
      * @param faction The faction we want to know about
-     * @return A List<Game> with games it has won
+     * @return A List with games it has won
      */
     public List<Game> factionWins(String faction) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -365,7 +365,7 @@ public class DAO {
      * Returns a list of all the games that this faction has lost
      *
      * @param faction The faction we want to know about
-     * @return A List<Game> with games it has lost
+     * @return A List with games it has lost
      */
     public List<Game> factionLoses(String faction) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -391,7 +391,7 @@ public class DAO {
      * Returns a list of all the games that this strategy has won
      *
      * @param s The strategy we want to know about
-     * @return A List<Game> with games it has lost
+     * @return A List with games it has lost
      */
     public List<Game> stratWins(String s) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -406,7 +406,7 @@ public class DAO {
      * Returns a list of all the games that this strategy has lost
      *
      * @param s The strategy we want to know about
-     * @return A List<Game> with games it has lost
+     * @return A List with games it has lost
      */
     public List<Game> stratLosses(String s) {
         sesion = HibernateUtil.getSessionFactory().getCurrentSession();
