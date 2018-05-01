@@ -17,6 +17,7 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Calendar;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.VerticalSplitPanel;
@@ -46,8 +47,27 @@ public class DashboardPanel extends CssLayout implements View {
         addStyleName("dashboard");
         this.loadData();
 
+        // Tabla con ranking de jugadores
+        Label tableTitle = new Label("Player Rankings");
+        tableTitle.addStyleName("h3");
+        Table table = new Table();
+        table.addContainerProperty("Nickname", String.class, null);
+        table.addContainerProperty("Points", Integer.class, null);
+        int i = 1;
+        for (Player p : this.players) {
+            table.addItem(new Object[]{p.getNickname(), p.getPoints()}, i);
+            i++;
+        }
+        table.setWidth(100, Unit.PERCENTAGE);
+        table.setPageLength(0);
+        VerticalLayout topleft = new VerticalLayout(tableTitle, table);
+        topleft.setMargin(true);
+        topleft.setSpacing(true);
+
         //Calendario
-        Calendar cal = new Calendar("Last Games");
+        Label calTitle = new Label("Last Games");
+        calTitle.addStyleName("h3");
+        Calendar cal = new Calendar();
         cal.setSizeFull();
         Date month = Date.from(ZonedDateTime.now().minusMonths(1).toInstant());
         cal.setStartDate(month);
@@ -62,7 +82,9 @@ public class DashboardPanel extends CssLayout implements View {
                     d, Date.from(d.toInstant().plusSeconds(3600 * 3))));
             it.remove(); // avoids a ConcurrentModificationException
         }
-        VerticalLayout topleft = new VerticalLayout(cal);
+        VerticalLayout right = new VerticalLayout(calTitle, cal);
+        right.setMargin(true);
+        right.setSpacing(true);
 
         //Gráfico
         Chart chart = new Chart(ChartType.PIE);
@@ -78,21 +100,10 @@ public class DashboardPanel extends CssLayout implements View {
         data.setPlotOptions(plot);
         conf.addSeries(data);
         VerticalLayout bottomleft = new VerticalLayout(chart);
+        bottomleft.setMargin(true);
+        bottomleft.setSpacing(true);
 
         VerticalSplitPanel left = new VerticalSplitPanel(topleft, bottomleft);
-
-        // Tabla con ranking de jugadores
-        Table table = new Table("Player ranking");
-        table.addContainerProperty("Nickname", String.class, null);
-        table.addContainerProperty("Points", Integer.class, null);
-        int i = 1;
-        for (Player p : this.players) {
-            table.addItem(new Object[]{p.getNickname(), p.getPoints()}, i);
-            i++;
-        }
-        table.setWidth(100, Unit.PERCENTAGE);
-        table.setPageLength(0);
-        VerticalLayout right = new VerticalLayout(table);
 
         HorizontalSplitPanel hsp = new HorizontalSplitPanel(left, right);
         addComponent(hsp);

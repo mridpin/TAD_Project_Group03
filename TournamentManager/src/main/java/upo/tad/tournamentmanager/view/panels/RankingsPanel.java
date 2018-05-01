@@ -20,7 +20,9 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.VerticalSplitPanel;
 import java.util.List;
 import upo.tad.tournamentmanager.controller.ArmyController;
@@ -59,7 +61,10 @@ public class RankingsPanel extends CssLayout implements View {
         plot.setColors(new SolidColor[]{new SolidColor("green"), new SolidColor("red")});
         dataWinLoss.setPlotOptions(plot);
         pieConf.addSeries(dataWinLoss);
-        right.setFirstComponent(pie);
+        VerticalLayout rightTop = new VerticalLayout(pie);
+        rightTop.setSpacing(true);
+        rightTop.setMargin(true);
+        right.setFirstComponent(rightTop);
 
         // Chart 2: Points per game line chart
         Chart line = new Chart(ChartType.LINE);
@@ -81,7 +86,10 @@ public class RankingsPanel extends CssLayout implements View {
         lineConf.addyAxis(yaxis);
         ListSeries dataLine = new ListSeries("Points");
         lineConf.addSeries(dataLine);
-        right.setSecondComponent(line);
+        VerticalLayout rightBot = new VerticalLayout(line);
+        rightBot.setSpacing(true);
+        rightBot.setMargin(true);
+        right.setSecondComponent(rightBot);
 
         /* Left side: Tables */
         // Divide left side in 3 equal parts
@@ -91,51 +99,23 @@ public class RankingsPanel extends CssLayout implements View {
         left.setSplitPosition(33, Unit.PERCENTAGE);
         left.setLocked(true);
         left.setSecondComponent(leftMidBot);
+        VerticalLayout leftTop = new VerticalLayout();
+        leftTop.setSpacing(true);
+        leftTop.setMargin(true);
+        VerticalLayout leftMid = new VerticalLayout();
+        leftMid.setSpacing(true);
+        leftMid.setMargin(true);
+        VerticalLayout leftBot = new VerticalLayout();
+        leftBot.setSpacing(true);
+        leftBot.setMargin(true);
 
-        // Table 1: Strategies
-        Table stratsTable = new Table("Strategies Rankings");
-        stratsTable.addContainerProperty("Strategy", String.class, null);
-        stratsTable.addContainerProperty("Win Ratio", Double.class, null);
-        int i = 1;
-        for (List tuple : this.strategies) {
-            String strat = (String) tuple.get(0);
-            Double d = (Double) tuple.get(1);
-            stratsTable.addItem(new Object[]{strat.toUpperCase(), d}, i);
-            i++;
-        }
-        stratsTable.setWidth(100, Unit.PERCENTAGE);
-        stratsTable.setPageLength(0);
-        stratsTable.setSelectable(true);
-        stratsTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
-            @Override
-            /**
-             * Changes the information displayed on the graphs according to what
-             * has been clicked
-             */
-            public void itemClick(ItemClickEvent event) {
-                Integer stratId = (Integer) event.getItemId() - 1; // -1 Prevents index out of bounds
-                String strat = (String) strategies.get(stratId).get(0);
-                // Draw pie chart
-                dataWinLoss.clear();
-                Integer wins = gc.strategyWins(strat).size();
-                Integer losses = gc.strategyLosses(strat).size();
-                dataWinLoss.setData(new String[]{"WINS", "LOSSES"}, new Integer[]{wins, losses});
-                pieConf.setTitle("Performance: " + strat.toUpperCase());
-                pie.drawChart();
-                // Draw line chart
-                List<Number> pointsPerGame = gc.strategyPointHistory(strat);
-                dataLine.setData(pointsPerGame);
-                lineConf.setTitle("Points history: " + strat.toUpperCase());
-                line.drawChart();
-            }
-        });
-        left.setFirstComponent(stratsTable);
-
-        // Table 2: Armies
-        Table armiesTable = new Table("Army Rankings");
+        // Table 1: Armies
+        Label armiesTitle = new Label("Army Rankings");
+        armiesTitle.addStyleName("h3");
+        Table armiesTable = new Table();
         armiesTable.addContainerProperty("Army Name", String.class, null);
         armiesTable.addContainerProperty("Win Ratio", Double.class, null);
-        i = 1;
+        int i = 1;
         for (List tuple : this.armies) {
             String armyName = ((Army) tuple.get(0)).getName();
             Double d = (Double) tuple.get(1);
@@ -168,10 +148,55 @@ public class RankingsPanel extends CssLayout implements View {
                 line.drawChart();
             }
         });
-        leftMidBot.setFirstComponent(armiesTable);
+        leftTop.addComponents(armiesTitle, armiesTable);
+        left.setFirstComponent(leftTop);
+
+        // Table 2: Strategies
+        Label stratsTitle = new Label("Strategy Rankings");
+        stratsTitle.addStyleName("h3");
+        Table stratsTable = new Table();
+        stratsTable.addContainerProperty("Strategy", String.class, null);
+        stratsTable.addContainerProperty("Win Ratio", Double.class, null);
+        i = 1;
+        for (List tuple : this.strategies) {
+            String strat = (String) tuple.get(0);
+            Double d = (Double) tuple.get(1);
+            stratsTable.addItem(new Object[]{strat.toUpperCase(), d}, i);
+            i++;
+        }
+        stratsTable.setWidth(100, Unit.PERCENTAGE);
+        stratsTable.setPageLength(0);
+        stratsTable.setSelectable(true);
+        stratsTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+            @Override
+            /**
+             * Changes the information displayed on the graphs according to what
+             * has been clicked
+             */
+            public void itemClick(ItemClickEvent event) {
+                Integer stratId = (Integer) event.getItemId() - 1; // -1 Prevents index out of bounds
+                String strat = (String) strategies.get(stratId).get(0);
+                // Draw pie chart
+                dataWinLoss.clear();
+                Integer wins = gc.strategyWins(strat).size();
+                Integer losses = gc.strategyLosses(strat).size();
+                dataWinLoss.setData(new String[]{"WINS", "LOSSES"}, new Integer[]{wins, losses});
+                pieConf.setTitle("Performance: " + strat.toUpperCase());
+                pie.drawChart();
+                // Draw line chart
+                List<Number> pointsPerGame = gc.strategyPointHistory(strat);
+                dataLine.setData(pointsPerGame);
+                lineConf.setTitle("Points history: " + strat.toUpperCase());
+                line.drawChart();
+            }
+        });
+        leftMid.addComponents(stratsTitle, stratsTable);
+        leftMidBot.setFirstComponent(leftMid);
 
         // Table 3: Factions ranking
-        Table factionsTable = new Table("Factions Rankings");
+        Label factionsTitle = new Label("Faction Rankings");
+        factionsTitle.addStyleName("h3");
+        Table factionsTable = new Table();
         factionsTable.addContainerProperty("Faction Name", String.class, null);
         factionsTable.addContainerProperty("Win Ratio", Double.class, null);
         i = 1;
@@ -207,8 +232,8 @@ public class RankingsPanel extends CssLayout implements View {
                 line.drawChart();
             }
         });
-
-        leftMidBot.setSecondComponent(factionsTable);
+        leftBot.addComponents(factionsTitle, factionsTable);
+        leftMidBot.setSecondComponent(leftBot);
         HorizontalSplitPanel hsp = new HorizontalSplitPanel(left, right);
         addComponent(hsp);
     }

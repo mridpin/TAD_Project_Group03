@@ -155,7 +155,7 @@ public class LoginScreen extends CssLayout {
     private CssLayout buildLoginInformation() {
         CssLayout loginInformation = new CssLayout();
         loginInformation.setStyleName("login-information");
-        Label loginInfoText = new Label("<h1>Warhammer 40,000</h1>", ContentMode.HTML);
+        Label loginInfoText = new Label("<h1>WARHAMMER 40,000</h1><h2>TOURNAMENT MANAGER</h2>", ContentMode.HTML);
         loginInformation.addComponent(loginInfoText);
         return loginInformation;
     }
