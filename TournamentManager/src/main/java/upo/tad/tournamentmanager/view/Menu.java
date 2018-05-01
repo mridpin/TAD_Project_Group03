@@ -50,7 +50,7 @@ public class Menu extends CssLayout {
         top.addStyleName(ValoTheme.MENU_TITLE);
         top.setSpacing(true);
         Label title = new Label("WARHAMMER");
-        title.addStyleName(ValoTheme.LABEL_H3);
+        title.addStyleName(ValoTheme.LABEL_H2);
         title.setSizeUndefined();
         top.addComponent(title);
         menuPart.addComponent(top);
