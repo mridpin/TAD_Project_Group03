@@ -15,6 +15,8 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
 import upo.tad.tournamentmanager.view.LoginScreen.LoginListener;
 
+// Database=localdb;Data Source=127.0.0.1:56859;User Id=azure;Password=6#vWHD_$
+
 @PreserveOnRefresh
 @Viewport("user-scalable=no,initial-scale=1.0")
 @Theme("mytheme")
